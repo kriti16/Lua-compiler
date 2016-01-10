@@ -3,7 +3,7 @@
 -- typical usage: lua -e N=500 sieve.lua | column
 
 -- generate all the numbers from 2 to n
-function gen (n)
+function gen_t_t| (n)
   return coroutine.wrap(function ()
     for i=2,n do coroutine.yield(i) end
   end)

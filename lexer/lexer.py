@@ -18,7 +18,7 @@ t_ignore = ' \t'
 tokens = keywords + operators
 
 def t_ID(t):
-    r'[A-Za-z][A-Z0-9a-z]*'
+    r'[A-Za-z][A-Z0-9a-z\_]*'
     if t.value in keywords:
         t.type = t.value
     return t
@@ -65,14 +65,14 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# Test it out
-data = '''
-3 + 4 * 10
-  + -20 *2
-'''
+#Create an empty Dictionary
 D = {k:0 for k in tokens}
-# Give the lexer some input
+
+#Get the file name
 fname = raw_input("Give File name>  ")
+
+
+#Read the File
 f = open(fname,'r')
 data = f.read()
 f.close()
@@ -83,10 +83,11 @@ lexer.input(data)
 
 while True:
     tok = lexer.token()
+    #Get the  end
     if not tok or tok == None: 
-        break      # No more input
+        break    
     #print tok
-    print tok.value,tok.type
+    #print tok.value,tok.type   ##Uncomment this to print each token
     D[tok.type] =D[tok.type] + 1
 
 for k in D.keys():
