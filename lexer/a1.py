@@ -2,9 +2,9 @@ import ply.lex as lex
 import numpy as np
 from collections import defaultdict
 keywords =  ('and', 'break', 'do', 'else', 'elseif',
-    'end', 'false', 'for', 'function', 'goto', 'if',
-    'in', 'local', 'nil', 'not', 'or', 'repeat',
-    'return', 'then', 'true', 'until', 'while')
+	'end', 'false', 'for', 'function', 'goto', 'if',
+	'in', 'local', 'nil', 'not', 'or', 'repeat',
+	'return', 'then', 'true', 'until', 'while')
 
 operators= (
      'EQUALS','PLUS','MINUS','TIMES','DIVIDE','POWER',
