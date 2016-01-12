@@ -24,5 +24,6 @@ while 1 do
   local n = x()		-- pick a number until done
   if n == nil then break end
   print(n)		-- must be a prime number
+  print \0x44f
   x = filter(n, x)	-- now remove its multiples
 end

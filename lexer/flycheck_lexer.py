@@ -2,19 +2,19 @@ import ply.lex as lex
 import numpy as np
 from collections import defaultdict
 keywords =  ('and', 'break', 'do', 'else', 'elseif',
-	'end', 'false', 'for', 'function', 'goto', 'if',
-	'in', 'local', 'nil', 'not', 'or', 'repeat',
-	'return', 'then', 'true', 'until', 'while')
+    'end', 'false', 'for', 'function', 'goto', 'if',
+    'in', 'local', 'nil', 'not', 'or', 'repeat',
+    'return', 'then', 'true', 'until', 'while')
 
 operators= (
      'EQUALS','PLUS','MINUS','TIMES','DIVIDE','POWER',
      'LPAREN','RPAREN','LT','LE','GT','GE','NE',
      'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
      'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-    'RCURLY','LCURLY','LSQUARE','RSQUARE','COMMENT','MODULO'
+    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO'
 )
 
-t_ignore = ' \t'
+t_ignore = ' \t \n'
 
 tokens = keywords + operators
 
@@ -36,7 +36,7 @@ t_SDOT = r'\.' #Single Dot
 t_MODULO =r'%' #Modulo
 t_TDASH = r'---' #Triple Dot
 t_COLON = r':' #Colon
-t_COMMENT = r'--(.*)'
+t_ignore_COMMENT  = r'--(.*)'
 t_LPAREN  = r'\(' #left parenthesis
 t_RPAREN  = r'\)' #right parenthesis
 t_RCURLY = r'{'
@@ -75,11 +75,12 @@ D = defaultdict(stru)
 #D = {k:0 for k in tokens}
 
 #Get the file name
-fname = raw_input("Give File name>  ")
-
+#fname = raw_input("Give File name>  ")
+fname = "big.lua"
 
 #Read the File
 f = open(fname,'r')
+
 data = f.read()
 f.close()
 
@@ -89,13 +90,13 @@ lexer.input(data)
 
 while True:
     tok = lexer.token()
-    #Get the  end
     if not tok or tok == None: 
         break    
-    #print tok
-    #print tok.value,tok.type   ##Uncomment this to print each token
     if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or len(D[tok.type].listOfOccurences) == 0:
         D[tok.type].listOfOccurences.append(tok.value)
+#        print D[tok.type].listOfOccurences
+    #print tok
+    
     D[tok.type].frequency = D[tok.type].frequency + 1
 
 for k in D.keys():
