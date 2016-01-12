@@ -11,7 +11,7 @@ operators= (
      'LPAREN','RPAREN','LT','LE','GT','GE','NE',
      'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
      'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO'
+    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID'
 )
 
 t_ignore = ' \t \n'
@@ -19,11 +19,11 @@ t_ignore = ' \t \n'
 tokens = keywords + operators
 
 def t_ID(t):
-    r'[A-Za-z][A-Z0-9a-z\_]*'
+    r'[A-Za-z\_][a-z\_]*[A-Z0-9a-z\_]*'
     if t.value in keywords:
         t.type = t.value
     return t
-    
+t_RESID = r'_[A-Z][A-Za-z\_]' #Reserved Identifiers
 t_EQUALS  = r'=' #assignment equal
 t_CHECKEQ = r'==' #Check equality
 t_HASH = r'\#'
@@ -51,7 +51,7 @@ t_NE      = r'~=' #not equal
 t_COMMA   = r'\,' #comma
 t_SEMI    = r';' #semicolon
 t_INTEGER = r'\d+'    #integer 
-t_FLOAT   = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))' #float
+t_FLOAT   = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+)|([1-9]\d*e[\+-]?\d+))' #float
 t_STRING  = r'(\".*?\")|(\'.*?\')'
 
 def t_NEWLINE(t):
@@ -63,6 +63,10 @@ def t_error(t):
     print "Illegal character", t.value[0]
     t.lexer.skip(1)
 
+def t_HEX(t):
+    r'0x[0-9a-f]*'
+    t.value = int(t.value,0)
+    return t
 lexer = lex.lex()
 
 #Create an empty Dictionary
@@ -95,7 +99,7 @@ while True:
     if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or len(D[tok.type].listOfOccurences) == 0:
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-    #print tok
+    print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
