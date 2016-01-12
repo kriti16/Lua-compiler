@@ -1,6 +1,7 @@
 import ply.lex as lex
 import numpy as np
 from collections import defaultdict
+
 keywords =  ('and', 'break', 'do', 'else', 'elseif',
     'end', 'false', 'for', 'function', 'goto', 'if',
     'in', 'local', 'nil', 'not', 'or', 'repeat',
@@ -11,7 +12,7 @@ operators= (
      'LPAREN','RPAREN','LT','LE','GT','GE','NE',
      'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
      'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID'
+    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS'
 )
 
 t_ignore = ' \t \n'
@@ -36,6 +37,7 @@ t_SDOT = r'\.' #Single Dot
 t_MODULO =r'%' #Modulo
 t_TDASH = r'---' #Triple Dot
 t_COLON = r':' #Colon
+t_DBLDOTS = r'\.\.' #concatenation
 t_ignore_COMMENT  = r'--(.*)'
 t_LPAREN  = r'\(' #left parenthesis
 t_RPAREN  = r'\)' #right parenthesis
@@ -69,18 +71,17 @@ def t_HEX(t):
     return t
 lexer = lex.lex()
 
-#Create an empty Dictionary
+#Create a class to keep frequency and list of lexemes
 class stru:
     def __init__(self):
         self.frequency = 0
         self.listOfOccurences = []
 
 D = defaultdict(stru)
-#D = {k:0 for k in tokens}
 
 #Get the file name
-#fname = raw_input("Give File name>  ")
-fname = "big.lua"
+fname = raw_input("Give File name>  ")
+#fname = "big.lua"
 
 #Read the File
 f = open(fname,'r')
@@ -96,10 +97,12 @@ while True:
     tok = lexer.token()
     if not tok or tok == None: 
         break    
-    if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or len(D[tok.type].listOfOccurences) == 0:
+    if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or tok.type == 'HEX' or len(D[tok.type].listOfOccurences) == 0:
+        if tok.type == 'STRING':
+            tok.value = tok.value.strip('"')
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-    print tok
+#    print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
