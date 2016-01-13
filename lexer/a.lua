@@ -1,13 +1,1 @@
-function concat_event (op1, op2)
-       if (type(op1) == "string" or type(op1) == "number") and
-          (type(op2) == "string" or type(op2) == "number") then
-         return op1 .. op2  -- primitive string concatenation
-       else
-         local h = getbinhandler(op1, op2, "__concat")
-         if h then
-           return (h(op1, op2))
-         else
-           error(...)
-         end
-       end
-     end
+3   3.0   3.1416   314.16E-2 314.16e-2   0.31416E1 0.31416e1   0xff   0x56 0X56
