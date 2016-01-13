@@ -18,13 +18,16 @@ operators= (
 t_ignore = ' \t \n'
 
 tokens = keywords + operators
-
+def t_RESID(t):
+    r'_[A-Z\_]+'
+    return t    #Reserved Identifiers
+    
 def t_ID(t):
     r'[A-Za-z\_][a-z\_]*[A-Z0-9a-z\_]*'
     if t.value in keywords:
         t.type = t.value
     return t
-t_RESID = r'_[A-Z][A-Za-z\_]' #Reserved Identifiers
+
 t_EQUALS  = r'=' #assignment equal
 t_CHECKEQ = r'==' #Check equality
 t_HASH = r'\#'
