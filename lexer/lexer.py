@@ -12,7 +12,7 @@ operators= (
      'LPAREN','RPAREN','LT','LE','GT','GE','NE',
      'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
      'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS'
+    'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS', 'TRPLDOTS'
 )
 
 t_ignore = ' \t \n'
@@ -21,7 +21,7 @@ tokens = keywords + operators
 def t_RESID(t):
     r'_[A-Z\_]+'
     return t    #Reserved Identifiers
-    
+
 def t_ID(t):
     r'[A-Za-z\_][a-z\_]*[A-Z0-9a-z\_]*'
     if t.value in keywords:
@@ -41,6 +41,7 @@ t_MODULO =r'%' #Modulo
 t_TDASH = r'---' #Triple Dot
 t_COLON = r':' #Colon
 t_DBLDOTS = r'\.\.' #concatenation
+t_TRPLDOTS = r'\.\.\.' 
 t_ignore_COMMENT  = r'--(.*)'
 t_LPAREN  = r'\(' #left parenthesis
 t_RPAREN  = r'\)' #right parenthesis
@@ -69,7 +70,7 @@ def t_error(t):
     t.lexer.skip(1)
 
 def t_HEX(t):
-    r'0x[0-9a-f]*'
+    r'0x[0-9a-f]+'
     t.value = int(t.value,0)
     return t
 lexer = lex.lex()
@@ -105,7 +106,7 @@ while True:
             tok.value = tok.value.strip('"')
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-#    print tok
+    print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
