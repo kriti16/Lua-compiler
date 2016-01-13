@@ -56,7 +56,7 @@ t_GE      = r'>=' #greter than equal
 t_NE      = r'~=' #not equal 
 t_COMMA   = r'\,' #comma
 t_SEMI    = r';' #semicolon
-t_INTEGER = r'\d+'    #integer 
+t_INTEGER = r'\d+([eE]\d+)?'    #integer 
 #t_FLOAT   = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+)|([1-9]\d*e[\+-]?\d+))' #float
 t_FLOAT   = r'((\d+\.\d+E[\+-]?\d+) | (\d+\.\d+e[\+-]?\d+) | \d+\.\d+)' #float
 t_STRING  = r'(\".*?\")|(\'.*?\')'
@@ -71,8 +71,8 @@ def t_error(t):
     t.lexer.skip(1)
 
 def t_HEX(t):
-    r'0[xX][0-9a-f]+'
-    t.value = int(t.value,0)
+    r'0[xX][0-9a-fA-F]+( ([pP][\+-]?\d+) | (\.[0-9a-fA-F]+([pP][\+-]?\d+)?) )?'
+    #t.value = int(t.value,0)
     return t
 lexer = lex.lex()
 
@@ -107,7 +107,7 @@ while True:
             tok.value = tok.value.strip('"')
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-#    print tok
+    print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
