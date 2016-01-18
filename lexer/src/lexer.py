@@ -67,7 +67,8 @@ def t_NEWLINE(t):
     return t
 
 def t_error(t):
-    print "Illegal character", t.value[0]
+    print t.value[0]
+    raise ValueError('Illegal Character ')
     t.lexer.skip(1)
 
 def t_HEX(t):
@@ -111,4 +112,4 @@ while True:
     D[tok.type].frequency = D[tok.type].frequency + 1
 
 for k in D.keys():
-        print k,D[k].frequency,D[k].listOfOccurences
+        print k+"\t"+str(D[k].frequency)+"->"+str(D[k].listOfOccurences)
