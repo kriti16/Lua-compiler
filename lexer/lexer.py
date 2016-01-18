@@ -76,8 +76,6 @@ class stru:
         self.listOfOccurences = []
 
 D = defaultdict(stru)
-#D = {k:0 for k in tokens}
-
 #Get the file name
 #fname = raw_input("Give File name>  ")
 fname = "big.lua"
@@ -99,7 +97,7 @@ while True:
     if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or len(D[tok.type].listOfOccurences) == 0:
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-    print tok
+    #print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
