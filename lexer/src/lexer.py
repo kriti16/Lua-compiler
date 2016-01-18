@@ -1,5 +1,6 @@
 import ply.lex as lex
 import numpy as np
+import sys
 from collections import defaultdict
 
 keywords =  ('and', 'break', 'do', 'else', 'elseif',
@@ -85,13 +86,15 @@ class stru:
 
 D = defaultdict(stru)
 #Get the file name
-fname = raw_input("Give File name>  ")
+#fname = raw_input("Give File name>  ")
 #fname = "big.lua"
-
+fname=sys.argv[1]
 #Read the File
+#print fname
 f = open(fname,'r')
 
 data = f.read()
+#print data
 f.close()
 
 lexer.input(data)
@@ -107,7 +110,7 @@ while True:
             tok.value = tok.value.strip('"')
         D[tok.type].listOfOccurences.append(tok.value)
 #        print D[tok.type].listOfOccurences
-    #print tok
+    print tok
     
     D[tok.type].frequency = D[tok.type].frequency + 1
 
