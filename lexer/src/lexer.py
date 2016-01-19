@@ -44,6 +44,7 @@ t_COLON = r':' #Colon
 t_DBLDOTS = r'\.\.' #concatenation
 t_TRPLDOTS = r'\.\.\.' 
 t_ignore_COMMENT  = r'--(.*)'
+t_ignore_MULTCOMMENT = r'--\[\[  (. | \n)* --\]\]'
 t_LPAREN  = r'\(' #left parenthesis
 t_RPAREN  = r'\)' #right parenthesis
 t_RCURLY = r'{'
