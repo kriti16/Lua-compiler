@@ -1,0 +1,10 @@
+Group 6
+Amartya, Bhuvesh, Kriti, Teekam
+Language: LUA
+
+When in asgn1, do
+– make
+– bin/lexer test/test1.lua
+
+There are 5 test files test1.lua, test2.lua, test3.lua, test4.lua, test5.lua
+test1.lua has an illegal character, other 4 are lua codes with the correct syntax.
