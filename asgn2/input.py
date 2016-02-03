@@ -33,23 +33,28 @@ class Reader(object):
                 #pprint ([vars(x) for x in self.list_of_3op])
         def genSymTable(self):
                 dict_perm={}
+                next_use={}
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
                         dict_perm[TOC.SymtabEntry2] = 0
                         dict_perm[TOC.SymtabEntry3] = 0
                         dict_perm[TOC.SymtabEntry1] = 0
+                        next_use[TOC.SymtabEntry2] = -1
+                        next_use[TOC.SymtabEntry3] = -1
+                        next_use[TOC.SymtabEntry1] = -1
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
                         dict_dead = {TOC.SymtabEntry2:dict_perm[TOC.SymtabEntry2],TOC.SymtabEntry3:dict_perm[TOC.SymtabEntry3],TOC.SymtabEntry1:dict_perm[TOC.SymtabEntry1]}
                         self.deadAlive.insert(0,dict_dead)
-                        #print TOC.SymtabEntry1,dict_perm['z']
                         dict_perm[TOC.SymtabEntry1]=0
                         dict_perm[TOC.SymtabEntry2]=1
-                        #print TOC.SymtabEntry2, TOC.SymtabEntry3, TOC.SymtabEntry1
                         dict_perm[TOC.SymtabEntry3]=1
-                        #print len(self.deadAlive),i
-                        #print self.deadAlive[0] 
+                        dict_next = {TOC.SymtabEntry2:next_use[TOC.SymtabEntry2],TOC.SymtabEntry3:next_use[TOC.SymtabEntry3],TOC.SymtabEntry1:next_use[TOC.SymtabEntry1]}
+                        self.nextUse.insert(0,dict_next)
+                        next_use[TOC.SymtabEntry1]=-1
+                        next_use[TOC.SymtabEntry2]=i+1
+                        next_use[TOC.SymtabEntry3]=i+1
                                                 
 if __name__=='__main__':
         fname = sys.argv[1]
@@ -58,6 +63,8 @@ if __name__=='__main__':
         list_op_3ops = Reader.list_of_3op
         Reader.genSymTable()
         pprint ([x for x in Reader.deadAlive])
+        print
+        pprint ([x for x in Reader.nextUse])
 
 
 
