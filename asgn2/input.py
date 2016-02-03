@@ -4,6 +4,7 @@ import numpy as np
 import sys
 from ThreeOp import ThreeOp
 from pprint import pprint
+from helperScripts import *
 class Reader(object):
         def __init__(self,):
                 self.list_of_3op = []
@@ -36,26 +37,52 @@ class Reader(object):
                 next_use={}
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
-                        dict_perm[TOC.SymtabEntry2] = 0
-                        dict_perm[TOC.SymtabEntry3] = 0
-                        dict_perm[TOC.SymtabEntry1] = 0
-                        next_use[TOC.SymtabEntry2] = -1
-                        next_use[TOC.SymtabEntry3] = -1
-                        next_use[TOC.SymtabEntry1] = -1
+                        if not check_variable(TOC.SymtabEntry2):
+                                dict_perm[TOC.SymtabEntry2] = 0
+                                next_use[TOC.SymtabEntry2] = -1
+                        if not check_variable(TOC.SymtabEntry3):
+                                dict_perm[TOC.SymtabEntry3] = 0
+                                next_use[TOC.SymtabEntry3] = -1
+                        if not check_variable(TOC.SymtabEntry1):
+                                dict_perm[TOC.SymtabEntry1] = 0
+                                next_use[TOC.SymtabEntry1] = -1
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
-                        dict_dead = {TOC.SymtabEntry2:dict_perm[TOC.SymtabEntry2],TOC.SymtabEntry3:dict_perm[TOC.SymtabEntry3],TOC.SymtabEntry1:dict_perm[TOC.SymtabEntry1]}
+                        dict_dead={}
+                        dict_next={}
+                        try:
+                                dict_dead[TOC.SymtabEntry2] = dict_perm[TOC.SymtabEntry2]
+                                dict_next[TOC.SymtabEntry2] = next_use[TOC.SymtabEntry2]
+                                dict_perm[TOC.SymtabEntry2]=1
+                                next_use[TOC.SymtabEntry2]=i+1
+                        except:
+                                pass
+                        
+                        try:
+                                dict_dead[TOC.SymtabEntry3]=dict_perm[TOC.SymtabEntry3]
+                                dict_next[TOC.SymtabEntry3]=next_use[TOC.SymtabEntry3]
+                                dict_perm[TOC.SymtabEntry3]=1
+                                next_use[TOC.SymtabEntry3]=i+1
+                        except:
+                                pass
+                        try:
+                                dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
+                                dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+                                dict_perm[TOC.SymtabEntry1]=0
+                                next_use[TOC.SymtabEntry1]=-1
+                        except:
+                                pass
                         self.deadAlive.insert(0,dict_dead)
-                        dict_perm[TOC.SymtabEntry1]=0
-                        dict_perm[TOC.SymtabEntry2]=1
-                        dict_perm[TOC.SymtabEntry3]=1
-                        dict_next = {TOC.SymtabEntry2:next_use[TOC.SymtabEntry2],TOC.SymtabEntry3:next_use[TOC.SymtabEntry3],TOC.SymtabEntry1:next_use[TOC.SymtabEntry1]}
                         self.nextUse.insert(0,dict_next)
-                        next_use[TOC.SymtabEntry1]=-1
-                        next_use[TOC.SymtabEntry2]=i+1
-                        next_use[TOC.SymtabEntry3]=i+1
                                                 
+
+def check_variable( vari):
+        try: 
+                int(vari)
+                return True
+        except ValueError:
+                return False
 if __name__=='__main__':
         fname = sys.argv[1]
         Reader = Reader()
