@@ -24,6 +24,7 @@ class GenSym(object):
                 #print input_lines
                 for i in range(0,len(input_lines)):
 	                tmp_list=input_lines[i].split(",")
+                        print tmp_list
                         OpCode = ThreeOp()
                         OpCode.InstrType = "Math"
                         OpCode.SymtabEntry1 = tmp_list[0]
