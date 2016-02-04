@@ -35,7 +35,13 @@ class Runner(object):
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
         for ops in self.list_op_3ops:
-            L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
+            if ops.InstrType=='Print':
+                AsPrint(ops.SymtabEntry1)
+                continue
+            if ops.Operator == '/':
+                L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)
+            else:
+                L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
             x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
             try:
                 if self.AddrDesc[y] == None:

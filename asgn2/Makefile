@@ -8,7 +8,7 @@ out: out.s
 	ld out.o -m elf_i386 -o out
 
 out.s:
-	python FinalRun.py  >out.s
+	python FinalRun.py input3.ir >out.s
 
 clean:
 	rm -rf out out.o out.s
