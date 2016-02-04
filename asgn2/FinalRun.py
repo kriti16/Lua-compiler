@@ -29,7 +29,7 @@ class Runner(object):
         print x86istr
 
     def footer(self):
-        print "MOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
+        print "\nMOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
 
     def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
@@ -69,16 +69,17 @@ class Runner(object):
                     if y not in getattr(self.RegDesc,L):
                         print "MOVL %"+ydash+",%"+L
             zdash=None
+            if ops.Operator=='/':
+                if check_variable(z):
+                    RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
+                    print "MOVL $"+str(z)+",%ESI"
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
             try:
                 if self.AddrDesc[z] == None:
                     raise Exception()
                 zdash=self.AddrDesc[z]
             except:
                 zdash = z;
-            if ops.Operator=='/':
-                if check_variable(zdash):
-                    RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
             gen(ops, zdash, L)
             self.AddrDesc[x] = L
             setattr(self.RegDesc,L,[x])
@@ -94,6 +95,7 @@ class Runner(object):
                     self.AddrDesc[z] = None
             except:
                 pass
+            print vars(self.RegDesc),self.AddrDesc
             i += 1
 if __name__=='__main__':
     fname = sys.argv[1]

@@ -5,4 +5,4 @@ print,z
 z,=,x,*,5
 print,y
 y,=,7,-,z
-x,=,z,+,y
+x,=,z,/,y
