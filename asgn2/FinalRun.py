@@ -40,10 +40,11 @@ class Runner(object):
                 if check_variable(x):
                     print "PUSHL $" + x
                 else:
-                    if self.AddrDesc[x] == None:
-                        print "PUSHL " + x
-                    else:
-                        print "PUSHL  %" + self.AddrDesc[x]
+                    RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                    print "PUSHL " + x
                 print "PUSHL $fmtstr"
                 print "CALL printf"
                 continue
