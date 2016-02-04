@@ -9,11 +9,11 @@ def symbol(op):
 	elif op=='*':
 		return "IMULL"
 	elif op=='/':
-		return "IDIV"
+		return "IDIVL"
 
 def gen(ops,zdash,L):
 	opr=symbol(ops.Operator)
-	if opr!="IDIV":
+	if opr!="IDIVL":
 		if check_variable(zdash):
 			print opr+" $"+str(zdash)+",%"+L
 		elif zdash==ops.SymtabEntry3:

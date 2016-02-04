@@ -31,13 +31,23 @@ class GenSym(object):
                         if tmp_list[0]=='print':
                                 OpCode.InstrType='Print'
                                 OpCode.SymtabEntry1 = tmp_list[1]
-                        elif tmp_list[3] in ['+','-','*','/']: 
+                        elif len(tmp_list)==3 and tmp_list[1]=='=':
+                                #print "Twent"
+                                #print tmp_list
+                                OpCode.InstrType = "Assign"
+                                OpCode.SymtabEntry1 = tmp_list[0]
+                                OpCode.SymtabEntry2 = tmp_list[2]
+                        elif tmp_list[3] in ['+','-','*','/']:
+                                #print "Third"
+                                #print tmp_list
                                 OpCode.InstrType = "Math"
                                 OpCode.SymtabEntry1 = tmp_list[0]
                                 OpCode.SymtabEntry2 = tmp_list[2]
                                 OpCode.SymtabEntry3 = tmp_list[4]
                                 OpCode.Operator = tmp_list[3]
-                                
+                        else:
+                                print "Four"
+                                #print tmp_list
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
@@ -55,16 +65,19 @@ class GenSym(object):
                                 next_use[TOC.SymtabEntry2] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if not check_variable(TOC.SymtabEntry3):
-                                dict_perm[TOC.SymtabEntry3] = 1
-                                next_use[TOC.SymtabEntry3] = self.lines-1
-                                self.AddrDesc[TOC.SymtabEntry3] = None
-                                self.AddrMem[TOC.SymtabEntry3] = None
                         if not check_variable(TOC.SymtabEntry1):
                                 dict_perm[TOC.SymtabEntry1] = 1
                                 next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
+                        if TOC.InstrType != 'Assign':
+                                #print TOC.InstrType
+                                if not check_variable(TOC.SymtabEntry3):
+                                        dict_perm[TOC.SymtabEntry3] = 1
+                                        next_use[TOC.SymtabEntry3] = self.lines-1
+                                        self.AddrDesc[TOC.SymtabEntry3] = None
+                                        self.AddrMem[TOC.SymtabEntry3] = None
+                        
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
@@ -83,6 +96,12 @@ class GenSym(object):
                         dict_dead={}
                         dict_next={}
                         try:
+                                dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
+                                dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+                        except:
+                                pass
+                        
+                        try:
                                 dict_dead[TOC.SymtabEntry2] = dict_perm[TOC.SymtabEntry2]
                                 dict_next[TOC.SymtabEntry2] = next_use[TOC.SymtabEntry2]
                        #         print 'a',i,vars(TOC)
@@ -97,41 +116,22 @@ class GenSym(object):
                         #        print next_use[TOC.SymtabEntry3], TOC.SymtabEntry3
                         except:
                                 pass
+                        ##################Updates############################
                         try:
-                                dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
-                         #       print TOC.SymtabEntry1
-                         #       print dict_next[TOC.SymtabEntry1]
-                         #       print next_use[TOC.SymtabEntry1]
-                                dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
-                         #       print dict_next[TOC.SymtabEntry1]
-                         #       print next_use[TOC.SymtabEntry1]
+                                dict_perm[TOC.SymtabEntry1]=0
+                                next_use[TOC.SymtabEntry1]=-1
                         except:
                                 pass
-                        ##################Updates############################
                         
                         try:
                                 dict_perm[TOC.SymtabEntry2]=1
                                 next_use[TOC.SymtabEntry2]=i+1
-                          #      print 'a',i,vars(TOC)
-                          #      print  next_use[TOC.SymtabEntry2], TOC.SymtabEntry2
                         except:
                                 pass
                         
                         try:
                                 dict_perm[TOC.SymtabEntry3]=1
                                 next_use[TOC.SymtabEntry3]=i+1
-                           #     print 'b',i,vars(TOC)
-                           #     print next_use[TOC.SymtabEntry3], TOC.SymtabEntry3
-                        except:
-                                pass
-                        try:
-                            #    print TOC.SymtabEntry1
-                            #    print dict_next[TOC.SymtabEntry1]
-                            #    print next_use[TOC.SymtabEntry1]
-                            ##    print dict_next[TOC.SymtabEntry1]
-                             #   print next_use[TOC.SymtabEntry1]
-                                dict_perm[TOC.SymtabEntry1]=0
-                                next_use[TOC.SymtabEntry1]=-1
                         except:
                                 pass
                         self.deadAlive.insert(0,dict_dead)

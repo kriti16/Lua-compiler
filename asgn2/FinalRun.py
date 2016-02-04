@@ -47,6 +47,7 @@ class Runner(object):
                     print "PUSHL " + x
                 print "PUSHL $fmtstr"
                 print "CALL printf"
+                #print vars(self.RegDesc),self.AddrDesc
                 continue
             if ops.InstrType=='Assignment':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
