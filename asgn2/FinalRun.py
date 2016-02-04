@@ -15,17 +15,17 @@ class Runner(object):
         self.AddrDesc = Gensym.AddrDesc
         self.AddrMem = Gensym.AddrMem
         ###########Printers#####################
-        pprint ([x for x in Gensym.deadAlive])
-        print
-        pprint ([x for x in Gensym.nextUse])
-        print Gensym.AddrDesc
+        #pprint ([x for x in Gensym.deadAlive])
+        #print
+        #pprint ([x for x in Gensym.nextUse])
+        #print Gensym.AddrDesc
         ##########################################
 
     def header(self):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+".long "+key+"\n"
-        x86istr=x86istr+".section .text\nglobl _start\n_start\n"
+        x86istr=x86istr+".section .text\n.globl _start\n_start:\n"
         print x86istr
 
     def footer(self):
