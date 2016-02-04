@@ -24,7 +24,7 @@ class GenSym(object):
                 input_lines=data.split("\n")
                 #print input_lines
                 for i in range(0,len(input_lines)):
-	                tmp_list=input_lines[i].split(",")
+	                tmp_list=input_lines[i].split(" ")
                         #print tmp_list
                         OpCode = ThreeOp()
                         #print tmp_list
@@ -45,9 +45,8 @@ class GenSym(object):
                                 OpCode.SymtabEntry2 = tmp_list[2]
                                 OpCode.SymtabEntry3 = tmp_list[4]
                                 OpCode.Operator = tmp_list[3]
-                        else:
-                                print "Four"
                                 #print tmp_list
+                        #print OpCode.InstrType,len(tmp_list),tmp_list
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
@@ -71,7 +70,6 @@ class GenSym(object):
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
                         if TOC.InstrType != 'Assign':
-                                #print TOC.InstrType
                                 if not check_variable(TOC.SymtabEntry3):
                                         dict_perm[TOC.SymtabEntry3] = 1
                                         next_use[TOC.SymtabEntry3] = self.lines-1

@@ -49,12 +49,15 @@ class Runner(object):
                 print "CALL printf"
                 #print vars(self.RegDesc),self.AddrDesc
                 continue
-            if ops.InstrType=='Assignment':
+            if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
-                if self.AddrDesc[y]==None:
-                    R=RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
+                try:
+                    if self.AddrDesc[y]==None:
+                        raise Exception()
+                except:
+                    R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
-                        print "MOVL "+str(y)+",%"+R
+                        print "MOVL $"+str(y)+",%"+R
                         self.AddrDesc[x]=R
                         setattr(self.RegDesc,R,x)
                         continue
@@ -63,11 +66,13 @@ class Runner(object):
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,y)
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
+                print Rdash
                 tmpVar=getattr(self.RegDesc,Rdash)+x
                 setattr(self.RegDesc,Rdash,tmpVar)
                 if self.nextUse[i][y]!=-1:
                     tmpVar=getattr(self.RegDesc,Rdash).remove(y)
-
+                    setattr(self.RegDesc,Rdash,tmpVar)
+                continue
             if ops.Operator == '/':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)
             else:

@@ -1,8 +1,8 @@
-x,=,y,+,3
-print,x
-z,=,y,+,1
-print,z
-z,=,x,*,5
-print,y
-y,=,7,-,z
-x,=,z,/,y
+x = y + 3
+print x
+z = y + 1
+print z
+z = x * 5
+print y
+y = 7 - z
+x = z / y
