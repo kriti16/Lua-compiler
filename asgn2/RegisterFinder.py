@@ -19,10 +19,7 @@ class RegisterFinder(object):
             regToSpl = self.findSpill(RegDesc,Perm)
             RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
             return regToSpl,RegDesc,AddrDesc
-    def getReg(self,ThreeOpCode,RegDesc,AddrDesc,i):
-        Entry1 = ThreeOpCode.SymtabEntry1
-        Entry2 = ThreeOpCode.SymtabEntry2
-        Entry3 = ThreeOpCode.SymtabEntry3
+    def getReg(self,Entry2,RegDesc,AddrDesc,i):
         reg_Y = -1
         try:
             reg_Y = AddrDesc[Entry2]
@@ -53,10 +50,7 @@ class RegisterFinder(object):
             RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
             return regToSpl,RegDesc,AddrDesc
     
-    def divModGetReg(self,ThreeOpCode,RegDesc,AddrDesc,i):
-        Entry1 = ThreeOpCode.SymtabEntry1
-        Entry2 = ThreeOpCode.SymtabEntry2
-        Entry3 = ThreeOpCode.SymtabEntry3
+    def divModGetReg(self,Entry2,RegDesc,AddrDesc,i):
         reg_Y = -1
         try:
             reg_Y = AddrDesc[Entry2]
@@ -79,7 +73,7 @@ class RegisterFinder(object):
     def storeMem(self,reg,regDesc,AddrDesc):
         varReg = getattr(regDesc,reg)
         for var in varReg:
-            print "MOVL %"+reg+","+var
+            print "\tMOVL %"+reg+","+var
             AddrDesc[var] = None
         setattr(regDesc,reg,[])
         return regDesc,AddrDesc

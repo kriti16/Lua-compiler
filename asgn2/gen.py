@@ -15,19 +15,19 @@ def gen(ops,zdash,L):
 	opr=symbol(ops.Operator)
 	if opr!="IDIVL":
 		if check_variable(zdash):
-			print opr+" $"+str(zdash)+",%"+L
+			print "\t"+opr+" $"+str(zdash)+",%"+L
 		elif zdash==ops.SymtabEntry3:
-			print opr+" "+zdash+",%"+L
+			print "\t"+opr+" "+zdash+",%"+L
 		else:
-			print opr+" %"+zdash+",%"+L
+			print "\t"+opr+" %"+zdash+",%"+L
 	else:
 		print "MOVL $0,%EDX"
 		if check_variable(ops.SymtabEntry3):
-			print opr+" %ESI"
+			print "\t"+opr+" %ESI"
 		elif ops.SymtabEntry3==zdash:
-			print opr+" "+zdash
+			print "\t"+opr+" "+zdash
 		else:
-			print opr+" %"+zdash
+			print "\t"+opr+" %"+zdash
 		
 if __name__=='__main__':
     op=ThreeOp()

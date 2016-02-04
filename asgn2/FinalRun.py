@@ -30,29 +30,42 @@ class Runner(object):
         print x86istr
 
     def footer(self):
-        print "\nMOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
+        print "\n\tMOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
 
     def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
+        #print [vars(x) for x in self.list_op_3ops]
+        #print self.leaders.keys()
         for ops in self.list_op_3ops:
-            if ops.InstrType == 'IfElse':
+            if str(i) in self.leaders.keys():
                 print "LEE"+str(self.leaders[str(i)])+":"
+            if ops.InstrType == 'IfElse':
+                
+                i += 1
                 continue
+
+
+
+            
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
-                    print "PUSHL $" + x
+                    print "\tPUSHL $" + x
                 else:
                     RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                    print "PUSHL " + x
-                print "PUSHL $fmtstr"
-                print "CALL printf"
+                    print "\tPUSHL " + x
+                print "\tPUSHL $fmtstr"
+                print "\tCALL printf"
                 #print vars(self.RegDesc),self.AddrDesc
+                i+= 1
                 continue
+
+
+
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
                 try:
@@ -61,12 +74,13 @@ class Runner(object):
                 except:
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
-                        print "MOVL $"+str(y)+",%"+R
+                        print "\tMOVL $"+str(y)+",%"+R
                         self.AddrDesc[x]=R
                         setattr(self.RegDesc,R,x)
+                        i += 1
                         continue
                     else:
-                        print "MOVL "+y+",%"+R
+                        print "\tMOVL "+y+",%"+R
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,y)
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
@@ -76,11 +90,15 @@ class Runner(object):
                 if self.nextUse[i][y]!=-1:
                     tmpVar=getattr(self.RegDesc,Rdash).remove(y)
                     setattr(self.RegDesc,Rdash,tmpVar)
+                i += 1
                 continue
+
+
+
             if ops.Operator == '/':
-                L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)
+                L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             else:
-                L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
+                L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
             try:
                 if self.AddrDesc[y] == None:
@@ -89,21 +107,27 @@ class Runner(object):
                 #print "Found " + ydash +" for "+y
             except:
                 if check_variable(y):
-                    print "MOVL $"+y+",%"+L
+                    print "\tMOVL $"+y+",%"+L
                 else:
-                    print "MOVL "+y+",%"+L
+                    print "\tMOVL "+y+",%"+L
             else:
                 if self.AddrDesc[y] == 'Spilled':
                         self.AddrDesc[y] = None
                 else:
                     if y not in getattr(self.RegDesc,L):
-                        print "MOVL %"+ydash+",%"+L
+                        print "\tMOVL %"+ydash+",%"+L
             zdash=None
+
+
+
             if ops.Operator=='/':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
-                    print "MOVL $"+str(z)+",%ESI"
+                    print "\tMOVL $"+str(z)+",%ESI"
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+
+
+
             try:
                 if self.AddrDesc[z] == None:
                     raise Exception()
