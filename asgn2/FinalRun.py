@@ -36,7 +36,16 @@ class Runner(object):
         i=0;
         for ops in self.list_op_3ops:
             if ops.InstrType=='Print':
-                AsPrint(ops.SymtabEntry1)
+                x = ops.SymtabEntry1
+                if check_variable(x):
+                    print "PUSH $" + x
+                else:
+                    if self.AddrDesc[x] == None:
+                        print "PUSH " + x
+                    else:
+                        print "PUSH + %" + self.AddrDesc[x]
+                print "PUSH $fmtstr"
+                print "CALL printf"
                 continue
             if ops.Operator == '/':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)

@@ -13,6 +13,7 @@ class GenSym(object):
                 self.AddrDesc = {}
                 self.AddrMem = {}
                 self.lines = 0
+                self.leaders = []
         def read(self,fname):
                 #fname=sys.argv[1]
                 #Read the File
@@ -24,13 +25,16 @@ class GenSym(object):
                 #print input_lines
                 for i in range(0,len(input_lines)):
 	                tmp_list=input_lines[i].split(",")
-                        print tmp_list
                         OpCode = ThreeOp()
-                        OpCode.InstrType = "Math"
-                        OpCode.SymtabEntry1 = tmp_list[0]
-                        OpCode.SymtabEntry2 = tmp_list[2]
-                        OpCode.SymtabEntry3 = tmp_list[4]
-                        OpCode.Operator = tmp_list[3]
+                        if tmp_list[0]=='Print':
+                                OpCode.InstrType='Print'
+                                OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[3] in ['+','-','*','/']: 
+                                OpCode.InstrType = "Math"
+                                OpCode.SymtabEntry1 = tmp_list[0]
+                                OpCode.SymtabEntry2 = tmp_list[2]
+                                OpCode.SymtabEntry3 = tmp_list[4]
+                                OpCode.Operator = tmp_list[3]
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
                 #pprint ([vars(x) for x in self.list_of_3op])
