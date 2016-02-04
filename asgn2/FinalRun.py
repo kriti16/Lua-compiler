@@ -25,7 +25,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl _start\n\n_start:\n'
+        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -47,6 +47,25 @@ class Runner(object):
                 print "PUSH $fmtstr"
                 print "CALL printf"
                 continue
+            if ops.InstrType=='Assignment':
+                x,y = ops.SymtabEntry1, ops.SymtabEntry2
+                if self.AddrDesc[y]==None:
+                    R=RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
+                    if check_variable(y):
+                        print "MOVL "+str(y)+",%"+R
+                        self.AddrDesc[x]=R
+                        setattr(self.RegDesc,R,x)
+                        continue
+                    else:
+                        print "MOVL "+y+",%"+R
+                        self.AddrDesc[y]=R                        
+                        setattr(self.RegDesc,R,y)
+                Rdash=self.AddrDesc[x]=self.AddrDesc[y]
+                tmpVar=getattr(self.RegDesc,Rdash)+x
+                setattr(self.RegDesc,Rdash,tmpVar)
+                if self.nextUse[i][y]!=-1:
+                    tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+
             if ops.Operator == '/':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)
             else:
@@ -95,7 +114,7 @@ class Runner(object):
                     self.AddrDesc[z] = None
             except:
                 pass
-            print vars(self.RegDesc),self.AddrDesc
+            #print vars(self.RegDesc),self.AddrDesc
             i += 1
 if __name__=='__main__':
     fname = sys.argv[1]
