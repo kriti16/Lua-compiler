@@ -14,7 +14,6 @@ def symbol(op):
 def gen(ops,zdash,L):
 	opr=symbol(ops.Operator)
 	if opr!="IDIV":
-		print "MOVL $0,%EDX"
 		if check_variable(zdash):
 			print opr+" $"+str(zdash)+",%"+L
 		elif zdash==ops.SymtabEntry3:
@@ -22,7 +21,13 @@ def gen(ops,zdash,L):
 		else:
 			print opr+" %"+zdash+",%"+L
 	else:
-		print opr+" %ESI"
+		print "MOVL $0,%EDX"
+		if check_variable(ops.SymtabEntry3):
+			print opr+" %ESI"
+		elif ops.SymtabEntry3==zdash:
+			print opr+" "+zdash
+		else:
+			print opr+" %"+zdash
 		
 if __name__=='__main__':
     op=ThreeOp()
