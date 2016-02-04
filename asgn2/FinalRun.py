@@ -25,7 +25,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl _start\n\n_start:\n'
+        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -38,13 +38,13 @@ class Runner(object):
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
-                    print "PUSH $" + x
+                    print "PUSHL $" + x
                 else:
                     if self.AddrDesc[x] == None:
-                        print "PUSH " + x
+                        print "PUSHL " + x
                     else:
-                        print "PUSH + %" + self.AddrDesc[x]
-                print "PUSH $fmtstr"
+                        print "PUSHL  %" + self.AddrDesc[x]
+                print "PUSHL $fmtstr"
                 print "CALL printf"
                 continue
             if ops.Operator == '/':
@@ -67,7 +67,7 @@ class Runner(object):
                         self.AddrDesc[y] = None
                 else:
                     if y not in getattr(self.RegDesc,L):
-                        print "MOVL %"+ydash+","+L
+                        print "MOVL %"+ydash+",%"+L
             zdash=None
             try:
                 if self.AddrDesc[z] == None:

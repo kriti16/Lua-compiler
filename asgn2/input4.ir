@@ -1,4 +1,14 @@
+x,=,y,+,3
+y,=,x,+,2
+z,=,y,+,5
+print,x
+print,y
+print,z
 x,=,y,+,z
+print,x
 y,=,z,/,5
+print,y
 y,=,x,/,z
+print,y
 x,=,y,/,z
+print,x

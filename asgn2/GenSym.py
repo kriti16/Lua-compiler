@@ -25,8 +25,10 @@ class GenSym(object):
                 #print input_lines
                 for i in range(0,len(input_lines)):
 	                tmp_list=input_lines[i].split(",")
+                        #print tmp_list
                         OpCode = ThreeOp()
-                        if tmp_list[0]=='Print':
+                        #print tmp_list
+                        if tmp_list[0]=='print':
                                 OpCode.InstrType='Print'
                                 OpCode.SymtabEntry1 = tmp_list[1]
                         elif tmp_list[3] in ['+','-','*','/']: 
@@ -37,12 +39,16 @@ class GenSym(object):
                                 OpCode.Operator = tmp_list[3]
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
+                        #print [vars(x) for x in  self.list_of_3op]
                 #pprint ([vars(x) for x in self.list_of_3op])
         def genSymTable(self):
                 dict_perm={}
                 next_use={}
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
+                        #print vars(TOC)
+                        if TOC.InstrType == 'Print':
+                                continue
                         if not check_variable(TOC.SymtabEntry2):
                                 dict_perm[TOC.SymtabEntry2] = 0
                                 next_use[TOC.SymtabEntry2] = -1
@@ -61,6 +67,8 @@ class GenSym(object):
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
+                        if TOC.InstrType == 'Print':
+                                continue
                         dict_dead={}
                         dict_next={}
                         try:

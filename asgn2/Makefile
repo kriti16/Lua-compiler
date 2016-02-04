@@ -4,11 +4,12 @@ all: out
 	./out
 
 out: out.s
-	as --gstabs out.s -32 -o out.o
-	ld out.o -m elf_i386 -o out
+	as --gstabs --32 out.s  -o out.o
+	gcc -m32 out.o -o out
+	
 
 out.s:
-	python FinalRun.py input3.ir >out.s
+	python FinalRun.py input4.ir >out.s
 
 clean:
 	rm -rf out out.o out.s
