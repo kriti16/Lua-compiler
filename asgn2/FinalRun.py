@@ -24,12 +24,12 @@ class Runner(object):
     def header(self):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
-            x86istr=x86istr+".long "+key+"\n"
-        x86istr=x86istr+".section .text\n.globl _start\n_start:\n"
+            x86istr=x86istr+key+":\n  .long 0\n"
+        x86istr=x86istr+".section .text\n\n.globl _start\n\n_start:\n"
         print x86istr
 
     def footer(self):
-        print "int $0x80"
+        print "MOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
 
     def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
@@ -44,15 +44,15 @@ class Runner(object):
                 #print "Found " + ydash +" for "+y
             except:
                 if check_variable(y):
-                    print "MOV $"+y+",%"+L
+                    print "MOVL $"+y+",%"+L
                 else:
-                    print "MOV "+y+",%"+L
+                    print "MOVL "+y+",%"+L
             else:
                 if self.AddrDesc[y] == 'Spilled':
                         self.AddrDesc[y] = None
                 else:
                     if y not in getattr(self.RegDesc,L):
-                        print "MOV1 %"+ydash+","+L
+                        print "MOVL %"+ydash+","+L
             zdash=None
             try:
                 if self.AddrDesc[z] == None:
