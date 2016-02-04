@@ -13,7 +13,7 @@ class Runner(object):
         self.nextUse = Gensym.nextUse
         self.RegDesc = Register()
         self.AddrDesc = Gensym.AddrDesc
- 	self.AddrMem = Gensym.AddrMem
+        self.AddrMem = Gensym.AddrMem
         ###########Printers#####################
         pprint ([x for x in Gensym.deadAlive])
         print
@@ -21,8 +21,17 @@ class Runner(object):
         print Gensym.AddrDesc
         ##########################################
 
-    def Run(self):
-	
+    def header(self):
+        x86istr=".section .data\n"
+        for key in self.AddrDesc:
+            x86istr=x86istr+".long "+key+"\n"
+        x86istr=x86istr+".section .text\nglobl _start\n_start\n"
+        print x86istr
+
+    def footer(self):
+        print "int $0x80"
+
+    def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
         for ops in self.list_op_3ops:
@@ -70,5 +79,7 @@ class Runner(object):
 if __name__=='__main__':
     fname = sys.argv[1]
     runner = Runner(fname)
+    runner.header()
     runner.Run()
+    runner.footer()
     #print vars(runner)
