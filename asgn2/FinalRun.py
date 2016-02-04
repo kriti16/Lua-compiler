@@ -25,7 +25,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl main\n\nmain:\n'
+        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .asciz "%d\n"\n\n.globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -95,7 +95,7 @@ class Runner(object):
                     self.AddrDesc[z] = None
             except:
                 pass
-            print vars(self.RegDesc),self.AddrDesc
+            #print vars(self.RegDesc),self.AddrDesc
             i += 1
 if __name__=='__main__':
     fname = sys.argv[1]

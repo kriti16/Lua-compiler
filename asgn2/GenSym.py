@@ -37,6 +37,7 @@ class GenSym(object):
                                 OpCode.SymtabEntry2 = tmp_list[2]
                                 OpCode.SymtabEntry3 = tmp_list[4]
                                 OpCode.Operator = tmp_list[3]
+                                
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
@@ -50,24 +51,34 @@ class GenSym(object):
                         if TOC.InstrType == 'Print':
                                 continue
                         if not check_variable(TOC.SymtabEntry2):
-                                dict_perm[TOC.SymtabEntry2] = 0
-                                next_use[TOC.SymtabEntry2] = -1
+                                dict_perm[TOC.SymtabEntry2] = 1
+                                next_use[TOC.SymtabEntry2] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
                         if not check_variable(TOC.SymtabEntry3):
-                                dict_perm[TOC.SymtabEntry3] = 0
-                                next_use[TOC.SymtabEntry3] = -1
+                                dict_perm[TOC.SymtabEntry3] = 1
+                                next_use[TOC.SymtabEntry3] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry3] = None
                                 self.AddrMem[TOC.SymtabEntry3] = None
                         if not check_variable(TOC.SymtabEntry1):
-                                dict_perm[TOC.SymtabEntry1] = 0
-                                next_use[TOC.SymtabEntry1] = -1
+                                dict_perm[TOC.SymtabEntry1] = 1
+                                next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
                         if TOC.InstrType == 'Print':
+                                try:
+                                        dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
+                                        dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+                                except:
+                                        pass
+                                try:
+                                        dict_perm[TOC.SymtabEntry1]=1
+                                        next_use[TOC.SymtabEntry1]=i+1
+                                except:
+                                        pass
                                 continue
                         dict_dead={}
                         dict_next={}
@@ -125,10 +136,9 @@ class GenSym(object):
                                 pass
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)
-                        for keysd in self.nextUse[-1].keys():
-                                self.nextUse[-1][keysd]=2
-                                                
-
+                for keysd in self.nextUse[-1].keys():
+                        self.nextUse[-1][keysd]=self.lines-1
+                
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()

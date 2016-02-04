@@ -7,7 +7,7 @@ def symbol(op):
 	elif op=='-':
 		return "SUBL"
 	elif op=='*':
-		return "IMUL"
+		return "IMULL"
 	elif op=='/':
 		return "IDIV"
 

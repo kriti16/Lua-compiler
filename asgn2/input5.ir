@@ -1,0 +1,4 @@
+a,=,50,+,b
+print,a
+print,a
+print,a

@@ -51,7 +51,6 @@ class RegisterFinder(object):
                 return reg_Y,RegDesc,AddrDesc
         except:
             pass
-        print "Down here"
         regToSpl = 'EAX'
         RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
         return regToSpl,RegDesc,AddrDesc
