@@ -5,7 +5,7 @@ import sys
 from ThreeOp import ThreeOp
 from pprint import pprint
 from helperScripts import *
-class Reader(object):
+class GenSym(object):
         def __init__(self,):
                 self.list_of_3op = []
                 self.deadAlive = []
@@ -77,21 +77,15 @@ class Reader(object):
                         self.nextUse.insert(0,dict_next)
                                                 
 
-def check_variable( vari):
-        try: 
-                int(vari)
-                return True
-        except ValueError:
-                return False
 if __name__=='__main__':
         fname = sys.argv[1]
-        Reader = Reader()
-        Reader.read(fname)
-        list_op_3ops = Reader.list_of_3op
-        Reader.genSymTable()
-        pprint ([x for x in Reader.deadAlive])
+        Gensym = GenSym()
+        Gensym.read(fname)
+        list_op_3ops = Gensym.list_of_3op
+        Gensym.genSymTable()
+        pprint ([x for x in Gensym.deadAlive])
         print
-        pprint ([x for x in Reader.nextUse])
+        pprint ([x for x in Gensym.nextUse])
 
 
 
