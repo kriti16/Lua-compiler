@@ -13,7 +13,7 @@ def bestLocation(variable):
 	#return ("reg","R2")
 	return ("mem","0xf")
 
-def genCode(x,op,y,z):
+def genCode(opCode,RegDesc,AddDesc):
 	x86instr=""
 	locy,yloc=bestLocation(y)	
 	locz,zloc=bestLocation(z)
