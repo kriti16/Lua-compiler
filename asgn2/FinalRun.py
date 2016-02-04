@@ -25,7 +25,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+".section .text\n\n.globl _start\n\n_start:\n"
+        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .string "%d\\n"\n\n.globl _start\n\n_start:\n'
         print x86istr
 
     def footer(self):
@@ -75,6 +75,10 @@ class Runner(object):
                 zdash=self.AddrDesc[z]
             except:
                 zdash = z;
+            if ops.Operator=='/':
+                if check_variable(zdash):
+                    RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
             gen(ops, zdash, L)
             self.AddrDesc[x] = L
             setattr(self.RegDesc,L,[x])
