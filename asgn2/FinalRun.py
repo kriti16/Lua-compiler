@@ -25,7 +25,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .asciz "%d\n"\n\n.globl main\n\nmain:\n'
+        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .asciz "%d\\n"\n\n.globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
