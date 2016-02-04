@@ -250,8 +250,8 @@ def genCode(x,op,y,z):
 
 	return x86instr
 
-
-print genCode('x','/',4,'x')
+if __name__ == '__main__':
+        print genCode('a','*','b','c')
 
 		
 
