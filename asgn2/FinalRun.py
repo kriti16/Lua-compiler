@@ -47,6 +47,25 @@ class Runner(object):
                 print "PUSHL $fmtstr"
                 print "CALL printf"
                 continue
+            if ops.InstrType=='Assignment':
+                x,y = ops.SymtabEntry1, ops.SymtabEntry2
+                if self.AddrDesc[y]==None:
+                    R=RegFind.getReg(ops,self.RegDesc,self.AddrDesc,i)
+                    if check_variable(y):
+                        print "MOVL "+str(y)+",%"+R
+                        self.AddrDesc[x]=R
+                        setattr(self.RegDesc,R,x)
+                        continue
+                    else:
+                        print "MOVL "+y+",%"+R
+                        self.AddrDesc[y]=R                        
+                        setattr(self.RegDesc,R,y)
+                Rdash=self.AddrDesc[x]=self.AddrDesc[y]
+                tmpVar=getattr(self.RegDesc,Rdash)+x
+                setattr(self.RegDesc,Rdash,tmpVar)
+                if self.nextUse[i][y]!=-1:
+                    tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+
             if ops.Operator == '/':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops,self.RegDesc,self.AddrDesc,i)
             else:
