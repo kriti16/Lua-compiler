@@ -32,15 +32,18 @@ class Runner(object):
                 if self.AddrDesc[y] == None:
                     raise Exception()
                 ydash = self.AddrDesc[y]
-                print "Found " + ydash +" for "+y
+                #print "Found " + ydash +" for "+y
             except:
                 if check_variable(y):
                     print "MOV $"+y+",%"+L
                 else:
                     print "MOV "+y+",%"+L
             else:
-                if y not in getattr(self.RegDesc,L):
-                    print "MOV %"+ydash+","+L
+                if self.AddrDesc[y] == 'Spilled':
+                        self.AddrDesc[y] = None
+                else:
+                    if y not in getattr(self.RegDesc,L):
+                        print "MOV1 %"+ydash+","+L
             zdash=None
             try:
                 if self.AddrDesc[z] == None:
@@ -51,20 +54,18 @@ class Runner(object):
             gen(ops, zdash, L)
             self.AddrDesc[x] = L
             setattr(self.RegDesc,L,[x])
-            print vars(self.RegDesc)
             try:
                 if self.nextUse[i][y]==-1:
-                    del self.AddrDesc[y]
+                    self.AddrDesc[y] = None
             except:
                 pass
 
 
             try:
                 if self.nextUse[i][z]==-1:
-                    del self.AddrDesc[z]
+                    self.AddrDesc[z] = None
             except:
                 pass
-            print self.AddrDesc
             i += 1
 if __name__=='__main__':
     fname = sys.argv[1]

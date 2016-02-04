@@ -112,6 +112,8 @@ class GenSym(object):
                                 pass
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)
+                        for keysd in self.nextUse[-1].keys():
+                                self.nextUse[-1][keysd]=2
                                                 
 
 if __name__=='__main__':

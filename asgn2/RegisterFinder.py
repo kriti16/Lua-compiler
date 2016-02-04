@@ -17,15 +17,17 @@ class RegisterFinder(object):
         #    print "Reg Y is nnnnnnnn"+ str(getattr(RegDesc,reg_Y))
         try:
             if len(getattr(RegDesc,reg_Y)) == 1 and self.NextUse[i][Entry2] == -1:
-                #print "FIST Part2"
+                #print "FIST Part2",reg_Y,Entry2
                 return reg_Y,RegDesc,AddrDesc
         except:
             pass
         if len(RegDesc.EAX)==0:
+            #print "111111111111111111111"
             return 'EAX',RegDesc,AddrDesc
         if len(RegDesc.EBX)==0:
+            #print "222222222222222222222222"
             return 'EBX',RegDesc,AddrDesc
-        #if len(RegDesc.EBX)==0:
+        #if len(RegDesc.ECX)==0:
         #    return 'ECX',RegDesc,AddrDesc
         #if len(RegDesc.EBX)==0:
         #    return 'EDX',RegDesc,AddrDesc
@@ -39,10 +41,9 @@ class RegisterFinder(object):
             return regToSpl,RegDesc,AddrDesc
             
     def storeMem(self,reg,regDesc,AddrDesc):
-        print "I am in "
         varReg = getattr(regDesc,reg)
         for var in varReg:
-            print "MOVL "+var+",%"+reg
-            del AddrDesc[var]
+            print "MOVL %"+reg+","+var
+            AddrDesc[var] = 'Spilled'
         setattr(regDesc,reg,[])
         return regDesc,AddrDesc

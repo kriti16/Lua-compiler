@@ -28,8 +28,8 @@ def gen(ops,zdash,L):
 			print opr+" "+zdash
 		else:
 			print opr+" %"+zdash
-
-op=ThreeOp()
-op.SymtabEntry3='z'
-op.Operator='/'
-gen(op,'EBX','EAX')
+if __name__=='__main__':
+    op=ThreeOp()
+    op.SymtabEntry3='z'
+    op.Operator='/'
+    gen(op,'EBX','EAX')
