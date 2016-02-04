@@ -11,6 +11,7 @@ class GenSym(object):
                 self.deadAlive = []
                 self.nextUse = []
                 self.AddrDesc = {}
+                self.AddrMem = {}
                 self.lines = 0
         def read(self,fname):
                 #fname=sys.argv[1]
@@ -41,14 +42,17 @@ class GenSym(object):
                                 dict_perm[TOC.SymtabEntry2] = 0
                                 next_use[TOC.SymtabEntry2] = -1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
+                                self.AddrMem[TOC.SymtabEntry2] = None
                         if not check_variable(TOC.SymtabEntry3):
                                 dict_perm[TOC.SymtabEntry3] = 0
                                 next_use[TOC.SymtabEntry3] = -1
                                 self.AddrDesc[TOC.SymtabEntry3] = None
+                                self.AddrMem[TOC.SymtabEntry3] = None
                         if not check_variable(TOC.SymtabEntry1):
                                 dict_perm[TOC.SymtabEntry1] = 0
                                 next_use[TOC.SymtabEntry1] = -1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
+                                self.AddrMem[TOC.SymtabEntry2] = None
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
