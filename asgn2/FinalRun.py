@@ -14,6 +14,7 @@ class Runner(object):
         self.RegDesc = Register()
         self.AddrDesc = Gensym.AddrDesc
         self.AddrMem = Gensym.AddrMem
+        self.leaders = Gensym.leaders
         ###########Printers#####################
         #pprint ([x for x in Gensym.deadAlive])
         #print
@@ -35,6 +36,9 @@ class Runner(object):
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
         for ops in self.list_op_3ops:
+            if ops.InstrType == 'IfElse':
+                print "LEE"+str(self.leaders[str(i)])+":"
+                continue
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):

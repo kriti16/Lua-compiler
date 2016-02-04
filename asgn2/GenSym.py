@@ -13,7 +13,7 @@ class GenSym(object):
                 self.AddrDesc = {}
                 self.AddrMem = {}
                 self.lines = 0
-                self.leaders = []
+                self.leaders = {str(0):1}
         def read(self,fname):
                 #fname=sys.argv[1]
                 #Read the File
@@ -28,7 +28,13 @@ class GenSym(object):
                         #print tmp_list
                         OpCode = ThreeOp()
                         #print tmp_list
-                        if tmp_list[0]=='print':
+                        if tmp_list[0] == 'if':
+                                OpCode.SymtabEntry1 = tmp_list[1]
+                                OpCode.Operator = tmp_list[2]
+                                OpCode.SymtabEntry2 = tmp_list[3]
+                                OpCode.Target = tmp_list[5]
+                                OpCode.InstrType = 'IfElse'
+                        elif tmp_list[0]=='print':
                                 OpCode.InstrType='Print'
                                 OpCode.SymtabEntry1 = tmp_list[1]
                         elif len(tmp_list)==3 and tmp_list[1]=='=':
@@ -54,9 +60,16 @@ class GenSym(object):
         def genSymTable(self):
                 dict_perm={}
                 next_use={}
+                leader_count = 2
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
-                        #print vars(TOC)
+                        print vars(TOC)
+                        if TOC.InstrType == 'IfElse':
+                                self.leaders[str(i+1)]=leader_count
+                                leader_count += 1
+                                self.leaders[TOC.Target]=leader_count
+                                leader_count += 1
+                                
                         if TOC.InstrType == 'Print':
                                 continue
                         if not check_variable(TOC.SymtabEntry2):
@@ -69,7 +82,7 @@ class GenSym(object):
                                 next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if TOC.InstrType != 'Assign':
+                        if TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse':
                                 if not check_variable(TOC.SymtabEntry3):
                                         dict_perm[TOC.SymtabEntry3] = 1
                                         next_use[TOC.SymtabEntry3] = self.lines-1
@@ -91,6 +104,29 @@ class GenSym(object):
                                 except:
                                         pass
                                 continue
+                        print dict_perm
+                        if TOC.InstrType == 'IfElse':
+                                try:
+                                        if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
+                                                raise Exception()
+                                        dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
+                                        dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+                                        dict_dead[TOC.SymtabEntry2]=dict_perm[TOC.SymtabEntry2]
+                                        dict_next[TOC.SymtabEntry2]=next_use[TOC.SymtabEntry2]
+                                except:
+                                        pass
+                                try:
+                                        if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
+                                                raise Exception()
+                                        dict_perm[TOC.SymtabEntry1]=1
+                                        next_use[TOC.SymtabEntry1]=i+1
+                                        
+                                        dict_perm[TOC.SymtabEntry2]=1
+                                        next_use[TOC.SymtabEntry2]=i+1
+                                except:
+                                        pass
+                                continue
+                        
                         dict_dead={}
                         dict_next={}
                         try:
@@ -136,7 +172,7 @@ class GenSym(object):
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
-                
+                print self.leaders
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()
