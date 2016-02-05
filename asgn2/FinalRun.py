@@ -92,7 +92,7 @@ class Runner(object):
                     print "\tJGE "+"LEE"+str(self.leaders[tgt])
                 elif opr == '~=':
                     print "\tJNE "+"LEE"+str(self.leaders[tgt])
-                    i += 1
+                i += 1
                 continue
 
 
