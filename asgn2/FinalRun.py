@@ -157,7 +157,7 @@ class Runner(object):
                 i += 1
                 continue
 
-            if ops.Operator == '/':
+            if ops.Operator == '/' or ops.Operator=='%':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             else:
                 L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
@@ -184,7 +184,7 @@ class Runner(object):
 
 
 
-            if ops.Operator=='/':
+            if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
                     print "\tMOVL $"+str(z)+",%ESI"

@@ -43,7 +43,7 @@ class GenSym(object):
                                 OpCode.InstrType = "Assign"
                                 OpCode.SymtabEntry1 = tmp_list[0]
                                 OpCode.SymtabEntry2 = tmp_list[2]
-                        elif tmp_list[3] in ['+','-','*','/']:
+                        elif tmp_list[3] in ['+','-','*','/','%']:
                                 #print "Third"
                                 #print tmp_list
                                 OpCode.InstrType = "Math"

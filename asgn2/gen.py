@@ -1,7 +1,7 @@
 from helperScripts import *
 from DataStruct import *
 
-math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL"}
+math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL"}
 cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
 def gen(ops,zdash,L):
 	if ops.InstrType=="Math":
@@ -21,6 +21,8 @@ def gen(ops,zdash,L):
 				print "\t"+opr+" "+zdash
 			else:
 				print "\t"+opr+" %"+zdash
+			if ops.Operator=='%':
+				print "\t MOVL %EDX,%"+L
 
 	elif ops.InstrType=="Compare":
 		opr=cmp_symbol[ops.Operator]
