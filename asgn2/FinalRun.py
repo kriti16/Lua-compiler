@@ -69,8 +69,6 @@ class Runner(object):
                     regX = R
                 if check_variable(Entry1):
                     print "\tMOVL $"+str(Entry1)+",%"+R
-                    self.AddrDesc[x]=R
-                    setattr(self.RegDesc,R,x)
                 else:
                     print "\tMOVL "+Entry1+",%"+R
                     self.AddrDesc[Entry1]=R                        
@@ -82,12 +80,12 @@ class Runner(object):
                 except:
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry1,self.RegDesc,self.AddrDesc,i)
                     regY = R
-                if check_variable(Entry2):
-                    print "\tMOVL $"+Entry2 +",%"+R
-                else:
-                    print "\tMOVL "+Entry2 +",%"+R
-                    self.AddrDesc[Entry2]=R                        
-                    setattr(self.RegDesc,R,Entry2)
+                    if check_variable(Entry2):
+                        print "\tMOVL $"+Entry2 +",%"+R
+                    else:
+                        print "\tMOVL "+Entry2 +",%"+R
+                        self.AddrDesc[Entry2]=R                        
+                        setattr(self.RegDesc,R,Entry2)
                 print "\tCMP %"+regY+",%"+regX
                 #print vars(self.RegDesc),self.AddrDesc
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
