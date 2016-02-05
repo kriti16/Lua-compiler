@@ -1,7 +1,7 @@
 from helperScripts import *
 from DataStruct import *
 
-math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL"}
+math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL",">>":"SARL","<<":"SALL"}
 cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
 def gen(ops,zdash,L):
 	if ops.InstrType=="Math":
@@ -10,7 +10,11 @@ def gen(ops,zdash,L):
 			if check_variable(zdash):
 				print "\t"+opr+" $"+str(zdash)+",%"+L
 			elif zdash==ops.SymtabEntry3:
-				print "\t"+opr+" "+zdash+",%"+L
+				if opr=="SARL" or opr=="SALL":
+					print "\tMOVL "+zdash+",%ESI"
+					print "\t"+opr+" %ESI,%"+L
+				else:
+					print "\t"+opr+" "+zdash+",%"+L
 			else:
 				print "\t"+opr+" %"+zdash+",%"+L
 		else:

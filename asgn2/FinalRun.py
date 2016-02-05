@@ -190,7 +190,7 @@ class Runner(object):
                     print "\tMOVL $"+str(z)+",%ESI"
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
 
-
+            
 
             try:
                 if self.AddrDesc[z] == None:
