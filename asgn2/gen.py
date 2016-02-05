@@ -21,7 +21,7 @@ def gen(ops,zdash,L):
 		else:
 			print "\t"+opr+" %"+zdash+",%"+L
 	else:
-		print "MOVL $0,%EDX"
+		print "\tMOVL $0,%EDX"
 		if check_variable(ops.SymtabEntry3):
 			print "\t"+opr+" %ESI"
 		elif ops.SymtabEntry3==zdash:

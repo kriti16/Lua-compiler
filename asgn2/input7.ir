@@ -1,3 +1,5 @@
-x,=,3
-y,=,19,/,-2
-print,y
+x = 3
+z = 4
+y = 19 / -2
+print y
+print z

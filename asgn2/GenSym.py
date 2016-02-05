@@ -61,15 +61,15 @@ class GenSym(object):
                 dict_perm={}
                 next_use={}
                 leader_count = 2
+                #print self.leaders
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
-                        print vars(TOC)
                         if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                
+                                #print self.leaders
                         if TOC.InstrType == 'Print':
                                 continue
                         if not check_variable(TOC.SymtabEntry2):
@@ -104,7 +104,7 @@ class GenSym(object):
                                 except:
                                         pass
                                 continue
-                        print dict_perm
+                        #print dict_perm
                         if TOC.InstrType == 'IfElse':
                                 try:
                                         if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
@@ -172,7 +172,7 @@ class GenSym(object):
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
-                print self.leaders
+                #print self.leaders
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()

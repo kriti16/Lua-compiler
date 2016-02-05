@@ -30,19 +30,69 @@ class Runner(object):
         print x86istr
 
     def footer(self):
-        print "\n\tMOVL $1,%EAX\nMOVL $0,%EBX\nint $0x80\n"
+        print "\n\tMOVL $1,%EAX\n\tMOVL $0,%EBX\nint $0x80\n"
 
     def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
         #print [vars(x) for x in self.list_op_3ops]
-        #print self.leaders.keys()
+        print self.leaders.keys()
         for ops in self.list_op_3ops:
+            print i#,vars(ops)
             if str(i) in self.leaders.keys():
                 print "LEE"+str(self.leaders[str(i)])+":"
-            if ops.InstrType == 'IfElse':
                 
-                i += 1
+                
+            if ops.InstrType == 'IfElse':
+                Entry1 = ops.SymtabEntry1
+                Entry2 = ops.SymtabEntry2
+                regX = regY = None
+                try:
+                    if self.AddrDesc[Entry1]==None:
+                        raise Exception()
+                    regX = self.AddrDesc[Entry1]
+                except:
+                    R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry2,self.RegDesc,self.AddrDesc,i)
+                    regX = R
+                    if check_variable(Entry1):
+                        print "\tMOVL $"+str(Entry1)+",%"+R
+                        self.AddrDesc[x]=R
+                        setattr(self.RegDesc,R,x)
+                    else:
+                        print "\tMOVL "+Entry1+",%"+R
+                        self.AddrDesc[Entry1]=R                        
+                        setattr(self.RegDesc,R,Entry1)
+                try:
+                    if self.AddrDesc[Entry2]==None:
+                        raise Exception()
+                    regY = self.AddrDesc[Entry2]
+                except:
+                    R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry1,self.RegDesc,self.AddrDesc,i)
+                    regY = R
+                    if check_variable(Entry2):
+                         print "\tMOVL $"+Entry2 +",%"+R
+                         self.AddrDesc[Entry2]=R
+                         setattr(self.RegDesc,R,Entry2)
+                    else:
+                        print "\tMOVL "+Entry2 +",%"+R
+                        self.AddrDesc[Entry2]=R                        
+                        setattr(self.RegDesc,R,Entry2)
+                print "\tCMP %"+regX+",%"+regY
+                opr = ops.Operator
+                tgt = ops.Target
+                if opr == '==':
+                    print "\tJE "+"LEE"+str(self.leaders[tgt])
+                elif opr == '<':
+                    print "\tJL "+"LEE"+str(self.leaders[tgt])
+                elif opr == '<=':
+                    print "\tJLE "+"LEE"+str(self.leaders[tgt])
+                elif opr == '>':
+                    print "\tJG "+"LEE"+str(self.leaders[tgt])
+                elif opr == '>=':
+                    print "\tJGE "+"LEE"+str(self.leaders[tgt])
+                elif opr == '~=':
+                    print "\tJNE "+"LEE"+str(self.leaders[tgt])
+                    i += 1
                 continue
 
 
@@ -84,7 +134,6 @@ class Runner(object):
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,y)
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
-                print Rdash
                 tmpVar=getattr(self.RegDesc,Rdash)+x
                 setattr(self.RegDesc,Rdash,tmpVar)
                 if self.nextUse[i][y]!=-1:
@@ -100,6 +149,8 @@ class Runner(object):
             else:
                 L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
+
+
             try:
                 if self.AddrDesc[y] == None:
                     raise Exception()
