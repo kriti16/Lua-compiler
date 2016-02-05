@@ -89,7 +89,7 @@ class Runner(object):
                     print "\tMOVL "+Entry2 +",%"+R
                     self.AddrDesc[Entry2]=R                        
                     setattr(self.RegDesc,R,Entry2)
-                print "\tCMP %"+regX+",%"+regY
+                print "\tCMP %"+regY+",%"+regX
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 opr = ops.Operator
                 tgt = ops.Target
