@@ -1,4 +1,5 @@
 x = 3
 y = 4
-x = y
+if x < y goto 4
+print y
 print x
