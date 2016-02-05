@@ -51,6 +51,7 @@ class Runner(object):
         #print self.leaders.keys()
         for ops in self.list_op_3ops:
             #print i#,vars(ops)
+            #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys():
                 print "LEE"+str(self.leaders[str(i)])+":"
                 
@@ -83,13 +84,12 @@ class Runner(object):
                     regY = R
                 if check_variable(Entry2):
                     print "\tMOVL $"+Entry2 +",%"+R
-                    self.AddrDesc[Entry2]=R
-                    setattr(self.RegDesc,R,Entry2)
                 else:
                     print "\tMOVL "+Entry2 +",%"+R
                     self.AddrDesc[Entry2]=R                        
                     setattr(self.RegDesc,R,Entry2)
                 print "\tCMP %"+regY+",%"+regX
+                #print vars(self.RegDesc),self.AddrDesc
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 opr = ops.Operator
                 tgt = ops.Target
