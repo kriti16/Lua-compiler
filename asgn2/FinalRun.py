@@ -87,7 +87,7 @@ class Runner(object):
                 print Rdash
                 tmpVar=getattr(self.RegDesc,Rdash)+x
                 setattr(self.RegDesc,Rdash,tmpVar)
-                if self.nextUse[i][y]!=-1:
+                if self.nextUse[i][y]==-1:
                     tmpVar=getattr(self.RegDesc,Rdash).remove(y)
                     setattr(self.RegDesc,Rdash,tmpVar)
                 i += 1
