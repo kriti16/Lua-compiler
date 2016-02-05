@@ -31,7 +31,15 @@ class Runner(object):
 
     def footer(self):
         print "\n\tMOVL $1,%EAX\n\tMOVL $0,%EBX\nint $0x80\n"
-
+        
+    def endBlock(self):
+        '''
+        Pushing all variables that are still present
+        in the Addr Descriptor to memory.
+        However Not deleting their register values'''
+        for var in self.AddrDesc.keys():
+            if self.AddrDesc[var] != None:
+                print '\tMOVL %'+self.AddrDesc[var]+","+var
     def Run(self):	
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
@@ -44,6 +52,7 @@ class Runner(object):
                 
                 
             if ops.InstrType == 'IfElse':
+                self.endBlock()
                 Entry1 = ops.SymtabEntry1
                 Entry2 = ops.SymtabEntry2
                 regX = regY = None
