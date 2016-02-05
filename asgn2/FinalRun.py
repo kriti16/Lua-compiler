@@ -67,12 +67,12 @@ class Runner(object):
                 except:
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry2,self.RegDesc,self.AddrDesc,i)
                     regX = R
-                if check_variable(Entry1):
-                    print "\tMOVL $"+str(Entry1)+",%"+R
-                else:
-                    print "\tMOVL "+Entry1+",%"+R
-                    self.AddrDesc[Entry1]=R                        
-                    setattr(self.RegDesc,R,Entry1)
+                    if check_variable(Entry1):
+                        print "\tMOVL $"+str(Entry1)+",%"+R
+                    else:
+                        print "\tMOVL "+Entry1+",%"+R
+                        self.AddrDesc[Entry1]=R                        
+                        setattr(self.RegDesc,R,Entry1)
                 try:
                     if self.AddrDesc[Entry2]==None:
                         raise Exception()
@@ -107,7 +107,11 @@ class Runner(object):
                 continue
 
 
-
+            if ops.InstrType=='GoTo':
+                self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
+                print "\tJMP LEE"+str(self.leaders[ops.Target])
+                i += 1
+                continue
             
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
@@ -136,20 +140,21 @@ class Runner(object):
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
                         print "\tMOVL $"+str(y)+",%"+R
-                        self.AddrDesc[x]=R
-                        setattr(self.RegDesc,R,x)
                         i += 1
+                        var = getattr(self.RegDesc,R) + [x]
+                        setattr(self.RegDesc,R,var)
+                        self.AddrDesc[x] = R
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
                         self.AddrDesc[y]=R                        
-                        setattr(self.RegDesc,R,y)
-                Rdash=self.AddrDesc[x]=self.AddrDesc[y]
-                tmpVar=getattr(self.RegDesc,Rdash)+x
-                setattr(self.RegDesc,Rdash,tmpVar)
-                if self.nextUse[i][y]==-1:
-                    tmpVar=getattr(self.RegDesc,Rdash).remove(y)
-                    setattr(self.RegDesc,Rdash,tmpVar)
+                        setattr(self.RegDesc,R,[y])
+                        Rdash=self.AddrDesc[x]=self.AddrDesc[y]
+                        tmpVar=getattr(self.RegDesc,Rdash)+x
+                        setattr(self.RegDesc,Rdash,tmpVar)
+                        if self.nextUse[i][y]==-1:
+                            tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+                            setattr(self.RegDesc,Rdash,tmpVar)
                 i += 1
                 continue
 

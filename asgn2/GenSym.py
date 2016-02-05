@@ -15,9 +15,6 @@ class GenSym(object):
                 self.lines = 0
                 self.leaders = {str(0):1}
         def read(self,fname):
-                #fname=sys.argv[1]
-                #Read the File
-                #print fname
                 f = open(fname,'r')
                 data = f.read()
                 f.close()
@@ -28,7 +25,10 @@ class GenSym(object):
                         #print tmp_list
                         OpCode = ThreeOp()
                         #print tmp_list
-                        if tmp_list[0] == 'if':
+                        if tmp_list[0] == 'goto':
+                                OpCode.InstrType = "GoTo"
+                                OpCode.Target = tmp_list[1]
+                        elif tmp_list[0] == 'if':
                                 OpCode.SymtabEntry1 = tmp_list[1]
                                 OpCode.Operator = tmp_list[2]
                                 OpCode.SymtabEntry2 = tmp_list[3]
@@ -64,6 +64,12 @@ class GenSym(object):
                 #print self.leaders
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
+                        if TOC.InstrType == 'GoTo':
+                                self.leaders[str(i+1)]=leader_count
+                                leader_count += 1
+                                self.leaders[TOC.Target]=leader_count
+                                leader_count += 1
+                                continue
                         if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
@@ -93,7 +99,8 @@ class GenSym(object):
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
                         #If end of block make all variables' next use on
-                                
+                        if TOC.InstrType == 'GoTo':
+                                continue
                         if TOC.InstrType == 'Print':
                                 try:
                                         dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
