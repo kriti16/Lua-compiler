@@ -1,5 +1,4 @@
-x = 3
+x = 5
 y = 4
-if x < y goto 4
-print y
+x = x > y
 print x

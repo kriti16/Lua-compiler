@@ -129,8 +129,6 @@ class Runner(object):
                 i+= 1
                 continue
 
-
-
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
                 try:
@@ -149,7 +147,7 @@ class Runner(object):
                         print "\tMOVL "+y+",%"+R
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,[y])
-                        
+
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
                 tmpVar=getattr(self.RegDesc,Rdash)+[x]
                 setattr(self.RegDesc,Rdash,tmpVar)

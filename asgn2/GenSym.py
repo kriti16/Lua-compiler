@@ -52,6 +52,12 @@ class GenSym(object):
                                 OpCode.SymtabEntry3 = tmp_list[4]
                                 OpCode.Operator = tmp_list[3]
                                 #print tmp_list
+                        elif tmp_list[3] in ['<','>','==','<=','>=','~=']:
+                         		OpCode.InstrType = "Compare"
+                         		OpCode.SymtabEntry1 = tmp_list[0]
+                         		OpCode.SymtabEntry2 = tmp_list[2]
+                         		OpCode.SymtabEntry3 = tmp_list[4]
+                         		OpCode.Operator = tmp_list[3]
                         #print OpCode.InstrType,len(tmp_list),tmp_list
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
@@ -188,10 +194,10 @@ if __name__=='__main__':
         Gensym.read(fname)
         list_op_3ops = Gensym.list_of_3op
         Gensym.genSymTable()
-        pprint ([x for x in Gensym.deadAlive])
-        print
-        pprint ([x for x in Gensym.nextUse])
-        print Gensym.AddrDesc
+        #pprint ([x for x in Gensym.deadAlive])
+        #print
+        #pprint ([x for x in Gensym.nextUse])
+        #print Gensym.AddrDesc
 
 
 
