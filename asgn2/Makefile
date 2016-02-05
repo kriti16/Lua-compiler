@@ -9,7 +9,7 @@ out: out.s
 	
 
 out.s:
-	python FinalRun.py input9.ir >out.s
+	python FinalRun.py input10.ir >out.s
 
 clean:
 	rm -rf out out.o out.s

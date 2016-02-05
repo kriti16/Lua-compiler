@@ -2,7 +2,7 @@ from helperScripts import *
 from DataStruct import *
 
 math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL"}
-cmp_symbol={">":("CMOVG",'CMOVLE'),"<":("CMOVL","CMOVGE"),">=":("CMOVGE","CMOVL"),"<=":("CMOVLE","CMOVG"),"==":("CMOVE","CMOVNE"),"~=":("CMOVNE","CMOVE")}
+cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
 def gen(ops,zdash,L):
 	if ops.InstrType=="Math":
 		opr=math_symbol[ops.Operator]
@@ -25,19 +25,18 @@ def gen(ops,zdash,L):
 	elif ops.InstrType=="Compare":
 		opr=cmp_symbol[ops.Operator]
 		z=ops.SymtabEntry3
+		print "\tMOVL $1,%"+L
 		if check_variable(z):
 			print "\t+CMPL $"+str(z)+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L
 		elif zdash==ops.SymtabEntry3:
 			print "\tCMPL "+zdash+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L 
 		else:
 			print "\tCMPL %"+zdash+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L
+		print "\t"+opr+" SKIP"
+		print "\tMOVL $0,%"+L
+		print "\nSKIP:\n"
 		
+
 if __name__=='__main__':
     op=ThreeOp()
     op.SymtabEntry3='z'
