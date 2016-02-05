@@ -1,5 +1,5 @@
-a = 2
-b = 3
-if b <= a goto 4
-print b
+a = 10
+b = 0
 print a
+a = a - 1
+if a <= b goto 1

@@ -92,6 +92,8 @@ class GenSym(object):
                 #print dict_perm
                 for i in range(self.lines-1,-1,-1):
                         TOC = self.list_of_3op[i]
+                        #If end of block make all variables' next use on
+                                
                         if TOC.InstrType == 'Print':
                                 try:
                                         dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
