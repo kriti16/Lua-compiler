@@ -149,16 +149,14 @@ class Runner(object):
                         print "\tMOVL "+y+",%"+R
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,[y])
-                        Rdash=self.AddrDesc[x]=self.AddrDesc[y]
-                        tmpVar=getattr(self.RegDesc,Rdash)+x
-                        setattr(self.RegDesc,Rdash,tmpVar)
-                        if self.nextUse[i][y]==-1:
-                            tmpVar=getattr(self.RegDesc,Rdash).remove(y)
-                            setattr(self.RegDesc,Rdash,tmpVar)
+                Rdash=self.AddrDesc[x]=self.AddrDesc[y]
+                tmpVar=getattr(self.RegDesc,Rdash)+[x]
+                setattr(self.RegDesc,Rdash,tmpVar)
+                if self.nextUse[i][y]==-1:
+                    tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+                    setattr(self.RegDesc,Rdash,tmpVar)
                 i += 1
                 continue
-
-
 
             if ops.Operator == '/':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
