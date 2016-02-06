@@ -3,7 +3,7 @@ from DataStruct import *
 
 math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL",">>":"SARL","<<":"SALL"}
 cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
-def gen(ops,zdash,L):
+def gen(ops,zdash,L,i):
 	if ops.InstrType=="Math":
 		opr=math_symbol[ops.Operator]
 		if opr!="IDIVL":
@@ -33,16 +33,17 @@ def gen(ops,zdash,L):
 	elif ops.InstrType=="Compare":
 		opr=cmp_symbol[ops.Operator]
 		z=ops.SymtabEntry3
-		print "\tMOVL $1,%"+L
 		if check_variable(z):
-			print "\t+CMPL $"+str(z)+",%"+L
+			print "\tCMPL $"+str(z)+",%"+L
 		elif zdash==ops.SymtabEntry3:
 			print "\tCMPL "+zdash+",%"+L
 		else:
 			print "\tCMPL %"+zdash+",%"+L
-		print "\t"+opr+" SKIP"
+		print "\t"+opr+" GREAT"+str(i)
 		print "\tMOVL $0,%"+L
-		print "\nSKIP:\n"
+                print "\tJMP Norm"+str(i)
+		print "\nGREAT"+str(i)+":\n\tMOVL $1,%"+L
+                print "\nNorm"+str(i)+":"
 		
 
 if __name__=='__main__':

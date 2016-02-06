@@ -147,11 +147,10 @@ class Runner(object):
                     print "\tPUSHL " + x
                 print "\tPUSHL $fmtstr"
                 print "\tCALL printf"
-                print "ADDL $8, %ESP" 
+                print "\tADDL $8, %ESP" 
                 #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
-            
             if ops.InstrType=='Scan':
                 x = ops.SymtabEntry2
                 if check_variable(x):
@@ -207,7 +206,7 @@ class Runner(object):
             if ops.Operator in ['<<','>>']:
                 if not check_variable(z):
                     zdash,self.RegDesc,self.AddrDesc = RegFind.shiftGetReg(ops.SymtabEntry3,self.RegDesc,self.AddrDesc,i)
-
+            
             try:
                 if self.AddrDesc[y] == None:
                     raise Exception()
@@ -219,14 +218,13 @@ class Runner(object):
                 else:
                     print "\tMOVL "+y+",%"+L
             else:
-                if self.AddrDesc[y] == 'Spilled':
-                        self.AddrDesc[y] = None
-                else:
-                    if y not in getattr(self.RegDesc,L):
-                        print "\tMOVL %"+ydash+",%"+L
+                if y not in getattr(self.RegDesc,L):
+                    print "\tMOVL %"+ydash+",%"+L
             
             zdash=None
-
+            if ops.InstrType=='Compare':
+                RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
+            
             if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
@@ -239,7 +237,7 @@ class Runner(object):
                 zdash=self.AddrDesc[z]
             except:
                 zdash = z;
-            gen(ops, zdash, L)
+            gen(ops, zdash, L,i)
             self.AddrDesc[x] = L
             setattr(self.RegDesc,L,[x])
             try:
