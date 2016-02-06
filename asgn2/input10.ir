@@ -1,4 +1,4 @@
 d = 32 >> 2
 print d
-d = d << d
+d = d << 3
 print d

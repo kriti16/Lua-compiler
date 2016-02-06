@@ -11,12 +11,14 @@ def gen(ops,zdash,L):
 				print "\t"+opr+" $"+str(zdash)+",%"+L
 			elif zdash==ops.SymtabEntry3:
 				if opr=="SARL" or opr=="SALL":
-					print "\tMOVL "+zdash+",%ESI"
-					print "\t"+opr+" %ESI,%"+L
+					print "\t"+opr+" %CL,%"+L
 				else:
 					print "\t"+opr+" "+zdash+",%"+L
 			else:
-				print "\t"+opr+" %"+zdash+",%"+L
+				if opr=="SARL" or opr=="SALL":
+					print "\t"+opr+" %CL,%"+L
+				else:
+					print "\t"+opr+" %"+zdash+",%"+L
 		else:
 			print "\tMOVL $0,%EDX"
 			if check_variable(ops.SymtabEntry3):
