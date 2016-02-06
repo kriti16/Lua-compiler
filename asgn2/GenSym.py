@@ -63,6 +63,10 @@ class GenSym(object):
                          		OpCode.SymtabEntry2 = tmp_list[2]
                          		OpCode.SymtabEntry3 = tmp_list[4]
                          		OpCode.Operator = tmp_list[3]
+                        elif tmp_list[2] == 'call':
+                                OpCode.InstrType = 'FunCall'
+                                OpCode.SymtabEntry1 = tmp_list[3]
+                                OpCode.SymtabEntry2 = tmp_list[0]
                         #print OpCode.InstrType,len(tmp_list),tmp_list
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
@@ -80,32 +84,37 @@ class GenSym(object):
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                #print "b",self.leaders
+                                print "b",self.leaders
                                 continue
-                        elif TOC.InstrType == 'IfElse':
+                        if TOC.InstrType == 'FunCall':
+                                self.leaders[str(i+1)] = leader_count
+                                print vars(TOC),i+1
+                                leader_count += 1
+                                print "e",self.leaders
+                        if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                #print "a",self.leaders
-                        elif TOC.InstrType == 'Func':
+                                print "a",self.leaders
+                        if TOC.InstrType == 'Func':
                                 self.leaders[str(i)] = leader_count
                                 leader_count += 1
-                                #print "c",self.leaders
+                                print "c",self.leaders
                                 continue
-                        elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
+                        if TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
                                 continue
-                        elif not check_variable(TOC.SymtabEntry2):
+                        if not check_variable(TOC.SymtabEntry2) :
                                 dict_perm[TOC.SymtabEntry2] = 1
                                 next_use[TOC.SymtabEntry2] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        elif not check_variable(TOC.SymtabEntry1):
+                        if not check_variable(TOC.SymtabEntry1) and TOC.InstrType != 'FunCall':
                                 dict_perm[TOC.SymtabEntry1] = 1
                                 next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        elif TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse':
+                        if TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse' and TOC.InstrType != 'FunCall':
                                 if not check_variable(TOC.SymtabEntry3):
                                         dict_perm[TOC.SymtabEntry3] = 1
                                         next_use[TOC.SymtabEntry3] = self.lines-1

@@ -1,7 +1,9 @@
-d = 32 >> 2
+d = 32 + 2
 print d
-d = d << d
+d = d + d
 print d
+s = call foo
+print s
 fun foo
 e = d + 1
 print d

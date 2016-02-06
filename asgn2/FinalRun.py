@@ -15,6 +15,7 @@ class Runner(object):
         self.AddrDesc = Gensym.AddrDesc
         self.AddrMem = Gensym.AddrMem
         self.leaders = Gensym.leaders
+        self.Sleep = 0
         ###########Printers#####################
         #pprint ([x for x in Gensym.deadAlive])
         #print
@@ -58,8 +59,18 @@ class Runner(object):
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                 print "\tMOVL "+ops.SymtabEntry1+",%EDX"
                 i+=1
+                self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
+                print "\tRET"
+                continue
+            if ops.InstrType == 'FunCall':
+                print "\tJMP "+ops.SymtabEntry1
+                print "\tMOVL %EDX,"+ops.SymtabEntry2
                 continue
             if ops.InstrType == 'Func':
+                if self.Sleep == 0:
+                    self.footer()
+                    self.Sleep += 1
+                    
                 print ops.SymtabEntry1+":"
                 i+=1
                 continue
@@ -227,5 +238,5 @@ if __name__=='__main__':
     runner = Runner(fname)
     runner.header()
     runner.Run()
-    runner.footer()
+    #runner.footer()
     #print vars(runner)
