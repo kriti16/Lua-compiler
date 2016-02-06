@@ -37,14 +37,14 @@ class RegisterFinder(object):
             return 'EAX',RegDesc,AddrDesc
         if len(RegDesc.EBX)==0:
             return 'EBX',RegDesc,AddrDesc
-        #if len(RegDesc.ECX)==0:
-        #    return 'ECX',RegDesc,AddrDesc
-        #if len(RegDesc.EBX)==0:
-        #    return 'EDX',RegDesc,AddrDesc
-        #if len(RegDesc.EBX)==0:
-        #    return 'ESI',RegDesc,AddrDesc
-        #if len(RegDesc.EBX)==0:
-        #    return 'EDI',RegDesc,AddrDesc
+        if len(RegDesc.ECX)==0:
+            return 'ECX',RegDesc,AddrDesc
+        if len(RegDesc.EBX)==0:
+            return 'EDX',RegDesc,AddrDesc
+        if len(RegDesc.EBX)==0:
+            return 'ESI',RegDesc,AddrDesc
+        if len(RegDesc.EBX)==0:
+            return 'EDI',RegDesc,AddrDesc
         else:
             regToSpl = self.findSpill(RegDesc,Entry2)
             RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)

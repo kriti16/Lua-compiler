@@ -67,7 +67,7 @@ class GenSym(object):
                                 OpCode.InstrType = 'FunCall'
                                 OpCode.SymtabEntry1 = tmp_list[3]
                                 OpCode.SymtabEntry2 = tmp_list[0]
-                        #print OpCode.InstrType,len(tmp_list),tmp_list
+                                #print OpCode.InstrType,len(tmp_list),tmp_list
 	                self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
@@ -84,23 +84,23 @@ class GenSym(object):
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                print "b",self.leaders
+                                #print "b",self.leaders
                                 continue
                         if TOC.InstrType == 'FunCall':
                                 self.leaders[str(i+1)] = leader_count
-                                print vars(TOC),i+1
+                                #print vars(TOC),i+1
                                 leader_count += 1
-                                print "e",self.leaders
+                                #print "e",self.leaders
                         if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                print "a",self.leaders
+                                #print "a",self.leaders
                         if TOC.InstrType == 'Func':
                                 self.leaders[str(i)] = leader_count
                                 leader_count += 1
-                                print "c",self.leaders
+                                #print "c",self.leaders
                                 continue
                         if TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
                                 continue

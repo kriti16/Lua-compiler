@@ -1,0 +1,15 @@
+b = 4
+a = 1
+x = 4
+print x
+c = call foo
+print c
+b = b * 2
+x = x + 1
+b = b + 1
+d = a * b
+e = d * x
+fun foo
+b = b / x
+a = b + 1
+ret b

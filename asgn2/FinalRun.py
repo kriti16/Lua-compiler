@@ -53,8 +53,8 @@ class Runner(object):
         for ops in self.list_op_3ops:
             #print i,vars(ops)
             #print vars(self.RegDesc),self.AddrDesc
-            # if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
-            #     print "LEE"+str(self.leaders[str(i)])+":", i,vars(ops)
+            if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
+                 print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                 print "\tMOVL "+ops.SymtabEntry1+",%EDX"
@@ -63,8 +63,9 @@ class Runner(object):
                 print "\tRET"
                 continue
             if ops.InstrType == 'FunCall':
-                print "\tJMP "+ops.SymtabEntry1
+                print "\tCALL "+ops.SymtabEntry1
                 print "\tMOVL %EDX,"+ops.SymtabEntry2
+                i += 1
                 continue
             if ops.InstrType == 'Func':
                 if self.Sleep == 0:
@@ -143,6 +144,7 @@ class Runner(object):
                     print "\tPUSHL " + x
                 print "\tPUSHL $fmtstr"
                 print "\tCALL printf"
+                print "ADDL $8, %ESP" 
                 #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
@@ -233,11 +235,14 @@ class Runner(object):
             except:
                 pass
             #print vars(self.RegDesc),self.AddrDesc
+            #print vars(ops),i
             i += 1
 if __name__=='__main__':
     fname = sys.argv[1]
     runner = Runner(fname)
     runner.header()
     runner.Run()
+    if runner.Sleep == 0:
+        runner.footer()
     #runner.footer()
     #print vars(runner)
