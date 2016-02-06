@@ -1,4 +1,4 @@
-x = 5
-y = 4
-x = x > y
-print x
+d = 32 >> 2
+print d
+d = d << d
+print d

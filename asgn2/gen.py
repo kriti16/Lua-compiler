@@ -1,8 +1,8 @@
 from helperScripts import *
 from DataStruct import *
 
-math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL"}
-cmp_symbol={">":("CMOVG",'CMOVLE'),"<":("CMOVL","CMOVGE"),">=":("CMOVGE","CMOVL"),"<=":("CMOVLE","CMOVG"),"==":("CMOVE","CMOVNE"),"~=":("CMOVNE","CMOVE")}
+math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL",">>":"SARL","<<":"SALL"}
+cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
 def gen(ops,zdash,L):
 	if ops.InstrType=="Math":
 		opr=math_symbol[ops.Operator]
@@ -10,7 +10,11 @@ def gen(ops,zdash,L):
 			if check_variable(zdash):
 				print "\t"+opr+" $"+str(zdash)+",%"+L
 			elif zdash==ops.SymtabEntry3:
-				print "\t"+opr+" "+zdash+",%"+L
+				if opr=="SARL" or opr=="SALL":
+					print "\tMOVL "+zdash+",%ESI"
+					print "\t"+opr+" %ESI,%"+L
+				else:
+					print "\t"+opr+" "+zdash+",%"+L
 			else:
 				print "\t"+opr+" %"+zdash+",%"+L
 		else:
@@ -21,23 +25,24 @@ def gen(ops,zdash,L):
 				print "\t"+opr+" "+zdash
 			else:
 				print "\t"+opr+" %"+zdash
+			if ops.Operator=='%':
+				print "\t MOVL %EDX,%"+L
 
 	elif ops.InstrType=="Compare":
 		opr=cmp_symbol[ops.Operator]
 		z=ops.SymtabEntry3
+		print "\tMOVL $1,%"+L
 		if check_variable(z):
 			print "\t+CMPL $"+str(z)+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L
 		elif zdash==ops.SymtabEntry3:
 			print "\tCMPL "+zdash+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L 
 		else:
 			print "\tCMPL %"+zdash+",%"+L
-			print "\t"+opr[0]+" $1,%"+L
-			print "\t"+opr[1]+" $0,%"+L
+		print "\t"+opr+" SKIP"
+		print "\tMOVL $0,%"+L
+		print "\nSKIP:\n"
 		
+
 if __name__=='__main__':
     op=ThreeOp()
     op.SymtabEntry3='z'

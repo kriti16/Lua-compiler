@@ -1,0 +1,11 @@
+fun foo
+x = a + 100
+ret x
+a = 1
+b = 2
+if 3 > b goto 5
+print a
+goto 6
+print b
+c = 4
+print c
