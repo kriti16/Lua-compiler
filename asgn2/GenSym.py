@@ -24,7 +24,6 @@ class GenSym(object):
 	                tmp_list=input_lines[i].split(" ")
                         #print tmp_list
                         OpCode = ThreeOp()
-                        print tmp_list
                         if tmp_list[0] == 'fun':
                                 OpCode.InstrType = "Func"
                                 OpCode.SymtabEntry1 = tmp_list[1]
@@ -81,18 +80,18 @@ class GenSym(object):
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                print self.leaders
+                                #print "b",self.leaders
                                 continue
                         elif TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                print self.leaders
+                                #print "a",self.leaders
                         elif TOC.InstrType == 'Func':
                                 self.leaders[str(i)] = leader_count
                                 leader_count += 1
-                                print self.leaders
+                                #print "c",self.leaders
                                 continue
                         elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
                                 continue
@@ -199,7 +198,7 @@ class GenSym(object):
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
-                print self.leaders
+                #print self.leaders
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()

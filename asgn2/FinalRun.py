@@ -55,9 +55,13 @@ class Runner(object):
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
                 print "LEE"+str(self.leaders[str(i)])+":", i,vars(ops)
             if ops.InstrType == 'Return':
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                i+=1
                 continue
             if ops.InstrType == 'Func':
-                print ops.SymtabEntry1+str(self.leaders[str(i)])+":"
+                print ops.SymtabEntry1+":"
+                i+=1
                 continue
             if ops.InstrType == 'IfElse':
                 Entry1 = ops.SymtabEntry1

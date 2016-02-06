@@ -1,11 +1,12 @@
+d = 32 >> 2
+print d
+d = d << d
+print d
 fun foo
-x = a + 100
-ret x
-a = 1
-b = 2
-if 3 > b goto 5
-print a
-goto 6
-print b
-c = 4
-print c
+e = d + 1
+print d
+ret e
+fun footer
+d = d - 1
+e = e / d
+ret d
