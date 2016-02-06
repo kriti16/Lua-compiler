@@ -50,12 +50,15 @@ class Runner(object):
         #print [vars(x) for x in self.list_op_3ops]
         #print self.leaders.keys()
         for ops in self.list_op_3ops:
-            #print i#,vars(ops)
+            #print i,vars(ops)
             #print vars(self.RegDesc),self.AddrDesc
-            if str(i) in self.leaders.keys():
-                print "LEE"+str(self.leaders[str(i)])+":"
-                
-                
+            if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
+                print "LEE"+str(self.leaders[str(i)])+":", i,vars(ops)
+            if ops.InstrType == 'Return':
+                continue
+            if ops.InstrType == 'Func':
+                print ops.SymtabEntry1+str(self.leaders[str(i)])+":"
+                continue
             if ops.InstrType == 'IfElse':
                 Entry1 = ops.SymtabEntry1
                 Entry2 = ops.SymtabEntry2
@@ -107,7 +110,7 @@ class Runner(object):
                 continue
 
 
-            if ops.InstrType=='GoTo':
+            elif ops.InstrType=='GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tJMP LEE"+str(self.leaders[ops.Target])
                 i += 1

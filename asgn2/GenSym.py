@@ -24,8 +24,14 @@ class GenSym(object):
 	                tmp_list=input_lines[i].split(" ")
                         #print tmp_list
                         OpCode = ThreeOp()
-                        #print tmp_list
-                        if tmp_list[0] == 'goto':
+                        print tmp_list
+                        if tmp_list[0] == 'fun':
+                                OpCode.InstrType = "Func"
+                                OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0] == 'ret':
+                                OpCode.InstrType = 'Return'
+                                OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0] == 'goto':
                                 OpCode.InstrType = "GoTo"
                                 OpCode.Target = tmp_list[1]
                         elif tmp_list[0] == 'if':
@@ -75,26 +81,32 @@ class GenSym(object):
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
+                                print self.leaders
                                 continue
-                        if TOC.InstrType == 'IfElse':
+                        elif TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
-                                #print self.leaders
-                        if TOC.InstrType == 'Print':
+                                print self.leaders
+                        elif TOC.InstrType == 'Func':
+                                self.leaders[str(i)] = leader_count
+                                leader_count += 1
+                                print self.leaders
                                 continue
-                        if not check_variable(TOC.SymtabEntry2):
+                        elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
+                                continue
+                        elif not check_variable(TOC.SymtabEntry2):
                                 dict_perm[TOC.SymtabEntry2] = 1
                                 next_use[TOC.SymtabEntry2] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if not check_variable(TOC.SymtabEntry1):
+                        elif not check_variable(TOC.SymtabEntry1):
                                 dict_perm[TOC.SymtabEntry1] = 1
                                 next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse':
+                        elif TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse':
                                 if not check_variable(TOC.SymtabEntry3):
                                         dict_perm[TOC.SymtabEntry3] = 1
                                         next_use[TOC.SymtabEntry3] = self.lines-1
@@ -107,7 +119,7 @@ class GenSym(object):
                         #If end of block make all variables' next use on
                         if TOC.InstrType == 'GoTo':
                                 continue
-                        if TOC.InstrType == 'Print':
+                        elif TOC.InstrType == 'Print':
                                 try:
                                         dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
                                         dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
@@ -120,7 +132,7 @@ class GenSym(object):
                                         pass
                                 continue
                         #print dict_perm
-                        if TOC.InstrType == 'IfElse':
+                        elif TOC.InstrType == 'IfElse':
                                 try:
                                         if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
                                                 raise Exception()
@@ -187,7 +199,7 @@ class GenSym(object):
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
-                #print self.leaders
+                print self.leaders
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()
