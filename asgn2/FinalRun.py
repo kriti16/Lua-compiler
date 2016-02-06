@@ -53,8 +53,8 @@ class Runner(object):
         for ops in self.list_op_3ops:
             #print i,vars(ops)
             #print vars(self.RegDesc),self.AddrDesc
-            if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
-                print "LEE"+str(self.leaders[str(i)])+":", i,vars(ops)
+            # if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
+            #     print "LEE"+str(self.leaders[str(i)])+":", i,vars(ops)
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                 print "\tMOVL "+ops.SymtabEntry1+",%EDX"
@@ -149,6 +149,7 @@ class Runner(object):
 
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
+
                 try:
                     if self.AddrDesc[y]==None:
                         raise Exception()
@@ -181,6 +182,9 @@ class Runner(object):
                 L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
 
+            if ops.Operator in ['<<','>>']:
+                if not check_variable(z):
+                    zdash,self.RegDesc,self.AddrDesc = RegFind.shiftGetReg(ops.SymtabEntry3,self.RegDesc,self.AddrDesc,i)
 
             try:
                 if self.AddrDesc[y] == None:
@@ -198,17 +202,14 @@ class Runner(object):
                 else:
                     if y not in getattr(self.RegDesc,L):
                         print "\tMOVL %"+ydash+",%"+L
+            
             zdash=None
-
-
 
             if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
                     print "\tMOVL $"+str(z)+",%ESI"
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-
-            
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)            
 
             try:
                 if self.AddrDesc[z] == None:

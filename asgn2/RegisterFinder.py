@@ -65,6 +65,29 @@ class RegisterFinder(object):
         regToSpl = 'EAX'
         RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
         return regToSpl,RegDesc,AddrDesc
+
+    def shiftGetReg(self,Entry2,RegDesc,AddrDesc,i):
+        reg_Z = -1
+        try:
+            reg_Z = AddrDesc[Entry2]
+        except:
+            pass
+        #if reg
+        if reg_Z =='ECX':
+            return reg_Y,RegDesc,AddrDesc
+        else:
+            regToSpl = 'ECX'
+            RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
+            if reg_Z!=None:
+                tempVar=getattr(RegDesc,reg_Z).remove(Entry2)
+                print "\tMOVL %"+reg_Z+",%ECX"
+            else:
+                print "\tMOVL "+Entry2+",%ECX"
+            setattr(RegDesc,'ECX',[Entry2])
+            AddrDesc[Entry2]='ECX'
+        
+        return regToSpl,RegDesc,AddrDesc
+
     def findSpill(self,RegDesc,y):
         if y not in RegDesc.EAX:
             return 'EAX'
