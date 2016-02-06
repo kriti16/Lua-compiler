@@ -1,0 +1,12 @@
+s = call inp
+g = call fact
+print g
+fun fact
+a = 1
+a = a * s
+s = s - 1
+if s > 1 goto 5
+ret a
+fun inp
+scanf x
+ret x

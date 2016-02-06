@@ -27,6 +27,9 @@ class GenSym(object):
                         if tmp_list[0] == 'fun':
                                 OpCode.InstrType = "Func"
                                 OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0] == 'scanf':
+                                OpCode.InstrType = 'Scan'
+                                OpCode.SymtabEntry2 = tmp_list[1]
                         elif tmp_list[0] == 'ret':
                                 OpCode.InstrType = 'Return'
                                 OpCode.SymtabEntry1 = tmp_list[1]
@@ -109,12 +112,13 @@ class GenSym(object):
                                 next_use[TOC.SymtabEntry2] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry2] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if not check_variable(TOC.SymtabEntry1) and TOC.InstrType != 'FunCall':
+                        
+                        if TOC.InstrType != 'Scan' and not check_variable(TOC.SymtabEntry1) and TOC.InstrType != 'FunCall' :
                                 dict_perm[TOC.SymtabEntry1] = 1
                                 next_use[TOC.SymtabEntry1] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry1] = None
                                 self.AddrMem[TOC.SymtabEntry2] = None
-                        if TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse' and TOC.InstrType != 'FunCall':
+                        if TOC.InstrType != 'Assign' and TOC.InstrType != 'IfElse' and TOC.InstrType != 'FunCall' and TOC.InstrType != 'Scan':
                                 if not check_variable(TOC.SymtabEntry3):
                                         dict_perm[TOC.SymtabEntry3] = 1
                                         next_use[TOC.SymtabEntry3] = self.lines-1

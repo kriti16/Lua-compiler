@@ -10,6 +10,7 @@ b = b + 1
 d = a * b
 e = d * x
 fun foo
+print x
 b = b / x
 a = b + 1
 ret b

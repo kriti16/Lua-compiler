@@ -1,14 +1,14 @@
 .PHONY: all
 
 all: out
-	./out
-	rm -rf out out.o out.s
+	@./out
+	@rm -rf out out.o out.s
 out: out.s
-	as --gstabs --32 out.s  -o out.o
-	gcc -m32 out.o -o out
+	@as --gstabs --32 out.s  -o out.o
+	@gcc -m32 out.o -o out
 
 out.s:
-	python FinalRun.py try.ir >out.s
+	@python FinalRun.py input14.ir >out.s
 
 clean:
-	rm -rf out out.o out.s
+	@rm -rf out out.o out.s

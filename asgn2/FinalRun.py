@@ -27,7 +27,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .asciz "%d\\n"\n\n.globl main\n\nmain:\n'
+        x86istr=x86istr+'\n.section .text\ninptstr:\n  .asciz "%d" \nfmtstr:  .asciz "%d\\n"\n\n .globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -49,11 +49,13 @@ class Runner(object):
         RegFind = RegisterFinder(self.deadAlive,self.nextUse)
         i=0;
         #print [vars(x) for x in self.list_op_3ops]
-        #print self.leaders.keys()
+        #print self.leaders
         for ops in self.list_op_3ops:
             #print i,vars(ops)
             #print vars(self.RegDesc),self.AddrDesc
-            if str(i) in self.leaders.keys() and ops.InstrType != 'Func':
+            if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
+                self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
+            if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
                  print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
@@ -63,6 +65,7 @@ class Runner(object):
                 print "\tRET"
                 continue
             if ops.InstrType == 'FunCall':
+                self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tCALL "+ops.SymtabEntry1
                 print "\tMOVL %EDX,"+ops.SymtabEntry2
                 i += 1
@@ -148,7 +151,24 @@ class Runner(object):
                 #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
-
+            
+            if ops.InstrType=='Scan':
+                x = ops.SymtabEntry2
+                if check_variable(x):
+                    print "\tPUSHL $" + x
+                else:
+                    RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
+                    RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                    print "\tPUSHL $" + x
+                print "\tPUSHL $inptstr"
+                print "\tCALL scanf"
+                print "\tADDL $8, %ESP" 
+                #print vars(self.RegDesc),self.AddrDesc
+                i+= 1
+                continue
+            
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
 

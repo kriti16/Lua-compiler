@@ -1,19 +1,2 @@
-d = 32 + 2
-print d
-d = d + d
-print d
-s = call foo
-if s > 75 goto 8
-print s
-goto 9
-print d
-print e
-fun foo
-e = d + 1
-d = d + 2
-print d
-ret e
-fun footer
-x = d / 2
-x = 1 - x
-ret x
+scanf x
+print x
