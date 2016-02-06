@@ -42,6 +42,9 @@ class GenSym(object):
                         elif tmp_list[0]=='print':
                                 OpCode.InstrType='Print'
                                 OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0]=='scan':
+                                OpCode.InstrType='Scan'
+                                OpCode.SymtabEntry1 = tmp_list[1]
                         elif len(tmp_list)==3 and tmp_list[1]=='=':
                                 #print "Twent"
                                 #print tmp_list
@@ -93,7 +96,7 @@ class GenSym(object):
                                 leader_count += 1
                                 #print "c",self.leaders
                                 continue
-                        elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
+                        elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return' or TOC.InstrType == "Scan":
                                 continue
                         elif not check_variable(TOC.SymtabEntry2):
                                 dict_perm[TOC.SymtabEntry2] = 1

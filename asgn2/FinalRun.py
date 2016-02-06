@@ -26,7 +26,7 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        x86istr=x86istr+'\n.section .text\nfmtstr:\n  .asciz "%d\\n"\n\n.globl main\n\nmain:\n'
+        x86istr=x86istr+'\n.section .text\nout_str:\n  .asciz "%d\\n"\n in_str: \n   .asciz "%d" \n\n.globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -120,7 +120,7 @@ class Runner(object):
                 i += 1
                 continue
             
-            if ops.InstrType=='Print':
+            elif ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
                     print "\tPUSHL $" + x
@@ -130,8 +130,23 @@ class Runner(object):
                     RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                     print "\tPUSHL " + x
-                print "\tPUSHL $fmtstr"
+                print "\tPUSHL $out_str" 
                 print "\tCALL printf"
+                #print vars(self.RegDesc),self.AddrDesc
+                i+= 1
+                continue
+
+            elif ops.InstrType=='Scan':
+                x = ops.SymtabEntry1
+                RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
+                RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
+                RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                if not self.AddrDesc[x]==None:
+                    RegFind.storeMem(self.AddrDesc[x],self.RegDesc,self.AddrDesc)
+                print "\tPUSHL $" + x
+                print "\tPUSHL $in_str"
+                print "\tCALL scanf"
                 #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
