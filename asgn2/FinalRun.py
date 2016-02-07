@@ -52,7 +52,7 @@ class Runner(object):
         #print self.leaders
         for ops in self.list_op_3ops:
             #print i,vars(ops)
-            #print vars(self.RegDesc),self.AddrDesc
+            print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
@@ -229,8 +229,7 @@ class Runner(object):
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
                     print "\tMOVL $"+str(z)+",%ESI"
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                print "/tMOVL $0,%EDX"            
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
 
             try:
                 if self.AddrDesc[z] == None:
