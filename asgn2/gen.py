@@ -1,7 +1,7 @@
 from helperScripts import *
 from DataStruct import *
 
-math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL",">>":"SARL","<<":"SALL"}
+math_symbol={"+":"ADDL","-":"SUBL","*":"IMULL","/":"IDIVL","%":"IDIVL",">>":"SARL","<<":"SALL","&":"ANDL","|":"ORL","^^":"XORL"}
 cmp_symbol={">":"JG","<":"JL",">=":"JGE","<=":"JLE","==":"JE","~=":"JNE"}
 def gen(ops,zdash,L,i):
 	if ops.InstrType=="Math":
