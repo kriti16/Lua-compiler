@@ -66,6 +66,12 @@ class GenSym(object):
                          		OpCode.SymtabEntry2 = tmp_list[2]
                          		OpCode.SymtabEntry3 = tmp_list[4]
                          		OpCode.Operator = tmp_list[3]
+                        elif tmp_list[3] in ['and','or']:
+                                OpCode.InstrType = "Logical"
+                                OpCode.SymtabEntry1 = tmp_list[0]
+                                OpCode.SymtabEntry2 = tmp_list[2]
+                                OpCode.SymtabEntry3 = tmp_list[4]
+                                OpCode.Operator = tmp_list[3]
                         elif tmp_list[2] == 'call':
                                 OpCode.InstrType = 'FunCall'
                                 OpCode.SymtabEntry1 = tmp_list[3]

@@ -44,7 +44,18 @@ def gen(ops,zdash,L,i):
                 print "\tJMP Norm"+str(i)
 		print "\nGREAT"+str(i)+":\n\tMOVL $1,%"+L
                 print "\nNorm"+str(i)+":"
-		
+
+	elif ops.InstrType=="Logical":
+		if ops.Operator=="and":
+			if check_variable(zdash):
+				print "\tMOVL $"+str(zdash)+",%"+L
+			elif zdash==ops.SymtabEntry3:
+				print "\tMOVL "+zdash+",%"+L
+			else:
+				print "\tMOVL %"+zdash+",%"+L
+		if ops.Operator=="or":
+			pass
+
 
 if __name__=='__main__':
     op=ThreeOp()

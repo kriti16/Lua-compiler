@@ -1,0 +1,28 @@
+.section .data
+a:
+  .long 0
+d:
+  .long 0
+
+.section .text
+fmtstr:
+  .asciz "%d\n"
+
+.globl main
+
+main:
+
+LEE1:
+	MOVL $1,%EAX
+	MOVL $1,%EBX
+	SALL %AL,%EBX
+	MOVL %AX,a
+	MOVL %EBX,d
+	PUSHL d
+	PUSHL $fmtstr
+	CALL printf
+
+	MOVL $1,%EAX
+	MOVL $0,%EBX
+int $0x80
+
