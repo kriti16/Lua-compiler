@@ -197,15 +197,15 @@ class Runner(object):
                 i += 1
                 continue
 
+            x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
+
             if ops.Operator == '/' or ops.Operator=='%':
                 L,self.RegDesc,self.AddrDesc = RegFind.divModGetReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
             else:
+                if ops.Operator in ['<<','>>']:
+                    if not check_variable(z):
+                        zdash,self.RegDesc,self.AddrDesc = RegFind.shiftGetReg(ops.SymtabEntry3,self.RegDesc,self.AddrDesc,i)
                 L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
-            x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
-
-            if ops.Operator in ['<<','>>']:
-                if not check_variable(z):
-                    zdash,self.RegDesc,self.AddrDesc = RegFind.shiftGetReg(ops.SymtabEntry3,self.RegDesc,self.AddrDesc,i)
             
             try:
                 if self.AddrDesc[y] == None:
@@ -229,12 +229,24 @@ class Runner(object):
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
                     print "\tMOVL $"+str(z)+",%ESI"
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)            
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                print "/tMOVL $0,%EDX"            
 
             try:
                 if self.AddrDesc[z] == None:
                     raise Exception()
                 zdash=self.AddrDesc[z]
+                #print zdash
+                #print "z:"+z+" x:"+x
+                if z==x:
+                    #print "hi"
+                    tempVar=getattr(self.RegDesc,zdash).remove(z)
+                    #print "hi"+tempVar
+                    if tempVar==None:
+                        setattr(self.RegDesc,zdash,[])
+                    else:
+                        setattr(self.RegDesc,zdash,tempVar)    
+                    #print "hi"                
             except:
                 zdash = z;
             gen(ops, zdash, L,i)

@@ -1,6 +1,6 @@
 a = 1
 b = 3
-c = a or b
-print c
-c = a and b
-print c
+a = 2 << a
+print a
+a = b - a
+print a

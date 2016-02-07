@@ -80,12 +80,17 @@ class RegisterFinder(object):
             RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
             if reg_Z!=None:
                 tempVar=getattr(RegDesc,reg_Z).remove(Entry2)
+                if tempVar==None:
+                    setattr(RegDesc,reg_Z,[])
+                else:
+                    setattr(RegDesc,reg_Z,tempVar)
                 print "\tMOVL %"+reg_Z+",%ECX"
             else:
                 print "\tMOVL "+Entry2+",%ECX"
             setattr(RegDesc,'ECX',[Entry2])
             AddrDesc[Entry2]='ECX'
-        
+        # print "new"
+        # print vars(RegDesc),AddrDesc
         return regToSpl,RegDesc,AddrDesc
     
     def findSpill(self,RegDesc,y):
