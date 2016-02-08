@@ -1,18 +1,19 @@
 a = 2
-b = 20
-if a >= b goto 17
+b = 10
+if a => b goto 18
 d = call checkPrime
 if d == 0 goto 6
 print a
 a = a + 1
-goto 3
+goto 2
 fun checkPrime
 i = 2
-if i >= a goto 15
-c = a % i	 	
-if c == 0 goto 16
+if i => a goto 16
+c = a % i
+print c
+if c == 0 goto 17
 i = i + 1
-goto 9
+goto 10
 ret 1
 ret 0
 a = a

@@ -53,17 +53,20 @@ class Runner(object):
         #print self.leaders
         for ops in self.list_op_3ops:
             #print i,vars(ops)
-            print vars(self.RegDesc),self.AddrDesc
+            #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
                  print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                if self.AddrDesc[ops.SymtabEntry1] == None:
-                    print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                if check_variable(ops.SymtabEntry1):
+                    print "\tMOVL $"+ops.SymtabEntry1+",%EDX"
                 else:
-                    print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
+                    if self.AddrDesc[ops.SymtabEntry1] == None:
+                        print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                    else:
+                        print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
                 i+=1
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tRET"
