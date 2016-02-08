@@ -8,7 +8,7 @@ out: out.s
 	@gcc -m32 out.o -o out
 
 out.s:
-	@python FinalRun.py fiboRec.ir >out.s
+	@python FinalRun.py input7.ir >out.s
 
 clean:
 	@rm -rf out out.o out.s

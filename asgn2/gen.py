@@ -20,6 +20,7 @@ def gen(ops,zdash,L,i):
 				else:
 					print "\t"+opr+" %"+zdash+",%"+L
 		else:
+                        print "\tCDQ"
 			print "\tMOVL $0,%EDX"
 			if check_variable(ops.SymtabEntry3):
 				print "\t"+opr+" %ESI"
