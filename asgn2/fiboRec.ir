@@ -1,0 +1,17 @@
+n = call inp
+i1 = 0
+i2 = 1
+i = 0
+f = call fibo
+print f
+fun inp
+scanf x
+ret x
+fun fibo
+a = i1 + i2
+i1 = i2
+i2 = a
+i = i + 1
+if i > n goto 17
+a = call fibo 
+ret a

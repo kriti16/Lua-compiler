@@ -8,7 +8,7 @@ out: out.s
 	@gcc -m32 out.o -o out
 
 out.s:
-	@python FinalRun.py recFact.ir >out.s
+	@python FinalRun.py fiboItr.ir >out.s
 
 clean:
 	@rm -rf out out.o out.s

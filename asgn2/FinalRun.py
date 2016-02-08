@@ -201,6 +201,8 @@ class Runner(object):
                 setattr(self.RegDesc,Rdash,tmpVar)
                 if self.nextUse[i][y]==-1:
                     tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+                    if tmpVar == None:
+                        tmpVar = [] 
                     setattr(self.RegDesc,Rdash,tmpVar)
                 i += 1
                 #print vars(self.RegDesc),self.AddrDesc
