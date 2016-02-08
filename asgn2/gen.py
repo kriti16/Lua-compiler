@@ -8,7 +8,10 @@ def gen(ops,zdash,L,i):
 		opr=math_symbol[ops.Operator]
 		if opr!="IDIVL":
 			if check_variable(zdash):
-				print "\t"+opr+" $"+str(zdash)+",%"+L
+				if opr=="ADDL" and zdash==1:
+					print "\t"+"INCL" + ",%"+L
+				else:
+					print "\t"+opr+" $"+str(zdash)+",%"+L
 			elif zdash==ops.SymtabEntry3:
 				if opr=="SARL" or opr=="SALL":
 					print "\t"+opr+" %CL,%"+L
@@ -21,7 +24,7 @@ def gen(ops,zdash,L,i):
 					print "\t"+opr+" %"+zdash+",%"+L
 		else:
                         print "\tCDQ"
-			print "\tMOVL $0,%EDX"
+			print "\tXOR %EDX,%EDX"
 			if check_variable(ops.SymtabEntry3):
 				print "\t"+opr+" %ESI"
 			elif ops.SymtabEntry3==zdash:
