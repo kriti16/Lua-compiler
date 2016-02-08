@@ -79,7 +79,8 @@ class RegisterFinder(object):
             regToSpl = 'ECX'
             RegDesc,AddrDesc = self.storeMem(regToSpl,RegDesc,AddrDesc)
             if reg_Z!=None:
-                tempVar=getattr(RegDesc,reg_Z).remove(Entry2)
+                tempVar=getattr(RegDesc,reg_Z)
+                tempVar.remove(Entry2)
                 if tempVar==None:
                     setattr(RegDesc,reg_Z,[])
                 else:

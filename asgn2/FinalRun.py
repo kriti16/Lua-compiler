@@ -261,7 +261,8 @@ class Runner(object):
                 #print "z:"+z+" x:"+x
                 if z==x:
                     #print "hi"
-                    tempVar=getattr(self.RegDesc,zdash).remove(z)
+                    tempVar=getattr(self.RegDesc,zdash)
+                    tmpVar.remove(z)
                     #print "hi"+tempVar
                     if tempVar==None:
                         setattr(self.RegDesc,zdash,[])
