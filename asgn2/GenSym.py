@@ -88,11 +88,13 @@ class GenSym(object):
                 #print self.leaders
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
+                        #print vars(TOC)
                         if TOC.InstrType == 'GoTo':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
+                                continue
                                 #print "b",self.leaders
                         if TOC.InstrType == 'FunCall':
                                 self.leaders[str(i+1)] = leader_count
@@ -138,7 +140,7 @@ class GenSym(object):
                                 self.deadAlive.insert(0,{})
                                 self.nextUse.insert(0,{})
                                 continue
-                        elif TOC.InstrType == 'Print':
+                        elif TOC.InstrType == 'Print' or TOC.InstrType == 'Return':
                                 dict_dead = {}
                                 dict_next = {}
                                 
@@ -238,7 +240,6 @@ class GenSym(object):
                         except:
                                 pass
                         #print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-                        #print vars(TOC)
                         #print dict_next,next_use
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)

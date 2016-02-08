@@ -27,3 +27,13 @@ h = a + b
 print h
 d = b / a
 d = d + k
+gf = call foo
+print gf
+fun foo
+df = call goo
+df = df + d
+ret df
+fun goo
+f = f * x
+print f
+ret f

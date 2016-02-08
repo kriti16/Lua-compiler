@@ -60,8 +60,11 @@ class Runner(object):
                  print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                print "\tMOVL "+ops.SymtabEntry1+",%EDX"
-                i+=1
+                if self.AddrDesc[ops.SymtabEntry1] == None:
+                    print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                else:
+                    print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
+                    i+=1
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tRET"
                 continue
@@ -253,6 +256,7 @@ class Runner(object):
                     #print "hi"                
             except:
                 zdash = z;
+            #print vars(ops),zdash,L,z,x
             gen(ops, zdash, L,i)
             self.AddrDesc[x] = L
             setattr(self.RegDesc,L,[x])
