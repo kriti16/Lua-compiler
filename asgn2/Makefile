@@ -8,6 +8,7 @@ out: out.s
 	@gcc -m32 out.o -o out
 
 out.s:
+
 	@python FinalRun.py prime.ir >out.s
 
 clean:

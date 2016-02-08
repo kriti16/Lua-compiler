@@ -1,7 +1,9 @@
 n = call inp
-i1 = 0
+f = 1
+if n <= 2 goto 7
+i1 = 1
 i2 = 1
-i = 0
+i = 2
 f = call fibo
 print f
 fun inp
@@ -12,6 +14,6 @@ a = i1 + i2
 i1 = i2
 i2 = a
 i = i + 1
-if i > n goto 16
+if i => n goto 18
 a = call fibo 
 ret a

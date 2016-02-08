@@ -240,7 +240,7 @@ class GenSym(object):
                         except:
                                 pass
                         #print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-                        #print dict_next,next_use
+                        #print dict_dead,dict_next
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():

@@ -90,8 +90,6 @@ class RegisterFinder(object):
                 print "\tMOVL "+Entry2+",%ECX"
             setattr(RegDesc,'ECX',[Entry2])
             AddrDesc[Entry2]='ECX'
-        # print "new"
-        # print vars(RegDesc),AddrDesc
         return regToSpl,RegDesc,AddrDesc
     
     def findAltSpill(self,RegDesc,y,i):
