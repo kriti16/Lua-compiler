@@ -53,7 +53,7 @@ class Runner(object):
         #print self.leaders
         for ops in self.list_op_3ops:
             #print i,vars(ops)
-            #print vars(self.RegDesc),self.AddrDesc
+            print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
