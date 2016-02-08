@@ -94,7 +94,6 @@ class GenSym(object):
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
                                 #print "b",self.leaders
-                                continue
                         if TOC.InstrType == 'FunCall':
                                 self.leaders[str(i+1)] = leader_count
                                 #print vars(TOC),i+1
@@ -136,9 +135,16 @@ class GenSym(object):
                         TOC = self.list_of_3op[i]
                         #If end of block make all variables' next use on
                         if TOC.InstrType == 'GoTo':
+                                self.deadAlive.insert(0,{})
+                                self.nextUse.insert(0,{})
                                 continue
                         elif TOC.InstrType == 'Print':
+                                dict_dead = {}
+                                dict_next = {}
+                                
                                 try:
+                                        if check_variable(TOC.SymtabEntry1):
+                                                raise Exception()
                                         dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
                                         dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
                                 except:
@@ -148,9 +154,15 @@ class GenSym(object):
                                         next_use[TOC.SymtabEntry1]=i+1
                                 except:
                                         pass
+                                
+                                self.deadAlive.insert(0,dict_dead)
+                                self.nextUse.insert(0,dict_next)
                                 continue
                         #print dict_perm
                         elif TOC.InstrType == 'IfElse':
+                                dict_next = {}
+                                dict_dead = {}
+                                
                                 try:
                                         if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
                                                 raise Exception()
@@ -170,17 +182,27 @@ class GenSym(object):
                                         next_use[TOC.SymtabEntry2]=i+1
                                 except:
                                         pass
+                                
+                                self.deadAlive.insert(0,dict_dead)
+                                self.nextUse.insert(0,dict_next)
                                 continue
                         
                         dict_dead={}
                         dict_next={}
                         try:
+                                if check_variable(TOC.SymtabEntry1):
+                                        raise Exception()
                                 dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
                                 dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+                                #print "^^^^^^^^^^^^^^^^^^^^^^^^"
+                                #print dict_next
+                                #print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                         except:
                                 pass
                         
                         try:
+                                if check_variable(TOC.SymtabEntry2):
+                                        raise Exception()
                                 dict_dead[TOC.SymtabEntry2] = dict_perm[TOC.SymtabEntry2]
                                 dict_next[TOC.SymtabEntry2] = next_use[TOC.SymtabEntry2]
                        #         print 'a',i,vars(TOC)
@@ -189,6 +211,8 @@ class GenSym(object):
                                 pass
                         
                         try:
+                                if check_variable(TOC.SymtabEntry3):
+                                        raise Exception()
                                 dict_dead[TOC.SymtabEntry3]=dict_perm[TOC.SymtabEntry3]
                                 dict_next[TOC.SymtabEntry3]=next_use[TOC.SymtabEntry3]
                         #        print 'b',i,vars(TOC)
@@ -213,11 +237,14 @@ class GenSym(object):
                                 next_use[TOC.SymtabEntry3]=i+1
                         except:
                                 pass
+                        #print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+                        #print vars(TOC)
+                        #print dict_next,next_use
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
-                #print self.leaders
+                #print self.nextUse
 if __name__=='__main__':
         fname = sys.argv[1]
         Gensym = GenSym()

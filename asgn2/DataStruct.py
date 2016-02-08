@@ -15,3 +15,13 @@ class Register(object):
     EBP = []
     EIP = []
     ESP = []
+    def __init__(self):
+         self.EAX = []
+         self.EBX = []
+         self.ECX = []
+         self.EDX = []
+         self.ESI  = []
+         self.EDI  = []
+         self.EBP = []
+         self.EIP = []
+         self.ESP = []

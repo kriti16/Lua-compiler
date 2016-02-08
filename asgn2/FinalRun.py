@@ -12,6 +12,7 @@ class Runner(object):
         self.deadAlive = Gensym.deadAlive
         self.nextUse = Gensym.nextUse
         self.RegDesc = Register()
+        #print vars(self.RegDesc)
         self.AddrDesc = Gensym.AddrDesc
         self.AddrMem = Gensym.AddrMem
         self.leaders = Gensym.leaders
@@ -52,7 +53,7 @@ class Runner(object):
         #print self.leaders
         for ops in self.list_op_3ops:
             #print i,vars(ops)
-            print vars(self.RegDesc),self.AddrDesc
+            #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
@@ -144,8 +145,11 @@ class Runner(object):
                     RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                    print "\tPUSHL " + x
-                print "\tPUSHL $fmtstr"
+                    if self.AddrDesc[x] == None:
+                        print "\tPUSHL " + x
+                    else:
+                        print "\tPUSHL %" + self.AddrDesc[x]
+                    print "\tPUSHL $fmtstr"
                 print "\tCALL printf"
                 print "\tADDL $8, %ESP" 
                 #print vars(self.RegDesc),self.AddrDesc
@@ -182,6 +186,7 @@ class Runner(object):
                         var = getattr(self.RegDesc,R) + [x]
                         setattr(self.RegDesc,R,var)
                         self.AddrDesc[x] = R
+                        #print vars(self.RegDesc),self.AddrDesc
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
@@ -195,6 +200,7 @@ class Runner(object):
                     tmpVar=getattr(self.RegDesc,Rdash).remove(y)
                     setattr(self.RegDesc,Rdash,tmpVar)
                 i += 1
+                #print vars(self.RegDesc),self.AddrDesc
                 continue
 
             x,y,z = ops.SymtabEntry1, ops.SymtabEntry2, ops.SymtabEntry3
@@ -206,7 +212,6 @@ class Runner(object):
                     if not check_variable(z):
                         zdash,self.RegDesc,self.AddrDesc = RegFind.shiftGetReg(ops.SymtabEntry3,self.RegDesc,self.AddrDesc,i)
                 L,self.RegDesc,self.AddrDesc = RegFind.getReg(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
-            
             try:
                 if self.AddrDesc[y] == None:
                     raise Exception()

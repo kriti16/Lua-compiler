@@ -1,0 +1,29 @@
+a = 1
+b = 2
+q = 23
+w = 4
+r = 6
+t = 6
+fg = 9
+t = a + b 
+print t
+c = 3
+d = 4
+d = w + t
+print d
+x = c + fg
+print fg
+e = 5
+f = 6
+f = f * a
+print f
+y = f + e
+print y
+g = 7
+i = 9
+j = g * i
+k = 10
+h = a + b
+print h
+d = b / a
+d = d + k
