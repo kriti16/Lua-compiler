@@ -6,7 +6,7 @@ a = i1 + i2
 i1 = i2
 i2 = a
 i = i + 1
-if i <= n goto 5
+if i <= n goto 4
 print a
 fun inp
 scanf x

@@ -177,11 +177,11 @@ class Runner(object):
             
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
-
                 try:
                     if self.AddrDesc[y]==None:
                         raise Exception()
                 except:
+                #    print vars(self.RegDesc),self.AddrDesc
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
                         print "\tMOVL $"+str(y)+",%"+R
@@ -196,14 +196,26 @@ class Runner(object):
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,[y])
 
+                #print self.AddrDesc[x],self.AddrDesc[y]
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
                 tmpVar=getattr(self.RegDesc,Rdash)+[x]
+                #print tmpVar,Rdash
                 setattr(self.RegDesc,Rdash,tmpVar)
                 if self.nextUse[i][y]==-1:
-                    tmpVar=getattr(self.RegDesc,Rdash).remove(y)
+                    #print tmpVar,y,getattr(self.RegDesc,Rdash)
+                    tmpVar=getattr(self.RegDesc,Rdash)
+                    #print "###############################"
+                    tmpVar.remove(y)
                     if tmpVar == None:
                         tmpVar = [] 
                     setattr(self.RegDesc,Rdash,tmpVar)
+                    #print getattr(self.RegDesc,Rdash)
+                    try:
+                        if check_variable(y):
+                            raise Exception()
+                        self.AddrDesc[y] = None
+                    except:
+                        pass
                 i += 1
                 #print vars(self.RegDesc),self.AddrDesc
                 continue
