@@ -175,7 +175,7 @@ class Runner(object):
                 if self.AddrDesc[y] == None:
                     print "\tMOVL "+str(y)+",%ECX"
                 elif self.AddrDesc[y] != 'ECX':
-                    print "\tMOVL %"+self.AddrDesc[y]+",%ECX"
+                    print "\tMOVL %"+self.AddrDesc[z]+",%ECX"
                 if self.AddrDesc[z] == None:
                     print "\tMOVL "+str(z)+",%EDX"
                 elif self.AddrDesc[z] != 'EDX':
