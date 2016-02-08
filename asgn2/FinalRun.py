@@ -64,7 +64,7 @@ class Runner(object):
                     print "\tMOVL "+ops.SymtabEntry1+",%EDX"
                 else:
                     print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
-                    i+=1
+                i+=1
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tRET"
                 continue
@@ -190,6 +190,7 @@ class Runner(object):
                         setattr(self.RegDesc,R,var)
                         self.AddrDesc[x] = R
                         #print vars(self.RegDesc),self.AddrDesc
+                
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
@@ -201,6 +202,7 @@ class Runner(object):
                 tmpVar=getattr(self.RegDesc,Rdash)+[x]
                 #print tmpVar,Rdash
                 setattr(self.RegDesc,Rdash,tmpVar)
+                #print self.nextUse[i+1],self.nextUse[i],y
                 if self.nextUse[i][y]==-1:
                     #print tmpVar,y,getattr(self.RegDesc,Rdash)
                     tmpVar=getattr(self.RegDesc,Rdash)
