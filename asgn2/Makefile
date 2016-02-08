@@ -9,7 +9,7 @@ out: out.s
 
 out.s:
 
-	@python FinalRun.py prime.ir >out.s
+	@python FinalRun.py isprime.ir >out.s
 
 clean:
 	@rm -rf out out.o out.s

@@ -1,4 +1,4 @@
-a = 2
+a = 5
 b = 10
 if a => b goto 18
 d = call checkPrime
@@ -10,7 +10,7 @@ fun checkPrime
 i = 2
 if i => a goto 16
 c = a % i
-print c
+print i
 if c == 0 goto 17
 i = i + 1
 goto 10
