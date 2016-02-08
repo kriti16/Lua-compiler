@@ -68,10 +68,13 @@ class Runner(object):
                 continue
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
-                if self.AddrDesc[ops.SymtabEntry1] == None:
-                    print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                if check_variable(ops.SymtabEntry1):
+                    print "\tMOVL $"+ops.SymtabEntry1+",%EDX"
                 else:
-                    print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
+                    if self.AddrDesc[ops.SymtabEntry1] == None:
+                        print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                    else:
+                        print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
                 i+=1
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tRET"

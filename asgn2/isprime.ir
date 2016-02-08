@@ -1,0 +1,18 @@
+a = call inp
+if a < 2 goto 17
+d = call isp
+if d == 0 goto 17
+print a
+fun inp
+scanf x
+ret x
+fun isp
+i = 2
+if i => a goto 16
+c = a % i
+if c == 0 goto 15
+i = i + 1
+goto 10
+ret 0
+ret 1
+a = a
