@@ -13,8 +13,9 @@ class LuaParser(object):
             | chunk stat SEMI
             |  chunk stat laststat 
             | chunk stat SEMI laststat SEMI
-            |  empty '''
+            | empty'''
             p[0] = p[1]
+            
         def p_block_chunk(p):
             ''' block : chunk'''
             p[0] = p[1]
@@ -41,8 +42,12 @@ class LuaParser(object):
 
         def p_parlist_namelist(p):
             '''parlist : namelist 
-            |  namelist COMMA TRPLDOTS  
+            |  namelist comtrp  %prec comtrp
             | TRPLDOTS'''
+
+        def p_comtrp_parlist(p):
+            'comtrp : COMMA TRPLDOTS'
+
         def p_laststat_break(p):
             '''laststat : return explist 
             | return 
@@ -60,10 +65,6 @@ class LuaParser(object):
         def p_comid(p):
             '''comid : COMMA names comid 
             | empty'''
-
-        def p_comexp(p):
-            '''comexp : COMMA exp comexp 
-            | empty'''
             
         def p_ifblock_elseif(p):
             '''ifblock : ifblock elseif exp then block 
@@ -75,7 +76,6 @@ class LuaParser(object):
 
         def p_var_names(p):
             '''var :  names 
-            | prefixexp 
             | prefixexp LSQUARE exp RSQUARE 
             | prefixexp SDOT names '''
 
@@ -83,7 +83,8 @@ class LuaParser(object):
             'namelist :  names comid'
 
         def p_explist_exp(p):
-            'explist : comexp exp'
+            '''explist : explist COMMA exp
+            | exp '''
 
         def p_exp_oper(p):
             '''exp :  nil 
@@ -93,9 +94,23 @@ class LuaParser(object):
             | STRING 
             | TRPLDOTS 
             | function 
-	    | prefixexp 
-            | exp binop exp 
-            | unop exp 
+	        | prefixexp 
+            | exp PLUS exp
+            | exp MINUS exp
+            | exp TIMES exp
+            | exp DIVIDE exp
+            | exp POWER exp
+            | exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp
+            | exp and exp
+            | exp or exp
+            | exp MODULO exp
+            | exp DBLDOTS exp
+            | unop exp  %prec unop
             | tableconstructor'''
 
         def p_Number_ints(p):
@@ -111,23 +126,6 @@ class LuaParser(object):
             ''' prefixexp : var 
             |  LPAREN exp RPAREN '''
 
-        def p_binop_ops(p):
-            ''' binop : PLUS
-            | MINUS
-            | TIMES
-            | DIVIDE
-            | POWER
-            | LT
-            | LE
-            | GT
-            | GE
-            | NE
-            | CHECKEQ
-            | and
-            | or
-            | MODULO
-            | DBLDOTS'''
-
         def p_unop_ops(p):
             '''unop : MINUS
             | not
@@ -140,10 +138,10 @@ class LuaParser(object):
 
         def p_fieldlist_fieldseplist(p):
             '''fieldlist : field fieldseplist fieldsep
-            | field fieldseplist fieldsep fieldsep'''
+            | field fieldseplist'''
             
         def p_fieldseplist_field(p):
-            ''' fieldseplist : fieldsep field fieldseplist 
+            ''' fieldseplist : fieldseplist fieldsep field 
             | empty'''
 
         def p_field_exp(p):
@@ -154,13 +152,27 @@ class LuaParser(object):
         def p_fieldsep_seps(p):
             '''fieldsep : COMMA 
             | SEMI'''
+
         def p_error(p):
             print("Syntax error in input!")
 
         def p_names_id(p):
             '''names : ID
             | RESID'''
+
+        precedence = (
+            ('nonassoc','comtrp'),
+            ('nonassoc','COMMA'),
+            ('left','LT','GT','LE','GE','NE','CHECKEQ','and','or'),
+            ('right','DBLDOTS'),
+            ('left', 'PLUS', 'MINUS'),
+            ('left', 'TIMES', 'DIVIDE','MODULO'),
+            ('right', 'unop'),  #uminus left to handle
+            ('right', 'POWER')
+        )
+
         self.parser = yacc.yacc()
+
 if __name__ == '__main__':
     parser = LuaParser().parser
     while True:
