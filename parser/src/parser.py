@@ -7,12 +7,15 @@ class LuaParser(object):
         lexerClass = Lualexer()
         lexer = lexerClass.lexer
         tokens = lexerClass.tokenList
+
+        def p_sdash_start(p):
+        	'''sdash : chunk
+        	| chunk laststat
+        	| chunk laststat SEMI'''
     
-        def p_chunk_start(p):
+        def p_chunk(p):
             '''chunk : chunk stat
             | chunk stat SEMI
-            |  chunk stat laststat 
-            | chunk stat SEMI laststat SEMI
             | empty'''
             p[0] = p[1]
             
