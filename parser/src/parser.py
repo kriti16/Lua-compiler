@@ -1,5 +1,15 @@
 from lexer import Lualexer
 import ply.yacc as yacc
+import sys
+import logging
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
 
 class LuaParser(object):
 
@@ -16,30 +26,31 @@ class LuaParser(object):
         def p_chunk(p):
             '''chunk : chunk stat
             | chunk stat SEMI
-            | empty'''
+    		| stat
+    		| stat SEMI'''
             p[0] = p[1]
             
         def p_block_chunk(p):
-            ''' block : chunk'''
+            ''' block : sdash'''
             p[0] = p[1]
             
         def p_stat_statement(p):
             '''stat :  varlist EQUALS explist  
             | do block end 
             | while exp do block end 
-	    | repeat block until exp 
-	    | if exp then block ifblock else block end 
+	    	| repeat block until exp 
+	    	| if exp then block ifblock else block end 
             | if exp then block ifblock  end 
-	    | for names EQUALS exp COMMA exp  do block end 
+	    	| for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
-	    | for namelist in explist do block end 
-	    | local namelist 
+	    	| for namelist in explist do block end 
+	    	| local namelist 
             | local namelist EQUALS explist
             | function funcname funcbody
             | local function names funcbody'''
 
         def p_funcbody_parlist(p):
-            '''funcbody : LPAREN  RPAREN block end
+            '''funcbody : LPAREN RPAREN block end
             | LPAREN  parlist RPAREN block end'''
 
 
@@ -57,7 +68,7 @@ class LuaParser(object):
             | break'''
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
-            | names dotid '''
+            | names'''
         def p_dotid(p):
             '''dotid : SDOT names dotid 
             | empty'''
@@ -113,8 +124,8 @@ class LuaParser(object):
             | exp or exp
             | exp MODULO exp
             | exp DBLDOTS exp
-            | unop exp  %prec unop
-            | tableconstructor'''
+            | tableconstructor
+			| unop exp  %prec unop'''
 
         def p_Number_ints(p):
             '''Number : INTEGER 
@@ -174,16 +185,20 @@ class LuaParser(object):
             ('right', 'POWER')
         )
 
-        self.parser = yacc.yacc()
+        self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
+
+fname=sys.argv[1]
+f = open(fname,'r')
+data = f.read()
+f.close()
+
+# Set up a logging object
+
+# parser.parse(input,debug=log)
+
+# yacc.yacc(debug=True,debuglog=log)
 
 if __name__ == '__main__':
-    parser = LuaParser().parser
-    while True:
-        try:
-            s = raw_input('calc > ')
-        except EOFError:
-            break
-        if not s:
-            continue
-        result = parser.parse(s)
-        print(result)
+    parser = LuaParser().parser      
+    result = parser.parse(data,debug=log)
+    print(result)

@@ -1,0 +1,166 @@
+   yacc.py: 360:PLY: PARSE DEBUG START
+   yacc.py: 408:
+   yacc.py: 409:State  : 0
+   yacc.py: 433:Stack  : . LexToken(function,'function',1,0)
+   yacc.py: 443:Action : Shift and goto state 11
+   yacc.py: 408:
+   yacc.py: 409:State  : 11
+   yacc.py: 433:Stack  : function . LexToken(ID,'get_all_factors',1,9)
+   yacc.py: 443:Action : Shift and goto state 15
+   yacc.py: 408:
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : function ID . LexToken(LPAREN,'(',1,24)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with [<str @ 0x7f771e8ece30>] and goto state 54
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 54
+   yacc.py: 433:Stack  : function names . LexToken(LPAREN,'(',1,24)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 103
+   yacc.py: 542:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 103
+   yacc.py: 433:Stack  : function names empty . LexToken(LPAREN,'(',1,24)
+   yacc.py: 469:Action : Reduce rule [dotid -> empty] with [None] and goto state 102
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 102
+   yacc.py: 433:Stack  : function names dotid . LexToken(LPAREN,'(',1,24)
+   yacc.py: 469:Action : Reduce rule [funcname -> names dotid] with [None,None] and goto state 53
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 53
+   yacc.py: 433:Stack  : function funcname . LexToken(LPAREN,'(',1,24)
+   yacc.py: 443:Action : Shift and goto state 100
+   yacc.py: 408:
+   yacc.py: 409:State  : 100
+   yacc.py: 433:Stack  : function funcname LPAREN . LexToken(ID,'number',1,25)
+   yacc.py: 443:Action : Shift and goto state 15
+   yacc.py: 408:
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : function funcname LPAREN ID . LexToken(RPAREN,')',1,31)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['number'] and goto state 52
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 52
+   yacc.py: 433:Stack  : function funcname LPAREN names . LexToken(RPAREN,')',1,31)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 92
+   yacc.py: 542:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 92
+   yacc.py: 433:Stack  : function funcname LPAREN names empty . LexToken(RPAREN,')',1,31)
+   yacc.py: 469:Action : Reduce rule [comid -> empty] with [None] and goto state 94
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 94
+   yacc.py: 433:Stack  : function funcname LPAREN names comid . LexToken(RPAREN,')',1,31)
+   yacc.py: 469:Action : Reduce rule [namelist -> names comid] with [None,None] and goto state 136
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 136
+   yacc.py: 433:Stack  : function funcname LPAREN namelist . LexToken(RPAREN,')',1,31)
+   yacc.py: 469:Action : Reduce rule [parlist -> namelist] with [None] and goto state 138
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 138
+   yacc.py: 433:Stack  : function funcname LPAREN parlist . LexToken(RPAREN,')',1,31)
+   yacc.py: 443:Action : Shift and goto state 157
+   yacc.py: 408:
+   yacc.py: 409:State  : 157
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN . LexToken(local,'local',1,35)
+   yacc.py: 443:Action : Shift and goto state 10
+   yacc.py: 408:
+   yacc.py: 409:State  : 10
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local . LexToken(ID,'factors',1,41)
+   yacc.py: 443:Action : Shift and goto state 15
+   yacc.py: 408:
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local ID . LexToken(EQUALS,'=',1,49)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['factors'] and goto state 52
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 52
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local names . LexToken(EQUALS,'=',1,49)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 92
+   yacc.py: 542:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 92
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local names empty . LexToken(EQUALS,'=',1,49)
+   yacc.py: 469:Action : Reduce rule [comid -> empty] with [None] and goto state 94
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 94
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local names comid . LexToken(EQUALS,'=',1,49)
+   yacc.py: 469:Action : Reduce rule [namelist -> names comid] with [None,None] and goto state 51
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 51
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist . LexToken(EQUALS,'=',1,49)
+   yacc.py: 443:Action : Shift and goto state 98
+   yacc.py: 408:
+   yacc.py: 409:State  : 98
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist EQUALS . LexToken(INTEGER,'5',1,51)
+   yacc.py: 443:Action : Shift and goto state 26
+   yacc.py: 408:
+   yacc.py: 409:State  : 26
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist EQUALS INTEGER . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['5'] and goto state 33
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist EQUALS Number . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [None] and goto state 86
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 86
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist EQUALS exp . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [None] and goto state 135
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 135
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN local namelist EQUALS explist . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [stat -> local namelist EQUALS explist] with ['local',None,'=',None] and goto state 13
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 13
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN stat . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [None] and goto state 3
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 3
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN chunk . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk] with [None] and goto state 55
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 55
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN sdash . LexToken(end,'end',1,474)
+   yacc.py: 469:Action : Reduce rule [block -> sdash] with [None] and goto state 169
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 169
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN block . LexToken(end,'end',1,474)
+   yacc.py: 443:Action : Shift and goto state 177
+   yacc.py: 408:
+   yacc.py: 409:State  : 177
+   yacc.py: 433:Stack  : function funcname LPAREN parlist RPAREN block end . $end
+   yacc.py: 469:Action : Reduce rule [funcbody -> LPAREN parlist RPAREN block end] with ['(',None,')',None,'end'] and goto state 99
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 99
+   yacc.py: 433:Stack  : function funcname funcbody . $end
+   yacc.py: 469:Action : Reduce rule [stat -> function funcname funcbody] with ['function',None,None] and goto state 13
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 13
+   yacc.py: 433:Stack  : stat . $end
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [None] and goto state 3
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 3
+   yacc.py: 433:Stack  : chunk . $end
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk] with [None] and goto state 17
+   yacc.py: 503:Result : <NoneType @ 0x91a870> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 17
+   yacc.py: 433:Stack  : sdash . $end
+   yacc.py: 564:Done   : Returning <NoneType @ 0x91a870> (None)
+   yacc.py: 565:PLY: PARSE DEBUG END
