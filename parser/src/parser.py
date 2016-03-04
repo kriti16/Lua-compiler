@@ -151,17 +151,24 @@ class LuaParser(object):
             | LCURLY RCURLY'''
 
         def p_fieldlist_fieldseplist(p):
-            '''fieldlist : field fieldseplist fieldsep
-            | field fieldseplist'''
+            '''fieldlist : fieldArray fieldseplistArray fieldsep
+            | fieldArray fieldseplistArray
+            | fieldDict fieldseplistDict fieldsep
+            | fieldDict fieldseplistDict'''
             
-        def p_fieldseplist_field(p):
-            ''' fieldseplist : fieldseplist fieldsep field 
+        def p_fieldseplistArray_field(p):
+            ''' fieldseplistArray : fieldseplistArray fieldsep fieldArray 
             | empty'''
 
-        def p_field_exp(p):
-            '''field : LSQUARE exp RSQUARE EQUALS exp 
-            | names EQUALS exp 
-            | exp'''
+        def p_fieldseplistDict_field(p):
+            ''' fieldseplistDict : fieldseplistDict fieldsep fieldDict
+            | empty'''
+
+        def p_fieldDict_exp(p):
+            '''fieldDict : LSQUARE exp RSQUARE EQUALS exp'''
+
+        def p_fieldArray_exp(p):
+            '''fieldArray : exp'''
 
         def p_fieldsep_seps(p):
             '''fieldsep : COMMA 
@@ -185,7 +192,7 @@ class LuaParser(object):
             ('right', 'POWER')
         )
 
-        self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
+        self.parser = yacc.yacc(debug=True,debuglog=log)
 
 fname=sys.argv[1]
 f = open(fname,'r')

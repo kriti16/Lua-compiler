@@ -48,8 +48,8 @@ class Lualexer(object):
         #r'--\[\[  (. | \n)* --\]\]'
         t_LPAREN  = r'\(' #left parenthesis
         t_RPAREN  = r'\)' #right parenthesis
-        t_RCURLY = r'{'
-        t_LCURLY = r'}'
+        t_RCURLY = r'}'
+        t_LCURLY = r'{'
         t_LSQUARE = r'\['
         t_RSQUARE = r']'
         t_LT      = r'<' #less than
