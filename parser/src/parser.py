@@ -26,8 +26,10 @@ class LuaParser(object):
         def p_chunk(p):
             '''chunk : chunk stat
             | chunk stat SEMI
-    		| stat
-    		| stat SEMI'''
+    	    | stat SEMI
+            | empty
+            | stat
+            '''
             p[0] = p[1]
             
         def p_block_chunk(p):
@@ -39,13 +41,13 @@ class LuaParser(object):
             | do block end
             | functioncall
             | while exp do block end 
-	    	| repeat block until exp 
-	    	| if exp then block ifblock else block end 
+	    | repeat block until exp 
+	    | if exp then block ifblock else block end 
             | if exp then block ifblock  end 
-	    	| for names EQUALS exp COMMA exp  do block end 
+	    | for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
-	    	| for namelist in explist do block end 
-	    	| local namelist 
+	    | for namelist in explist do block end 
+	    | local namelist 
             | local namelist EQUALS explist
             | function funcname funcbody
             | local function names funcbody'''
@@ -72,7 +74,7 @@ class LuaParser(object):
             'comtrp : COMMA TRPLDOTS'
 
         def p_laststat_break(p):
-            '''laststat : return explist 
+            '''laststat : return retexplist 
             | return 
             | break'''
         def p_funcname_names(p):
@@ -109,6 +111,7 @@ class LuaParser(object):
             '''explist : explist COMMA exp
             | exp '''
 
+
         def p_exp_oper(p):
             '''exp :  nil 
             | false 
@@ -117,7 +120,7 @@ class LuaParser(object):
             | STRING 
             | TRPLDOTS 
             | function 
-	        | prefixexp 
+	    | prefixexp 
             | exp PLUS exp
             | exp MINUS exp
             | exp TIMES exp
@@ -134,8 +137,42 @@ class LuaParser(object):
             | exp MODULO exp
             | exp DBLDOTS exp
             | tableconstructor
-			| unop exp  %prec unop'''
+	    | unop exp  %prec unop'''
 
+
+        def p_retexplist_exp(p):
+            '''retexplist : retexplist COMMA retexp
+            | retexp '''
+
+
+        def p_retexp_oper(p):
+            '''retexp :  nil 
+            | false 
+            | true 
+            | Number 
+            | STRING 
+            | TRPLDOTS 
+            | prefixexp 
+            | exp PLUS exp
+            | exp MINUS exp
+            | exp TIMES exp
+            | exp DIVIDE exp
+            | exp POWER exp
+            | exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp
+            | exp and exp
+            | exp or exp
+            | exp MODULO exp
+            | exp DBLDOTS exp
+            | tableconstructor
+	    | unop exp  %prec unop'''
+
+
+            
         def p_Number_ints(p):
             '''Number : INTEGER 
             | FLOAT 
@@ -186,6 +223,8 @@ class LuaParser(object):
 
         precedence = (
             ('nonassoc','comtrp'),
+            ('left','LPAREN'),
+            ('right','RPAREN'),
             ('right','COMMA'),
             ('left','LT','GT','LE','GE','NE','CHECKEQ','and','or'),
             ('right','DBLDOTS'),
@@ -195,8 +234,8 @@ class LuaParser(object):
             ('right', 'POWER')
         )
 
-        #self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
-        self.parser = yacc.yacc(start='sdash')
+        self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
+#        self.parser = yacc.yacc(start='sdash')
 
 fname=sys.argv[1]
 f = open(fname,'r')
@@ -211,6 +250,6 @@ f.close()
 
 if __name__ == '__main__':
     parser = LuaParser().parser      
-#    result = parser.parse(data,debug=log)
-    result = parser.parse(data)
+    result = parser.parse(data,debug=log)
+#    result = parser.parse(data)
     print(result)
