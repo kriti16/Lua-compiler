@@ -103,7 +103,7 @@ class LuaParser(object):
             | prefixexp SDOT names '''
 
         def p_namelist_names(p):
-            'namelist :  names COMMA comid'
+            'namelist :  names  comid'
 
         def p_explist_exp(p):
             '''explist : explist COMMA exp

@@ -1,16 +1,16 @@
-function get_all_factors(number, bun)
+function get_all_factors(number)
   local factors =  {}
   -- for possible_factor=1, math.sqrt(number), 1 do
   --   local remainder = number%possible_factor
     
      if remainder == 0 then
-       local factor, factor_pair = possible_factor, number/possible_factor
+     --  local factor, factor_pair = possible_factor, number/possible_factor
       table.insert(factors, factor )
       a = 3
-       if factor ~= factor_pair then
-         table.insert(factors, factor_pair)
-       end
-     end
+     --  if factor ~= factor_pair then
+     --    table.insert(factors, factor_pair)
+     -- end
+     --end
   end
   -- table.sort(factors)
   -- return factors
