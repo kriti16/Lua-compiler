@@ -142,12 +142,13 @@ class LuaParser(object):
             | HEX '''
         
         def p_empty(p):
-            'empty :'
+            'empty : '
             pass
 
         def p_prefixexp_exp(p):
             ''' prefixexp : var 
-            |  LPAREN exp RPAREN '''
+            |  LPAREN exp RPAREN 
+            | functioncall'''
 
         def p_unop_ops(p):
             '''unop : MINUS
@@ -173,7 +174,7 @@ class LuaParser(object):
             | exp'''
 
         def p_fieldsep_seps(p):
-            '''fieldsep : COMMA 
+          '''fieldsep : COMMA 
             | SEMI'''
 
         def p_error(p):
@@ -185,7 +186,7 @@ class LuaParser(object):
 
         precedence = (
             ('nonassoc','comtrp'),
-            ('nonassoc','COMMA'),
+            ('right','COMMA'),
             ('left','LT','GT','LE','GE','NE','CHECKEQ','and','or'),
             ('right','DBLDOTS'),
             ('left', 'PLUS', 'MINUS'),
@@ -194,7 +195,8 @@ class LuaParser(object):
             ('right', 'POWER')
         )
 
-        self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
+        #self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
+        self.parser = yacc.yacc(start='sdash')
 
 fname=sys.argv[1]
 f = open(fname,'r')
@@ -209,5 +211,6 @@ f.close()
 
 if __name__ == '__main__':
     parser = LuaParser().parser      
-    result = parser.parse(data,debug=log)
+#    result = parser.parse(data,debug=log)
+    result = parser.parse(data)
     print(result)
