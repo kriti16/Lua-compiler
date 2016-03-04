@@ -1,3 +1,1 @@
-function try(a)
-   return a
-end
+a = {1, function try(a) print("a") end }

@@ -1,8 +1,8 @@
+from __future__ import print_function
 from lexer import Lualexer
 import ply.yacc as yacc
 import sys
 import logging
-
 logging.basicConfig(
     level = logging.DEBUG,
     filename = "parselog.txt",
@@ -10,13 +10,13 @@ logging.basicConfig(
     format = "%(filename)10s:%(lineno)4d:%(message)s"
 )
 log = logging.getLogger()
-
 class node(object):
 	def __init__(self, value, children = []):
 		self.value = value
 		self.children = children
 
 
+proto = type(node(5))
 
 class LuaParser(object):
 
@@ -35,7 +35,6 @@ class LuaParser(object):
             '''chunk : chunk stat
             | chunk stat SEMI
     	    | stat SEMI
-            | empty
             | stat
             '''
             p[0] = node ("CHUNK",p[1:])
@@ -164,8 +163,8 @@ class LuaParser(object):
             | exp MODULO exp
             | exp DBLDOTS exp
             | tableconstructor
-	    		| unop exp  %prec unop'''
-	    		p[0] = node ("EXP",p[1:])
+            | unop exp  %prec unop'''
+	    p[0] = node ("EXP",p[1:])
 
 
         def p_retexplist_exp(p):
@@ -198,8 +197,8 @@ class LuaParser(object):
             | exp MODULO exp
             | exp DBLDOTS exp
             | tableconstructor
-	    		| unop exp  %prec unop'''
-	    		p[0] = node ("RETEXP",p[1:])
+	    | unop exp  %prec unop'''
+	    p[0] = node ("RETEXP",p[1:])
 
 
             
@@ -250,8 +249,8 @@ class LuaParser(object):
 
         def p_fieldsep_seps(p):
           '''fieldsep : COMMA 
-            | SEMI'''
-            p[0] = node ("FIELDSEP",p[1:])
+          | SEMI'''
+          p[0] = node ("FIELDSEP",p[1:])
 
         def p_error(p):
             print("Syntax error in input!")
@@ -283,30 +282,28 @@ def print_right_most(start):
 	done = 0
 	print("<p> <font color=\"red\"> START </font> </p>")
 	while not done:
-		right = -1;
-		for i in range(len(der)):
-			if type(der[i]) == proto:
-				right = i
-			
-		print("<p>" , end = " ")
-		for i in range(len(der)):
-			if type(der[i]) == proto:
-				if i == right:
-					print("<font color=\"red\">", end = " ")
-					print(der[i].value,end=" ")
-					print("</font> ", end = " ")
-				else:
-					print(der[i].value,end=" ")
-			else:
-				print(der[i],end=" ")
-			
-			
-		print("</p>")
-
-		if right!=-1:
-			der = der[:right] + der[right].children + der[right+1:]
+	    right = -1;
+	    for i in range(len(der)):
+		if type(der[i]) == proto:
+		    right = i	
+	    print ("<p>" , end = " ")
+	    for i in range(len(der)):
+		if type(der[i]) == proto:
+		    if i == right:
+			print("<font color=\"red\">", end = " ")
+			print(der[i].value,end=" ")
+			print("</font> ", end = " ")
+		    else:
+			print(der[i].value,end=" ")
 		else:
-			done = 1
+		    print(der[i],end=" ")
+			
+			
+	    print("</p>")
+	    if right!=-1:
+		der = der[:right] + der[right].children + der[right+1:]
+	    else:
+		done = 1
 
 			
 
@@ -327,4 +324,4 @@ if __name__ == '__main__':
     parser = LuaParser().parser      
     result = parser.parse(data,debug=log)
 #    result = parser.parse(data)
-    print(result)
+    print_right_most(result)
