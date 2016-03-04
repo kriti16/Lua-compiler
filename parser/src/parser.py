@@ -36,7 +36,8 @@ class LuaParser(object):
             
         def p_stat_statement(p):
             '''stat :  varlist EQUALS explist  
-            | do block end 
+            | do block end
+            | functioncall
             | while exp do block end 
 	    	| repeat block until exp 
 	    	| if exp then block ifblock else block end 
@@ -53,7 +54,15 @@ class LuaParser(object):
             '''funcbody : LPAREN RPAREN block end
             | LPAREN  parlist RPAREN block end'''
 
+        def p_functioncall_prefix(p):
+            '''functioncall : prefixexp args'''
 
+
+        def p_args_explist(p):
+            '''args : LPAREN RPAREN
+            | LPAREN explist RPAREN
+            | tableconstructor
+            | STRING'''
         def p_parlist_namelist(p):
             '''parlist : namelist 
             |  namelist comtrp  %prec comtrp
@@ -94,7 +103,7 @@ class LuaParser(object):
             | prefixexp SDOT names '''
 
         def p_namelist_names(p):
-            'namelist :  names comid'
+            'namelist :  names COMMA comid'
 
         def p_explist_exp(p):
             '''explist : explist COMMA exp

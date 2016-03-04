@@ -48,8 +48,8 @@ class Lualexer(object):
         #r'--\[\[  (. | \n)* --\]\]'
         t_LPAREN  = r'\(' #left parenthesis
         t_RPAREN  = r'\)' #right parenthesis
-        t_RCURLY = r'{'
-        t_LCURLY = r'}'
+        t_RCURLY = r'}'
+        t_LCURLY = r'{'
         t_LSQUARE = r'\['
         t_RSQUARE = r']'
         t_LT      = r'<' #less than
@@ -57,7 +57,7 @@ class Lualexer(object):
         t_GT      = r'>' #greater than
         t_GE      = r'>=' #greter than equal
         t_NE      = r'~=' #not equal 
-        t_COMMA   = r'\,' #comma
+        t_COMMA   = r',' #comma
         t_SEMI    = r';' #semicolon
         t_INTEGER = r'\d+([eE]\d+)?'    #integer 
         #t_FLOAT   = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+)|([1-9]\d*e[\+-]?\d+))' #float
