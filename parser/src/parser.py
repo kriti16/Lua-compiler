@@ -49,23 +49,15 @@ class LuaParser(object):
             | function funcname funcbody
             | local function names funcbody'''
 
-        def p_funcbody_parlist(p):
+        def p_funcbody_namelist(p):
             '''funcbody : LPAREN RPAREN block end
-            | LPAREN  parlist RPAREN block end'''
-
-
-        def p_parlist_namelist(p):
-            '''parlist : namelist 
-            |  namelist comtrp  %prec comtrp
-            | TRPLDOTS'''
-
-        def p_comtrp_parlist(p):
-            'comtrp : COMMA TRPLDOTS'
+            | LPAREN namelist RPAREN block end'''
 
         def p_laststat_break(p):
             '''laststat : return explist 
             | return 
             | break'''
+
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
             | names'''
@@ -182,7 +174,6 @@ class LuaParser(object):
             | RESID'''
 
         precedence = (
-            ('nonassoc','comtrp'),
             ('nonassoc','COMMA'),
             ('left','LT','GT','LE','GE','NE','CHECKEQ','and','or'),
             ('right','DBLDOTS'),
