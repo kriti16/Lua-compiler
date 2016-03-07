@@ -24,10 +24,14 @@ class LuaParser(object):
         lexerClass = Lualexer()
         lexer = lexerClass.lexer
         tokens = lexerClass.tokenList
+        errors_list = []
 
+
+                    
         def p_sdash_start(p):
         	'''sdash : chunk
         	| chunk laststat
+                | laststat
         	| chunk laststat SEMI'''
         	p[0] = node ("SCHUNK",p[1:])
     
@@ -253,8 +257,8 @@ class LuaParser(object):
           p[0] = node ("FIELDSEP",p[1:])
 
         def p_error(p):
-            print("Syntax error in input!")
-
+            print("Syntax error at line number" + str(p.lineno) +" with token "+p.value)
+            print ("\n")
         def p_names_id(p):
             '''names : ID
             | RESID'''
@@ -290,9 +294,10 @@ def print_right_most(start):
 	    for i in range(len(der)):
 		if type(der[i]) == proto:
 		    if i == right:
-			print("<font color=\"red\">", end = " ")
+			print("<font color=\"blue\">", end = " ")
 			print(der[i].value,end=" ")
 			print("</font> ", end = " ")
+                        
 		    else:
 			print(der[i].value,end=" ")
 		else:
