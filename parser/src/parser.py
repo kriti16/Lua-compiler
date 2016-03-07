@@ -65,7 +65,7 @@ class LuaParser(object):
             | local function names funcbody'''
             p[0] = node ("STAT",p[1:])
 
-        def p_funcbody_parlist(p):
+        def p_funcbody_namelist(p):
             '''funcbody : LPAREN RPAREN block end
             | LPAREN  parlist RPAREN block end'''
             p[0] = node ("FUNCBODY",p[1:])
@@ -241,8 +241,8 @@ class LuaParser(object):
             | field fieldseplist'''
             p[0] = node ("FIELDLIST",p[1:])
             
-        def p_fieldseplist_field(p):
-            ''' fieldseplist : fieldseplist fieldsep field 
+        def p_fieldseplistArray_field(p):
+            ''' fieldseplistArray : fieldseplistArray fieldsep fieldArray 
             | empty'''
             p[0] = node ("FIELDSEPLIST",p[1:])
 

@@ -16,7 +16,7 @@ class Lualexer(object):
             'LPAREN','RPAREN','LT','LE','GT','GE','NE',
             'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
             'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-            'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS', 'TRPLDOTS'
+            'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS'
         )
         tokens = keywords + operators
         t_ignore = ' \t \n'
@@ -41,7 +41,7 @@ class Lualexer(object):
         t_TDASH = r'---' #Triple Dot
         t_COLON = r':' #Colon
         t_DBLDOTS = r'\.\.' #concatenation
-        t_TRPLDOTS = r'\.\.\.' 
+        #t_TRPLDOTS = r'\.\.\.' 
         t_ignore_COMMENT  = r'--[^\[][^\[](.*)'
         t_ignore_MULTCOMMENT = r'--\[\[ [^\]]*[^\]]* \]\]'
         #r'--\[\[  [^(--\]\])]* --\]\]'
