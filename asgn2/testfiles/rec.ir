@@ -1,0 +1,14 @@
+call myfunc
+goto 13
+fun myfunc
+g0 = g
+if g0 == 0 goto 6
+goto 7
+ret
+g1 = g
+print g1
+g2 = g
+g3 = g2 - 1
+g = g3
+call myfunc
+g0 = g0
