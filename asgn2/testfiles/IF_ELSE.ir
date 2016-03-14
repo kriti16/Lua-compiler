@@ -1,0 +1,17 @@
+j =1
+sum =0
+i = 0
+j = 1
+goto 13
+d1732 = j % 10
+if d1732 == 0 goto 8
+goto 10
+print j
+goto 11
+sum = sum + i
+i = i + 1
+j = i * 2
+if i <= 99 goto 5
+goto 15
+print sum
+d1736 = 0 
