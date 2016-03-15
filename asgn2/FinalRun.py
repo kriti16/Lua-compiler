@@ -62,6 +62,7 @@ class Runner(object):
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
+                self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Array':
                 i += 1
@@ -116,6 +117,7 @@ class Runner(object):
                     regY = self.AddrDesc[Entry2]
                 except:
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry1,self.RegDesc,self.AddrDesc,i)
+                    #print vars(self.RegDesc),self.AddrDesc
                     regY = R
                     if check_variable(Entry2):
                         print "\tMOVL $"+Entry2 +",%"+R

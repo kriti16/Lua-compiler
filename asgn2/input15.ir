@@ -1,7 +1,0 @@
-a = call inp
-b = call inp
-f = a > b
-print f
-fun inp
-scanf x
-ret x

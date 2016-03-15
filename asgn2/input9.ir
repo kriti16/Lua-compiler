@@ -1,7 +1,0 @@
-b = 3
-c = 4
-if c < 4 goto 5
-print b
-goto 6
-print c
-d = 3

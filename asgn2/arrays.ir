@@ -1,6 +1,0 @@
-array z[10]
-x = 3
-y = 0
-z[y] = x
-d = z[y]
-print d

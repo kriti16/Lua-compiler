@@ -169,7 +169,7 @@ class LuaParser(object):
             | exp DBLDOTS exp
             | tableconstructor
             | unop exp  %prec unop'''
-	    p[0] = node ("EXP",p[1:])
+            p[0] = node ("EXP",p[1:])
 
 
         def p_retexplist_exp(p):
@@ -203,7 +203,7 @@ class LuaParser(object):
             | exp DBLDOTS exp
             | tableconstructor
 	    | unop exp  %prec unop'''
-	    p[0] = node ("RETEXP",p[1:])
+            p[0] = node ("RETEXP",p[1:])
 
 
             
@@ -282,36 +282,34 @@ class LuaParser(object):
 #        self.parser = yacc.yacc(start='sdash')
 
 
-def print_right_most(start):
-	der = [start]
-	done = 0
-	print("<p> <font color=\"red\"> START </font> </p>")
-	while not done:
-	    right = -1;
-	    for i in range(len(der)):
-		if type(der[i]) == proto:
-		    right = i	
-	    print ("<p>" , end = " ")
-	    for i in range(len(der)):
-		if type(der[i]) == proto:
-		    if i == right:
-			print("<font color=\"blue\">", end = " ")
-			print(der[i].value,end=" ")
-			print("</font> ", end = " ")
-                        
-		    else:
-			print(der[i].value,end=" ")
-		else:
-		    print(der[i],end=" ")
-			
-			
-	    print("</p>")
-	    if right!=-1:
-		der = der[:right] + der[right].children + der[right+1:]
-	    else:
-		done = 1
 
-			
+def print_right_most(start):
+        der = [start]
+        done = 0
+        print("<p> <font color=\"red\"> START </font> </p>")
+        while not done:
+                right = -1
+                for i in range(len(der)):
+                        if type(der[i]) == proto:
+                                right = i
+                print ("<p>" , end = " ")
+                for i in range(len(der)):
+                        if type(der[i]) == proto:
+                                if i == right:
+                                        print("<font color=\"blue\">", end = " ")
+                                        print(der[i].value,end=" ")
+                                        print("</font> ", end = " ")
+                                else:
+                                        print(der[i].value,end=" ")
+                        else:
+                                print(der[i],end=" ")
+                print("</p>")
+                if right != -1:
+                        der = der[:right] + der[right].children + der[right+1:]
+                else:
+                        done = 1
+
+
 
 fname=sys.argv[1]
 f = open(fname,'r')

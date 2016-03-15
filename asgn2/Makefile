@@ -9,7 +9,7 @@ out: out.s
 	@gcc -m32 out.o -o out
 
 out.s:
-	@python FinalRun.py negDiv.ir > out.s
+	@python FinalRun.py testF.ir > out.s
 	@rm *.pyc
 
 clean:

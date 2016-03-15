@@ -14,5 +14,4 @@ if j <= 9 goto 5
 goto 14
 i = i + 1
 if i <= 9 goto 3
-goto 17
 print res
