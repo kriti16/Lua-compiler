@@ -2,8 +2,8 @@
    yacc.py:3339:
    yacc.py:3340:Unused terminals:
    yacc.py:3341:
-   yacc.py:3344:    TDASH
    yacc.py:3344:    NEWLINE
+   yacc.py:3344:    TDASH
    yacc.py:3348:
    yacc.py:3349:Grammar
    yacc.py:3350:

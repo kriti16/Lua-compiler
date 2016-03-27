@@ -1,0 +1,235 @@
+   yacc.py:3288:Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+   yacc.py:3339:
+   yacc.py:3340:Unused terminals:
+   yacc.py:3341:
+   yacc.py:3344:    NEWLINE
+   yacc.py:3344:    TDASH
+   yacc.py:3348:
+   yacc.py:3349:Grammar
+   yacc.py:3350:
+   yacc.py:3352:Rule 0     S' -> sdash
+   yacc.py:3352:Rule 1     sdash -> chunk
+   yacc.py:3352:Rule 2     sdash -> chunk laststat
+   yacc.py:3352:Rule 3     sdash -> laststat
+   yacc.py:3352:Rule 4     sdash -> chunk laststat SEMI
+   yacc.py:3352:Rule 5     chunk -> chunk stat
+   yacc.py:3352:Rule 6     chunk -> chunk stat SEMI
+   yacc.py:3352:Rule 7     chunk -> stat SEMI
+   yacc.py:3352:Rule 8     chunk -> stat
+   yacc.py:3352:Rule 9     block -> sdash
+   yacc.py:3352:Rule 10    stat -> varlist EQUALS explist
+   yacc.py:3352:Rule 11    stat -> do block end
+   yacc.py:3352:Rule 12    stat -> functioncall
+   yacc.py:3352:Rule 13    stat -> while exp do block end
+   yacc.py:3352:Rule 14    stat -> repeat block until exp
+   yacc.py:3352:Rule 15    stat -> if exp then block ifblock else block end
+   yacc.py:3352:Rule 16    stat -> if exp then block ifblock end
+   yacc.py:3352:Rule 17    stat -> for names EQUALS exp COMMA exp do block end
+   yacc.py:3352:Rule 18    stat -> for names EQUALS exp COMMA exp COMMA exp do block end
+   yacc.py:3352:Rule 19    stat -> for namelist in explist do block end
+   yacc.py:3352:Rule 20    stat -> local namelist
+   yacc.py:3352:Rule 21    stat -> local namelist EQUALS explist
+   yacc.py:3352:Rule 22    stat -> function funcname funcbody
+   yacc.py:3352:Rule 23    stat -> local function names funcbody
+   yacc.py:3352:Rule 24    funcbody -> LPAREN RPAREN block end
+   yacc.py:3352:Rule 25    funcbody -> LPAREN parlist RPAREN block end
+   yacc.py:3352:Rule 26    functioncall -> prefixexp args
+   yacc.py:3352:Rule 27    args -> LPAREN RPAREN
+   yacc.py:3352:Rule 28    args -> LPAREN explist RPAREN
+   yacc.py:3352:Rule 29    args -> tableconstructor
+   yacc.py:3352:Rule 30    args -> STRING
+   yacc.py:3352:Rule 31    parlist -> namelist
+   yacc.py:3352:Rule 32    parlist -> namelist comtrp
+   yacc.py:3352:Rule 33    parlist -> TRPLDOTS
+   yacc.py:3352:Rule 34    comtrp -> COMMA TRPLDOTS
+   yacc.py:3352:Rule 35    laststat -> return retexplist
+   yacc.py:3352:Rule 36    laststat -> return
+   yacc.py:3352:Rule 37    laststat -> break
+   yacc.py:3352:Rule 38    funcname -> names dotid COLON
+   yacc.py:3352:Rule 39    funcname -> names
+   yacc.py:3352:Rule 40    dotid -> SDOT names dotid
+   yacc.py:3352:Rule 41    dotid -> empty
+   yacc.py:3352:Rule 42    comvar -> COMMA var comvar
+   yacc.py:3352:Rule 43    comvar -> empty
+   yacc.py:3352:Rule 44    comid -> COMMA names comid
+   yacc.py:3352:Rule 45    comid -> empty
+   yacc.py:3352:Rule 46    ifblock -> ifblock elseif exp then block
+   yacc.py:3352:Rule 47    ifblock -> empty
+   yacc.py:3352:Rule 48    varlist -> var comvar
+   yacc.py:3352:Rule 49    var -> names
+   yacc.py:3352:Rule 50    var -> prefixexp LSQUARE exp RSQUARE
+   yacc.py:3352:Rule 51    var -> prefixexp SDOT names
+   yacc.py:3352:Rule 52    namelist -> names comid
+   yacc.py:3352:Rule 53    explist -> explist COMMA exp
+   yacc.py:3352:Rule 54    explist -> exp
+   yacc.py:3352:Rule 55    exp -> nil
+   yacc.py:3352:Rule 56    exp -> false
+   yacc.py:3352:Rule 57    exp -> true
+   yacc.py:3352:Rule 58    exp -> Number
+   yacc.py:3352:Rule 59    exp -> STRING
+   yacc.py:3352:Rule 60    exp -> TRPLDOTS
+   yacc.py:3352:Rule 61    exp -> function
+   yacc.py:3352:Rule 62    exp -> prefixexp
+   yacc.py:3352:Rule 63    exp -> exp PLUS exp
+   yacc.py:3352:Rule 64    exp -> exp MINUS exp
+   yacc.py:3352:Rule 65    exp -> exp TIMES exp
+   yacc.py:3352:Rule 66    exp -> exp DIVIDE exp
+   yacc.py:3352:Rule 67    exp -> exp POWER exp
+   yacc.py:3352:Rule 68    exp -> exp LT exp
+   yacc.py:3352:Rule 69    exp -> exp LE exp
+   yacc.py:3352:Rule 70    exp -> exp GT exp
+   yacc.py:3352:Rule 71    exp -> exp GE exp
+   yacc.py:3352:Rule 72    exp -> exp NE exp
+   yacc.py:3352:Rule 73    exp -> exp CHECKEQ exp
+   yacc.py:3352:Rule 74    exp -> exp and exp
+   yacc.py:3352:Rule 75    exp -> exp or exp
+   yacc.py:3352:Rule 76    exp -> exp MODULO exp
+   yacc.py:3352:Rule 77    exp -> exp DBLDOTS exp
+   yacc.py:3352:Rule 78    exp -> tableconstructor
+   yacc.py:3352:Rule 79    exp -> unop exp
+   yacc.py:3352:Rule 80    retexplist -> retexplist COMMA retexp
+   yacc.py:3352:Rule 81    retexplist -> retexp
+   yacc.py:3352:Rule 82    retexp -> nil
+   yacc.py:3352:Rule 83    retexp -> false
+   yacc.py:3352:Rule 84    retexp -> true
+   yacc.py:3352:Rule 85    retexp -> Number
+   yacc.py:3352:Rule 86    retexp -> STRING
+   yacc.py:3352:Rule 87    retexp -> TRPLDOTS
+   yacc.py:3352:Rule 88    retexp -> prefixexp
+   yacc.py:3352:Rule 89    retexp -> exp PLUS exp
+   yacc.py:3352:Rule 90    retexp -> exp MINUS exp
+   yacc.py:3352:Rule 91    retexp -> exp TIMES exp
+   yacc.py:3352:Rule 92    retexp -> exp DIVIDE exp
+   yacc.py:3352:Rule 93    retexp -> exp POWER exp
+   yacc.py:3352:Rule 94    retexp -> exp LT exp
+   yacc.py:3352:Rule 95    retexp -> exp LE exp
+   yacc.py:3352:Rule 96    retexp -> exp GT exp
+   yacc.py:3352:Rule 97    retexp -> exp GE exp
+   yacc.py:3352:Rule 98    retexp -> exp NE exp
+   yacc.py:3352:Rule 99    retexp -> exp CHECKEQ exp
+   yacc.py:3352:Rule 100   retexp -> exp and exp
+   yacc.py:3352:Rule 101   retexp -> exp or exp
+   yacc.py:3352:Rule 102   retexp -> exp MODULO exp
+   yacc.py:3352:Rule 103   retexp -> exp DBLDOTS exp
+   yacc.py:3352:Rule 104   retexp -> tableconstructor
+   yacc.py:3352:Rule 105   retexp -> unop exp
+   yacc.py:3352:Rule 106   Number -> INTEGER
+   yacc.py:3352:Rule 107   Number -> FLOAT
+   yacc.py:3352:Rule 108   Number -> HEX
+   yacc.py:3352:Rule 109   empty -> <empty>
+   yacc.py:3352:Rule 110   prefixexp -> var
+   yacc.py:3352:Rule 111   prefixexp -> LPAREN exp RPAREN
+   yacc.py:3352:Rule 112   prefixexp -> functioncall
+   yacc.py:3352:Rule 113   unop -> MINUS
+   yacc.py:3352:Rule 114   unop -> not
+   yacc.py:3352:Rule 115   unop -> HASH
+   yacc.py:3352:Rule 116   tableconstructor -> LCURLY fieldlist RCURLY
+   yacc.py:3352:Rule 117   tableconstructor -> LCURLY RCURLY
+   yacc.py:3352:Rule 118   fieldlist -> field fieldseplist fieldsep
+   yacc.py:3352:Rule 119   fieldlist -> field fieldseplist
+   yacc.py:3352:Rule 120   fieldseplistArray -> fieldseplistArray fieldsep fieldArray
+   yacc.py:3352:Rule 121   fieldseplistArray -> empty
+   yacc.py:3352:Rule 122   field -> LSQUARE exp RSQUARE EQUALS exp
+   yacc.py:3352:Rule 123   field -> names EQUALS exp
+   yacc.py:3352:Rule 124   field -> exp
+   yacc.py:3352:Rule 125   fieldsep -> COMMA
+   yacc.py:3352:Rule 126   fieldsep -> SEMI
+   yacc.py:3352:Rule 127   names -> ID
+   yacc.py:3352:Rule 128   names -> RESID
+   yacc.py:3370:
+   yacc.py:3371:Terminals, with rules where they appear
+   yacc.py:3372:
+   yacc.py:3376:CHECKEQ              : 73 99
+   yacc.py:3376:COLON                : 38
+   yacc.py:3376:COMMA                : 17 18 18 34 42 44 53 80 125
+   yacc.py:3376:DBLDOTS              : 77 103
+   yacc.py:3376:DIVIDE               : 66 92
+   yacc.py:3376:EQUALS               : 10 17 18 21 122 123
+   yacc.py:3376:FLOAT                : 107
+   yacc.py:3376:GE                   : 71 97
+   yacc.py:3376:GT                   : 70 96
+   yacc.py:3376:HASH                 : 115
+   yacc.py:3376:HEX                  : 108
+   yacc.py:3376:ID                   : 127
+   yacc.py:3376:INTEGER              : 106
+   yacc.py:3376:LCURLY               : 116 117
+   yacc.py:3376:LE                   : 69 95
+   yacc.py:3376:LPAREN               : 24 25 27 28 111
+   yacc.py:3376:LSQUARE              : 50 122
+   yacc.py:3376:LT                   : 68 94
+   yacc.py:3376:MINUS                : 64 90 113
+   yacc.py:3376:MODULO               : 76 102
+   yacc.py:3376:NE                   : 72 98
+   yacc.py:3376:NEWLINE              : 
+   yacc.py:3376:PLUS                 : 63 89
+   yacc.py:3376:POWER                : 67 93
+   yacc.py:3376:RCURLY               : 116 117
+   yacc.py:3376:RESID                : 128
+   yacc.py:3376:RPAREN               : 24 25 27 28 111
+   yacc.py:3376:RSQUARE              : 50 122
+   yacc.py:3376:SDOT                 : 40 51
+   yacc.py:3376:SEMI                 : 4 6 7 126
+   yacc.py:3376:STRING               : 30 59 86
+   yacc.py:3376:TDASH                : 
+   yacc.py:3376:TIMES                : 65 91
+   yacc.py:3376:and                  : 74 100
+   yacc.py:3376:break                : 37
+   yacc.py:3376:do                   : 11 13 17 18 19
+   yacc.py:3376:else                 : 15
+   yacc.py:3376:elseif               : 46
+   yacc.py:3376:end                  : 11 13 15 16 17 18 19 24 25
+   yacc.py:3376:error                : 
+   yacc.py:3376:false                : 56 83
+   yacc.py:3376:for                  : 17 18 19
+   yacc.py:3376:function             : 22 23 61
+   yacc.py:3376:if                   : 15 16
+   yacc.py:3376:in                   : 19
+   yacc.py:3376:local                : 20 21 23
+   yacc.py:3376:nil                  : 55 82
+   yacc.py:3376:not                  : 114
+   yacc.py:3376:or                   : 75 101
+   yacc.py:3376:repeat               : 14
+   yacc.py:3376:return               : 35 36
+   yacc.py:3376:then                 : 15 16 46
+   yacc.py:3376:true                 : 57 84
+   yacc.py:3376:until                : 14
+   yacc.py:3376:while                : 13
+   yacc.py:3378:
+   yacc.py:3379:Nonterminals, with rules where they appear
+   yacc.py:3380:
+   yacc.py:3384:Number               : 58 85
+   yacc.py:3384:TRPLDOTS             : 33 34 60 87
+   yacc.py:3384:args                 : 26
+   yacc.py:3384:block                : 11 13 14 15 15 16 17 18 19 24 25 46
+   yacc.py:3384:chunk                : 1 2 4 5 6
+   yacc.py:3384:comid                : 44 52
+   yacc.py:3384:comtrp               : 32
+   yacc.py:3384:comvar               : 42 48
+   yacc.py:3384:dotid                : 38 40
+   yacc.py:3384:empty                : 41 43 45 47 121
+   yacc.py:3384:exp                  : 13 14 15 16 17 17 18 18 18 46 50 53 54 63 63 64 64 65 65 66 66 67 67 68 68 69 69 70 70 71 71 72 72 73 73 74 74 75 75 76 76 77 77 79 89 89 90 90 91 91 92 92 93 93 94 94 95 95 96 96 97 97 98 98 99 99 100 100 101 101 102 102 103 103 105 111 122 122 123 124
+   yacc.py:3384:explist              : 10 19 21 28 53
+   yacc.py:3384:field                : 118 119
+   yacc.py:3384:fieldArray           : 120
+   yacc.py:3384:fieldlist            : 116
+   yacc.py:3384:fieldsep             : 118 120
+   yacc.py:3384:fieldseplist         : 118 119
+   yacc.py:3384:fieldseplistArray    : 120
+   yacc.py:3384:funcbody             : 22 23
+   yacc.py:3384:funcname             : 22
+   yacc.py:3384:functioncall         : 12 112
+   yacc.py:3384:ifblock              : 15 16 46
+   yacc.py:3384:laststat             : 2 3 4
+   yacc.py:3384:namelist             : 19 20 21 31 32
+   yacc.py:3384:names                : 17 18 23 38 39 40 44 49 51 52 123
+   yacc.py:3384:parlist              : 25
+   yacc.py:3384:prefixexp            : 26 50 51 62 88
+   yacc.py:3384:retexp               : 80 81
+   yacc.py:3384:retexplist           : 35 80
+   yacc.py:3384:sdash                : 9 0
+   yacc.py:3384:stat                 : 5 6 7 8
+   yacc.py:3384:tableconstructor     : 29 78 104
+   yacc.py:3384:unop                 : 79 105
+   yacc.py:3384:var                  : 42 48 110
+   yacc.py:3384:varlist              : 10
+   yacc.py:3385:
