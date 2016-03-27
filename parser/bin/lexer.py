@@ -16,7 +16,7 @@ class Lualexer(object):
             'LPAREN','RPAREN','LT','LE','GT','GE','NE',
             'COMMA','SEMI', 'INTEGER','FLOAT', 'STRING','COLON',
             'ID','NEWLINE','CHECKEQ','HASH','SDOT','TDASH',
-            'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS'
+            'RCURLY','LCURLY','LSQUARE','RSQUARE','MODULO','HEX','RESID','DBLDOTS', 'TRPLDOTS'
         )
         tokens = keywords + operators
         t_ignore = ' \t \n'
@@ -41,7 +41,7 @@ class Lualexer(object):
         t_TDASH = r'---' #Triple Dot
         t_COLON = r':' #Colon
         t_DBLDOTS = r'\.\.' #concatenation
-        #t_TRPLDOTS = r'\.\.\.' 
+        t_TRPLDOTS = r'\.\.\.' 
         t_ignore_COMMENT  = r'--[^\[][^\[](.*)'
         t_ignore_MULTCOMMENT = r'--\[\[ [^\]]*[^\]]* \]\]'
         #r'--\[\[  [^(--\]\])]* --\]\]'
@@ -101,3 +101,25 @@ if __name__ == '__main__':
     lexer = Lualexer().lexer
     lexer.input(data)
 
+# Tokenize
+    while True:
+        tok = lexer.token()
+        if not tok or tok == None: 
+            break    
+        if tok.type == 'ID' or tok.type == 'INTEGER' or tok.type == 'STRING' or tok.type == 'FLOAT' or tok.type == 'HEX' or len(D[tok.type].listOfOccurences) == 0:
+            if tok.type == 'STRING':
+                tok.value = tok.value.strip('"')
+            D[tok.type].listOfOccurences.append(tok.value)
+        #print D[tok.type].listOfOccurences
+    
+        D[tok.type].frequency = D[tok.type].frequency + 1
+    #line_new = '{:>12}  {:>12}  {:>12}'.format(word[0], word[1], word[2])
+    print '{:>12}  {:>12}  {:}'.format("Tokens", "Occurences" , "Lexemes")
+    for k in D.keys():
+        line_new = '{:>12}  {:>12}  {:}'.format(k, D[k].frequency , (D[k].listOfOccurences)[0])
+        print line_new
+        for i in range(1,len(D[k].listOfOccurences)-1):
+            # print i
+            line_new = '{:>12}  {:>12}  {:}'.format("","", (D[k].listOfOccurences)[i])
+            print line_new
+        #print k+"\t"+str(D[k].frequency)+"->"+str(D[k].listOfOccurences)

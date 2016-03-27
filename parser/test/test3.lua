@@ -2,7 +2,7 @@
     function allwords ()
       local line = io.read()    -- current line
       local pos = 1             -- current position in the line
-      return function ()        -- iterator function
+      --return function ()        -- iterator function
         while line do           -- repeat while there are lines
           local s, e = string.find(line, "%w+", pos)
           if s then      -- found a word?
@@ -14,7 +14,7 @@
           end
         end
         return nil            -- no more lines: end of traversal
-      end
+      --end
     end
     
     function prefix (w1, w2)
