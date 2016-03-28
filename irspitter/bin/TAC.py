@@ -5,10 +5,17 @@ class ThreeOp(object):
     SymtabEntry3 = None
     Target = None
     Operator = None
+    PosList = []
+    NegList = []
+    NextList = []
+    Quad = None
+
 class TACList():
     def __init__(self,):
         self.TAC=[]
-
+        self.mile = -1
+        self.nextMile = 0
+        
     def inject(self,operator,tmp_list):
         OpCode = ThreeOp()
         if operator in ['+','-','*','/','%','>>','<<','and','or']:
@@ -21,7 +28,17 @@ class TACList():
             OpCode.InstrType = "Assign"
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
+
+
+        self.mile += 1
+        self.nextMile += 1
         self.TAC.append(OpCode)
+
+
+    def backpatch(self, PatchList, GodMile):
+        for instr in PatchList:
+            if i < self.nextMile and self.TAC[i].InstrType =='GoTo':
+                self.TAC[i].Target = GodMile
         
     def print_OpCodes(self):
         for code in self.TAC:
