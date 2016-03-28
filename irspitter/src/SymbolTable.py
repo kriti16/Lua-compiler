@@ -3,7 +3,6 @@ class Symbol(object):
     Type = None
     Iden = None
     Locate = None
-
 class LifeTime():
     Vars = {}
 

@@ -42,31 +42,50 @@ class LuaParser(object):
         def p_block_chunk(p):
             ''' block : sdash'''
         def p_stat_var_exp(p):
-            '''stat :  varlist EQUALS explist
-            '''
-            if not self.SymbolTable.isPresentIdent(p[1]):
-                self.SymbolTable.addVar(p[1])
-                tempVar = self.SymbolTable.create_temp()
-                p[1].Locate = tempVar
-            else:
-                p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
-            self.TAC.inject('=',[p[1].Locate,p[3].Locate])
-            
-        def p_stat_statement(p):
-            '''stat : do block end
-            | functioncall
-            | while exp do block end 
-	    | repeat block until exp 
-	    | if exp then block ifblock else block end 
-            | if exp then block ifblock  end 
-	    | for names EQUALS exp COMMA exp  do block end 
+            '''stat :  varlist EQUALS explist'''
+            if (len(p[1]) != len(p[3])):
+                print("Not elements on either side not equal")
+            minarg = min(len(p[1]),len(p[3]))
+            p[1] = p[1]+[p[1][0]]
+            del p[1][0]
+            for i in range(0,minarg):
+                    if not self.SymbolTable.isPresentIdent(p[1][i]):
+                            tempVar = self.SymbolTable.create_temp()
+                            p[1][i].Locate = tempVar
+                            self.SymbolTable.addVar(p[1][i])
+                    else:
+                            p[1][i].Locate = self.SymbolTable.getIdent(p[1][i]).Locate
+                    self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
+
+        def p_if_blocks(p):
+            '''stat : if exp then block ifblock else block end 
+            | if exp then block ifblock  end '''
+
+        def p_for_block(p):
+            '''stat :  for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
-	    | for namelist in explist do block end 
-	    | local namelist 
-            | local namelist EQUALS explist
-            | function funcname funcbody
+	    | for namelist in explist do block end'''
+        def p_stat_while(p):
+            '''stat : while exp do block end'''
+
+        def p_stat_repeat(p):
+	    '''stat : repeat block until exp '''
+
+        def p_stat_doblock(p):
+            '''stat : do block end '''
+            
+        def p_stat_function(p):
+            '''stat : function funcname funcbody 
             | local function names funcbody'''
 
+        def p_stat_namelist(p):
+            '''stat : local namelist 
+            | local namelist EQUALS explist
+            '''
+        def p_stat_functioncall(p):
+            '''stat : functioncall
+            '''
+        
         def p_funcbody_parlist(p):
             '''funcbody : LPAREN RPAREN block end
             | LPAREN  parlist RPAREN block end'''
@@ -105,7 +124,10 @@ class LuaParser(object):
         def p_comvar(p):
             '''comvar : COMMA var comvar 
             | empty'''
-            
+            if len(p) == 2:
+                p[0] = []
+            else:
+                p[0] = p[3] + [p[2]]
 
         def p_comid(p):
             '''comid : COMMA names comid 
@@ -117,8 +139,8 @@ class LuaParser(object):
         
         def p_varlist_var(p):
             '''varlist : var comvar '''
-            p[0] = p[1]
-                
+            p[0] = [p[1]] + p[2]
+            
         def p_var_names(p):
             '''var :  names 
             | prefixexp LSQUARE exp RSQUARE 
@@ -135,7 +157,9 @@ class LuaParser(object):
             '''explist : explist COMMA exp
             | exp '''
             if len(p) == 2:
-                p[0] = p[1]
+                p[0] = [p[1]]
+            else:
+                p[0] =p[1]+ [p[3]]
             
         def p_exp_primi(p):
             '''exp :  nil 
@@ -146,7 +170,7 @@ class LuaParser(object):
             '''
             p[0] = p[1]
             
-        def p_exp_oper(p):
+        def p_exp_mathoper(p):
             '''exp : TRPLDOTS 
             | function 
 	    | prefixexp 
@@ -155,18 +179,7 @@ class LuaParser(object):
             | exp TIMES exp
             | exp DIVIDE exp
             | exp POWER exp
-            | exp LT exp
-            | exp LE exp
-            | exp GT exp
-            | exp GE exp
-            | exp NE exp
-            | exp CHECKEQ exp
-            | exp and exp
-            | exp or exp
-            | exp MODULO exp
-            | exp DBLDOTS exp
-            | tableconstructor
-            | unop exp  %prec unop'''
+            '''
             
             ###############################################
             ## HANDLING 2 ARGUEMENTS ##
@@ -189,7 +202,20 @@ class LuaParser(object):
                 #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
                 self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
                     
-
+        def p_exp_reloper(p):
+            '''exp : exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp
+            | exp and exp
+            | exp or exp
+            | exp MODULO exp
+            | exp DBLDOTS exp
+            | tableconstructor
+            | unop exp  %prec unop'''
+             
         def p_retexplist_exp(p):
             '''retexplist : retexplist COMMA retexp
             | retexp '''
@@ -295,14 +321,6 @@ class LuaParser(object):
         #self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
         self.parser = yacc.yacc(start='sdash')
 
-
-
-
-# Set up a logging object
-
-# parser.parse(input,debug=log)
-
-# yacc.yacc(debug=True,debuglog=log)
 
 if __name__ == '__main__':
         fname=sys.argv[1]
