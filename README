@@ -1,0 +1,8 @@
+# Features Implemented
+
+##TODO
+
+* Static Typing with int and float
+* Fixed length Dictionary
+* Extra Functions inputInt(), printInt(), inputStr(), printStr(), inputFloat(), printFloat() for interacting with stdin/stdout
+* Static Scoping
