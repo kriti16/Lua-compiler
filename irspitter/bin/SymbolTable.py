@@ -18,8 +18,14 @@ class SymbolTable(object):
         self.tempNo += 1
         return self.tempBase+str(self.tempNo-1)
     def isPresentIdent(self,key):
-        return key in self.scope[self.CurrScope].Vars.keys()
+        try:
+            return key.Iden in self.scope[self.CurrScope].Vars.keys()
+        except:
+            return False
     def addVar(self,var):
         self.scope[self.CurrScope].Vars[var.Iden]=var
     def getIdent(self,var):
-        return self.scope[self.CurrScope].Vars[var]
+        try:
+            return self.scope[self.CurrScope].Vars[var.Iden]
+        except:
+            return False

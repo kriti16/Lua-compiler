@@ -11,7 +11,7 @@ class TACList():
 
     def inject(self,operator,tmp_list):
         OpCode = ThreeOp()
-        if operator in ['+','-','*','/','%','>>','<<','&','|','^^']:
+        if operator in ['+','-','*','/','%','>>','<<','and','or']:
             OpCode.InstrType = "Math"
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
@@ -20,7 +20,7 @@ class TACList():
         if operator == '=':
             OpCode.InstrType = "Assign"
             OpCode.SymtabEntry1 = tmp_list[0]
-            OpCode.SymtabEntry2 = tmp_list[2]
+            OpCode.SymtabEntry2 = tmp_list[1]
         self.TAC.append(OpCode)
         
     def print_OpCodes(self):

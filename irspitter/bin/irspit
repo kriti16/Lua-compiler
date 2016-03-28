@@ -44,14 +44,14 @@ class LuaParser(object):
         def p_stat_var_exp(p):
             '''stat :  varlist EQUALS explist
             '''
-            print("sssssssssssssssssssssssss",len(p))
-            try:
-                print(vars(p[3]))
-            except:
-                pass
-            p[3].Iden=p[1].Iden
-            self.SymbolTable.addVar(p[3])
-            print(vars(p[3]))
+            if not self.SymbolTable.isPresentIdent(p[1]):
+                self.SymbolTable.addVar(p[1])
+                tempVar = self.SymbolTable.create_temp()
+                p[1].Locate = tempVar
+            else:
+                p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
+            self.TAC.inject('=',[p[1].Locate,p[3].Locate])
+            
         def p_stat_statement(p):
             '''stat : do block end
             | functioncall
@@ -117,7 +117,6 @@ class LuaParser(object):
         
         def p_varlist_var(p):
             '''varlist : var comvar '''
-            print(vars(p),"varlists",p[1])
             p[0] = p[1]
                 
         def p_var_names(p):
@@ -136,9 +135,8 @@ class LuaParser(object):
             '''explist : explist COMMA exp
             | exp '''
             if len(p) == 2:
-                print("explsitpref",p[0])
                 p[0] = p[1]
-                print("explsit",p[0])
+            
         def p_exp_primi(p):
             '''exp :  nil 
             | false 
@@ -146,11 +144,8 @@ class LuaParser(object):
             | Number 
             | STRING
             '''
-            tempVar = self.SymbolTable.create_temp()
             p[0] = p[1]
-            p[0].Locate = tempVar
-            self.TAC.inject('=',[tempVar,p[0].Locate,p[1].Value])
-            print(tempVar,p[1],vars(p[1]),vars(p),"AA")
+            
         def p_exp_oper(p):
             '''exp : TRPLDOTS 
             | function 
@@ -176,20 +171,23 @@ class LuaParser(object):
             ###############################################
             ## HANDLING 2 ARGUEMENTS ##
             ##############################################
-            if len(p) == 2:
-                    if self.SymbolTable.isPresentIdent(p[1].Iden):
-                            p[1].Locate = self.SymbolTable.getIdent(p[1].Iden).Locate
-                    print(vars(p),"llllllllll",self.SymbolTable.isPresentIdent(p[1].Iden+"u"))
-                    p[0] = p[1]
+            if len(p) == 2:    
+                if self.SymbolTable.isPresentIdent(p[1]):
+                        p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
+                p[0] = p[1]
             if len(p) == 4:
-                    tempVar = self.SymbolTable.create_temp()
-                    print("GT",vars(p))
-                    print(p[3])
-                    self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
-                    tempSymbol = Symbol()
-                    tempSymbol.Type=p[1].Type #########Implement Type Check
-                    tempSymbol.Locate = tempVar
-                    p[0] = tempSymbol
+                #print(vars(p),p[0])
+                if self.SymbolTable.isPresentIdent(p[0]):
+                        tempVar = self.SymbolTable.getIdent(p[0]).Locate
+                        p[0].Type=p[1].Type #########Implement Type Check
+                else:
+                        tempVar = self.SymbolTable.create_temp()
+                        tempSymbol = Symbol()
+                        tempSymbol.Type=p[1].Type #########Implement Type Check
+                        p[0] = tempSymbol
+                        p[0].Locate= tempVar
+                #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
+                self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
                     
 
         def p_retexplist_exp(p):
@@ -230,8 +228,9 @@ class LuaParser(object):
             tempNum = Symbol()
             tempNum.Type = p.slice[1].type
             tempNum.Value=p[1]
+            tempNum.Locate = p[1]
             p[0] = tempNum
-            print (vars(p[0]))
+            #print (vars(p[0]))
 
         def p_empty(p):
             'empty : '
@@ -243,7 +242,7 @@ class LuaParser(object):
             |  LPAREN exp RPAREN 
             | functioncall'''
             p[0] = p[1]
-            print(vars(p[0]),vars(p),"pre")
+            #print(vars(p[0]),vars(p),"pre")
         def p_unop_ops(p):
             '''unop : MINUS
             | not
@@ -310,10 +309,11 @@ if __name__ == '__main__':
         f = open(fname,'r')
         data = f.read()
         f.close()
-        print("Hello")
+        #print("Hello")
         parserClass = LuaParser()
         parser = parserClass.parser      
         #    result = parser.parse(data,tracking=True)
         result = parser.parse(data)
-        print(parserClass.TAC.print_OpCodes()) 
-        print("Hello")
+        print(parserClass.TAC.print_OpCodes())
+        print([vars(parserClass.SymbolTable.scope['Main'].Vars[x]) for x in parserClass.SymbolTable.scope['Main'].Vars])
+        #print("Hello")
