@@ -1,3 +1,6 @@
 y = 1
-z = 2
-z = 2 + 2 + y + z 
+if y == 1 then
+   z = 2
+   y = 4
+end
+p = y + z 
