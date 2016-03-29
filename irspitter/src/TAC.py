@@ -27,7 +27,8 @@ class TACList():
 
         if operator == 'goto':
             OpCode.InstrType = "GoTo"
-
+            if len(tmp_list) >0:
+                OpCode.Target = tmp_list[0]
         if operator in ['<','>','=>','<=','==','~=']:
             OpCode.InstrType = 'IfElse'
             OpCode.Operator = tmp_list[0]

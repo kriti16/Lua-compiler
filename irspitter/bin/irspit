@@ -8,6 +8,8 @@ from TAC import TACList
 from SymbolTable import *
 import logging
 from copy import deepcopy
+import sys
+
 logging.basicConfig(
     level = logging.DEBUG,
     filename = "parselog.txt",
@@ -25,20 +27,47 @@ class LuaParser(object):
         errors_list = []
         self.TAC = TACList()
         self.SymbolTable = SymbolTable()
-        def p_sdash_start(p):
-        	'''sdash : chunk
-        	| chunk laststat
-                | laststat
-        	| chunk laststat SEMI'''
+        def p_sdash_last(p):
+        	'''sdash : chunk M_chunk
+        	| chunk laststat M_chunk
+                | laststat M_chunk
+        	| chunk laststat M_chunk SEMI'''
                 p[0] = p[1]
-        def p_chunk(p):
-            '''chunk : chunk stat
-            | chunk stat SEMI
-    	    | stat SEMI
-            | stat
-            '''
-            p[0] = p[1]
-            
+                if len(p) == 3:
+                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                elif len(p) == 4:
+                        self.TAC.backpatch(p[2].NextList,p[3].Quad)
+                else:
+                        self.TAC.backpatch(p[3].NextList,p[4].Quad)
+                
+        def p_chunk_semi(p):
+                '''chunk : chunk M_chunk stat SEMI
+    	        | stat SEMI
+                '''
+                p[0] = deepcopy(p[1])
+                if len(p) > 3:
+                        p[0] = Symbol()
+                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                        p[0].NextList = p[3].NextList 
+                print(p[0].NextList,"chunk")
+        def p_chunk_stat(p):
+                '''chunk : chunk M_chunk stat
+                | stat'''
+                
+                p[0] = deepcopy(p[1])
+                if len(p) > 2:
+                        p[0] = Symbol()
+                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                        p[0].NextList = p[3].NextList 
+                        
+
+        
+        def p_Marker_chunk(p):
+                '''M_chunk : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.nextMile
+
+                
         def p_block_chunk(p):
             ''' block : sdash'''
             p[0] = p[1]
@@ -74,11 +103,27 @@ class LuaParser(object):
 
             
         def p_stat_while(p):
-            '''stat : while exp do block end'''
+            '''stat : while M_while1 exp do M_while2 block end'''
+            self.TAC.backpatch(p[6].NextList,p[2].Quad)
+            self.TAC.backpatch(p[3].PosList,p[5].Quad)
+            p[0] = Symbol()
+            p[0].NextList = p[3].NegList
+            self.TAC.inject('goto',[p[2].Quad])
 
+        def p_Marker_while1(p):
+                '''M_while1 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.nextMile
+
+        def p_Marker_while2(p):
+                '''M_while2 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.nextMile
+
+                
         def p_stat_repeat(p):
 	    '''stat : repeat block until exp '''
-
+            
         def p_stat_doblock(p):
             '''stat : do block end '''
             
@@ -90,6 +135,8 @@ class LuaParser(object):
             '''stat : local namelist 
             | local namelist EQUALS explist
             '''
+            
+            
         def p_stat_functioncall(p):
             '''stat : functioncall
             '''
@@ -139,14 +186,25 @@ class LuaParser(object):
                 p[0] = p[3] + [p[2]]
 
         def p_comid(p):
-            '''comid : COMMA names comid 
-            | empty'''
-
+                '''comid : COMMA names comid 
+                | empty'''
+                if len(p) == 2:
+                        p[0] = []
+                else:
+                        p[0] = [p[2]] + p[3]
+                
+                    
 
 
 
         def p_if_noelse(p):
                 '''stat : if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail  end '''
+                try:
+                        if p[2].Type != 'Boolean' :
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
                 self.TAC.backpatch(p[2].PosList, p[5].Quad)
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
@@ -230,9 +288,9 @@ class LuaParser(object):
             
         def p_namelist_names(p):
             'namelist :  names  comid'
-
+            p[0] = [p[1]] + p[2]
         def p_explist_exp(p):
-            '''explist : explist COMMA exp
+            '''explist : exp COMMA explist
             | exp '''
             if len(p) == 2:
                 p[0] = [p[1]]
@@ -255,7 +313,7 @@ class LuaParser(object):
         def p_exp_false(p):
                 '''exp : false'''
                 p[0].NegList = [self.TAC.nextMile]
-                
+                self.TAC.inject('goto',[])
         def p_exp_mathoper(p):
                 '''exp : TRPLDOTS 
                 | function 
@@ -273,9 +331,9 @@ class LuaParser(object):
                 if len(p) == 2:    
                         if self.SymbolTable.isPresentIdent(p[1]):
                                 p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
-                                p[0] = p[1]
+                                p[0] = deepcopy(p[1])
                         else:
-                                p[0] = p[1]
+                                p[0] = deepcopy(p[1])
                 if len(p) == 4:
                         if self.SymbolTable.isPresentIdent(p[0]):
                                 tempVar = self.SymbolTable.getIdent(p[0]).Locate
@@ -312,19 +370,34 @@ class LuaParser(object):
             
         def p_exp_and(p):
                 '''exp : exp or M_andor exp'''
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                
+                        
                 self.TAC.backpatch(p[1].NegList, p[3].Quad)
                 #print (p[0],"sssssssssss")
                 p[0] = Symbol()
                 p[0].PosList = p[1].PosList + p[4].PosList
                 p[0].NegList = p[4].NegList
-                
+                p[0].Type = 'Boolean'
         def p_exp_or(p):
                 '''exp : exp and M_andor exp'''
+                
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
                 self.TAC.backpatch(p[1].PosList, p[3].Quad)
                 p[0] = Symbol()
                 p[0].PosList = p[4].PosList
                 p[0].NegList = p[1].NegList + p[4].NegList
-                
+                p[0].Type = 'Boolean'
         def p_M_andor(p):
                 '''M_andor : empty'''
                 p[0] = Symbol()
@@ -338,6 +411,12 @@ class LuaParser(object):
         def p_exp_unop(p):
                 '''exp : unop exp %prec unop'''
                 if p[1].Value == 'NOT':
+                        try:
+                                if p[2].Type != 'Boolean' :
+                                        raise Exception("Not Boolean")
+                        except:
+                                print("ERROR! Boolean Type not found")
+                                sys.exit(0)
                         p[0] = deepcopy(p[2])
                         p[0].PosList = p[2].NegList
                         p[0].NegList = p[2].PosList
