@@ -7,6 +7,7 @@ import logging
 from TAC import TACList
 from SymbolTable import *
 import logging
+from copy import deepcopy
 logging.basicConfig(
     level = logging.DEBUG,
     filename = "parselog.txt",
@@ -196,7 +197,7 @@ class LuaParser(object):
                 elif len(p) > 3:
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
-                
+                        
 
         
         def p_if_else_b1(p):
@@ -275,7 +276,6 @@ class LuaParser(object):
                                 p[0] = p[1]
                         else:
                                 p[0] = p[1]
-                        
                 if len(p) == 4:
                         if self.SymbolTable.isPresentIdent(p[0]):
                                 tempVar = self.SymbolTable.getIdent(p[0]).Locate
@@ -333,10 +333,14 @@ class LuaParser(object):
         def p_exp_misc(p):
                 '''exp : exp MODULO exp
                 | exp DBLDOTS exp
-                | tableconstructor
-                | unop exp  %prec unop'''
-                
+                | tableconstructor'''
 
+        def p_exp_unop(p):
+                '''exp : unop exp %prec unop'''
+                if p[1].Value == 'NOT':
+                        p[0] = deepcopy(p[2])
+                        p[0].PosList = p[2].NegList
+                        p[0].NegList = p[2].PosList
                 ############################RETURN############################
 
 
@@ -439,20 +443,19 @@ class LuaParser(object):
 
 
         def p_prefixexp_exp(p):
-               ''' prefixexp : var 
-               |  LPAREN exp RPAREN 
-               | functioncall'''
-               if len(p) == 2:
-                       p[0] = p[1]
-               else:
-                       p[0] = p[2]
-        
-        
+                ''' prefixexp : var 
+                |  LPAREN exp RPAREN 
+                | functioncall'''
+                if len(p) == 2:
+                        p[0] = p[1]
+                else:
+                        p[0] = p[2]
+                
         def p_unop_not(p):
                 '''unop : not'''
                 p[0] = Symbol()
                 p[0].Value = 'NOT'
-            
+                
         def p_unop_ops(p):
             '''unop : MINUS
             | HASH'''

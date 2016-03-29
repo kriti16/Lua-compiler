@@ -1,6 +1,6 @@
 x = 2
 z = 5
-if x>3 and (z ==2 or x <5) then
+if x>1 and not(z ==2 or x >5) then
    y = 2
    if x == 2 then
       x = x + 1
