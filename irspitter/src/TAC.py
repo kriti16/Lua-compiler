@@ -54,10 +54,10 @@ class TACList():
             if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
                 print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
 
-            if code.Operator == '=':
+            if code.InstrType == 'Assign':
                 print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
 
-            if code.Operator == 'goto':
+            if code.InstrType == 'GoTo':
                 print "goto "+str(code.Target)
 
             if code.Operator in ['<','>','=>','<=','==','~=']:

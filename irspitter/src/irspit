@@ -602,6 +602,7 @@ if __name__ == '__main__':
         parser = parserClass.parser      
         result = parser.parse(data,tracking=True,debug=log)
         #result = parser.parse(data)
-        print(parserClass.TAC.print_OpCodes())
+        #print(parserClass.TAC.print_OpCodes())
         print([vars(parserClass.SymbolTable.scope['Main'].Vars[x]) for x in parserClass.SymbolTable.scope['Main'].Vars])
+        print(parserClass.TAC.print_ir_code())
         #print("Hello")
