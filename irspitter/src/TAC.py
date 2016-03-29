@@ -47,4 +47,18 @@ class TACList():
     def print_OpCodes(self):
         for code in self.TAC:
             print vars(code)
-        
+
+    def print_ir_code(self):
+        for code in self.TAC:
+            if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
+                print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
+
+            if code.Operator == '=':
+                print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
+
+            if code.Operator == 'goto':
+                print "goto "+str(code.Target)
+
+            if code.Operator in ['<','>','=>','<=','==','~=']:
+                print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
+            
