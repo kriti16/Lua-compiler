@@ -103,12 +103,12 @@ class LuaParser(object):
 
             
         def p_stat_while(p):
-            '''stat : while M_while1 exp do M_while2 block end'''
-            self.TAC.backpatch(p[6].NextList,p[2].Quad)
-            self.TAC.backpatch(p[3].PosList,p[5].Quad)
-            p[0] = Symbol()
-            p[0].NextList = p[3].NegList
-            self.TAC.inject('goto',[p[2].Quad])
+                '''stat : while M_while1 exp do M_while2 block end'''
+                self.TAC.backpatch(p[6].NextList,p[2].Quad)
+                self.TAC.backpatch(p[3].PosList,p[5].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[3].NegList
+                self.TAC.inject('goto',[p[2].Quad])
 
         def p_Marker_while1(p):
                 '''M_while1 : empty'''
@@ -119,23 +119,61 @@ class LuaParser(object):
                 '''M_while2 : empty'''
                 p[0] = Symbol()
                 p[0].Quad = self.TAC.nextMile
-
+                
                 
         def p_stat_repeat(p):
-	    '''stat : repeat block until exp '''
-            
+	        '''stat : repeat M_while1 block until M_while2 exp '''
+                self.TAC.backpatch(p[3].NextList,p[5].Quad)
+                self.TAC.backpatch(p[6].NegList,p[2].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[6].PosList
+                self.TAC.inject('goto',[p[2].Quad])
+
+
+
+                
         def p_stat_doblock(p):
-            '''stat : do block end '''
+            '''stat : do M_sc_beg block M_sc_end end '''
+            p[0] = deepcopy(p[3])
+
+        def p_sc_beg(p):
+                '''M_sc_beg : empty'''
+                self.SymbolTable.add_scope('DO')
+                
+        
+        def p_sc_end(p):
+                '''M_sc_end : empty'''
+                self.SymbolTable.leave_scope()
+        
             
         def p_stat_function(p):
             '''stat : function funcname funcbody 
             | local function names funcbody'''
 
         def p_stat_namelist(p):
-            '''stat : local namelist 
-            | local namelist EQUALS explist
-            '''
-            
+                '''stat : local namelist 
+                | local namelist EQUALS explist
+                '''
+                if len(p) == 5:
+                        if len(p[2]) != len(p[4]):
+                                print("KNOCK! KNOCK! Wrong number")
+                        minarg = min(len(p[2]),len(p[4]))
+                        p[2] = p[2]+[p[2][0]]
+                        del p[2][0]
+                        for i in range(0,minarg):
+                                tempSymbol = Symbol()
+                                tempSymbol.Iden = p[2][i]
+                                if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
+                                        tempVar = self.SymbolTable.create_temp()
+                                        tempSymbol.Locate = tempVar
+                                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
+                                else:
+                                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
+                                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
+                                p[0] = Symbol()
+                                self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
+
+
             
         def p_stat_functioncall(p):
             '''stat : functioncall
@@ -603,6 +641,7 @@ if __name__ == '__main__':
         result = parser.parse(data,tracking=True,debug=log)
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
-        print([vars(parserClass.SymbolTable.scope['Main'].Vars[x]) for x in parserClass.SymbolTable.scope['Main'].Vars])
+#        for keys in parserClass.SymbolTable.scope.keys():
+#                print([vars(parserClass.SymbolTable.scope[keys].Vars[x]) for x in parserClass.SymbolTable.scope[keys].Vars])
         print(parserClass.TAC.print_ir_code())
         #print("Hello")
