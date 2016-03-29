@@ -3,6 +3,11 @@ class Symbol(object):
     Type = None
     Iden = None
     Locate = None
+    PosList = []
+    NegList = []
+    NextList = []
+    Quad = -1
+    
 class LifeTime():
     Vars = {}
 

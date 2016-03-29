@@ -6,8 +6,14 @@ import sys
 import logging
 from TAC import TACList
 from SymbolTable import *
-
-
+import logging
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
 
 class LuaParser(object):
 
@@ -23,18 +29,18 @@ class LuaParser(object):
         	| chunk laststat
                 | laststat
         	| chunk laststat SEMI'''
-    
+                p[0] = p[1]
         def p_chunk(p):
             '''chunk : chunk stat
             | chunk stat SEMI
     	    | stat SEMI
             | stat
             '''
+            p[0] = p[1]
             
         def p_block_chunk(p):
             ''' block : sdash'''
-
-
+            p[0] = p[1]
 
             
         def p_stat_var_exp(p):
@@ -45,14 +51,15 @@ class LuaParser(object):
             p[1] = p[1]+[p[1][0]]
             del p[1][0]
             for i in range(0,minarg):
-                    if not self.SymbolTable.isPresentIdent(p[1][i]):
-                            tempVar = self.SymbolTable.create_temp()
-                            p[1][i].Locate = tempVar
-                            self.SymbolTable.addVar(p[1][i])
-                    else:
-                            p[1][i].Locate = self.SymbolTable.getIdent(p[1][i]).Locate
-                            p[1][i].Type = self.SymbolTable.getIdent(p[1][i]).Type
-                    self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
+                if not self.SymbolTable.isPresentIdent(p[1][i]):
+                        tempVar = self.SymbolTable.create_temp()
+                        p[1][i].Locate = tempVar
+                        self.SymbolTable.addVar(p[1][i])
+                else:
+                        p[1][i].Locate = self.SymbolTable.getIdent(p[1][i]).Locate
+                        p[1][i].Type = self.SymbolTable.getIdent(p[1][i]).Type
+                p[0] = Symbol()
+                self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
 
         
 
@@ -138,45 +145,73 @@ class LuaParser(object):
 
 
         def p_if_noelse(p):
-                '''stat : if exp then M_if1 block ifblock  end '''
-                self.TAC.backpatch(p[2].PosList, p[4].Quad)
-                p[0].NextList = p[2].NegList + block.NextList
+                '''stat : if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail  end '''
+                self.TAC.backpatch(p[2].PosList, p[5].Quad)
+                self.TAC.backpatch(p[2].NegList, p[7].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[2].NegList + p[6].NextList + p[9].NextList
                 
-        def p_if_marker1(p):
+                
+                
+        def p_if_bool(p):
+                '''M_bool : empty'''
+                p[0] = Symbol()
+        
+        def p_if_1(p):
                 '''M_if1 : empty'''
                 p[0] = Symbol()
                 p[0].Quad = self.TAC.nextMile
-
                 
-        def p_if_else(p):
-                '''stat : if exp then M_if1 block ifblock else M_if4 block end '''
-                self.TAC.backpatch(p[2].PosList, p[4].Quad)
-                self.TAC.backpatch(p[2].NegList, p[9].Quad)
-                p[0] = Symbol()
-                p[0].NextList = p[5].NegList + p[6].NextList + p[9].NextList
-                
-                
-        def p_if_marker4(p):
-                '''M_if4 : empty'''
+        def p_if_block_end(p):
+                '''M_if_block_end :  empty'''
                 p[0] = Symbol()
                 p[0].Quad = self.TAC.nextMile
                 
-        def p_ifblock_elseif(p):
-                '''ifblock : ifblock M_if5 elseif M_if6 exp then block 
-                | empty '''
+        def p_if_tail(p):
+                '''M_if_tail : empty'''
+                p[0] = Symbol()
+        
+        def p_opt_else(p):
+                '''opt_else : else M_else block M_else_block
+                | empty'''
+                p[0] = Symbol()
+                if len(p) > 2:
+                        p[0].NextList = p[4].NextList
+                else:
+                        p[0].NextList = self.TAC.nextMile
+        def p_if_else_marker(p):
+                '''M_else : empty'''
+                p[0] = Symbol()
 
+        def p_if_else_block(p):
+                '''M_else_block : empty'''
+                p[0] = Symbol()
+        
+        def p_ifblock_elseif(p):
+                '''ifblock : elseif exp M_bool  then M_else_block1 block M_else_block_end ifblock M_ifblock_end 
+                | opt_else '''
+                p[0] = Symbol()
+                if len(p) == 2:
+                        p[0].NextList = p[1].NextList
+                elif len(p) > 3:
+                        self.TAC.backpatch(p[2].PosList,p[5].Quad)
+                        self.TAC.backpatch(p[2].NegList,p[7].Quad)
+                
 
         
-        def p_if_marker5(p):
-                '''M_if5 : empty'''
+        def p_if_else_b1(p):
+                '''M_else_block1 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.nextMile
+        def p_if_else_bend(p):
+                '''M_else_block_end : empty'''
                 p[0] = Symbol()
                 p[0].Quad = self.TAC.nextMile
 
-        def p_if_marker6(p):
-                '''M_if6 : empty'''
+        def p_if_else_ifblock_end(p):
+                '''M_ifblock_end : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
-
+        
                 
             
         def p_varlist_var(p):
@@ -205,13 +240,21 @@ class LuaParser(object):
             
         def p_exp_primi(p):
             '''exp :  nil 
-            | false 
-            | true 
             | Number 
             | STRING
             '''
             p[0] = p[1]
-            
+
+
+        def p_exp_true(p):
+                '''exp : true'''
+                p[0].PosList = [self.TAC.nextMile]
+                self.TAC.inject('goto',[])
+
+        def p_exp_false(p):
+                '''exp : false'''
+                p[0].NegList = [self.TAC.nextMile]
+                
         def p_exp_mathoper(p):
                 '''exp : TRPLDOTS 
                 | function 
@@ -223,6 +266,115 @@ class LuaParser(object):
                 | exp POWER exp
                 '''
                 
+                ###############################################
+                ## HANDLING 2 ARGUEMENTS ##
+                ##############################################
+                if len(p) == 2:    
+                        if self.SymbolTable.isPresentIdent(p[1]):
+                                p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
+                                p[0] = p[1]
+                        else:
+                                p[0] = p[1]
+                        
+                if len(p) == 4:
+                        if self.SymbolTable.isPresentIdent(p[0]):
+                                tempVar = self.SymbolTable.getIdent(p[0]).Locate
+                        else:
+                                tempVar = self.SymbolTable.create_temp()
+                                tempSymbol = Symbol()
+                                p[0] = tempSymbol
+                                p[0].Locate= tempVar
+
+                        if (p[1].Type == 'INTEGER' or p[1].Type == 'HEX') and (p[3].Type == 'INTEGER' or p[1].Type == 'HEX'):
+                                p[0].Type = 'INTEGER'
+                        if p[1].Type == 'FLOAT' or p[1].Type == 'FLOAT':
+                                p[0].Type = 'FLOAT'
+                                
+                        #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
+                        self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
+                    
+        def p_exp_reloper(p):
+            '''exp : exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp'''
+            #print(vars(p),vars(p[1]),vars(p[3]))
+            p[0] = Symbol()
+            p[0].Type = 'Boolean'
+            p[0].PosList = [self.TAC.nextMile]
+            p[0].NegList = [self.TAC.nextMile+1]
+            self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
+            self.TAC.inject('goto',[])
+            
+
+            
+        def p_exp_and(p):
+                '''exp : exp or M_andor exp'''
+                self.TAC.backpatch(p[1].NegList, p[3].Quad)
+                #print (p[0],"sssssssssss")
+                p[0] = Symbol()
+                p[0].PosList = p[1].PosList + p[4].PosList
+                p[0].NegList = p[4].NegList
+                
+        def p_exp_or(p):
+                '''exp : exp and M_andor exp'''
+                self.TAC.backpatch(p[1].PosList, p[3].Quad)
+                p[0] = Symbol()
+                p[0].PosList = p[4].PosList
+                p[0].NegList = p[1].NegList + p[4].NegList
+                
+        def p_M_andor(p):
+                '''M_andor : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.nextMile
+        
+        def p_exp_misc(p):
+                '''exp : exp MODULO exp
+                | exp DBLDOTS exp
+                | tableconstructor
+                | unop exp  %prec unop'''
+                
+
+                ############################RETURN############################
+
+
+
+        def p_retexplist_exp(p):
+            '''retexplist : retexplist COMMA retexp
+            | retexp '''
+            if len(p) == 2:
+                p[0] = [p[1]]
+            else:
+                p[0] =p[1]+ [p[3]]
+            
+        def p_retexp_primi(p):
+            '''retexp :  nil 
+            | Number 
+            | STRING
+            '''
+            p[0] = p[1]
+
+
+        def p_retexp_true(p):
+                '''retexp : true'''
+                p[0].PosList = [self.TAC.nextMile]
+                self.TAC.inject('goto',[])
+
+        def p_retexp_false(p):
+                '''retexp : false'''
+                p[0].NegList = [self.TAC.nextMile]
+                
+        def p_retexp_mathoper(p):
+                '''retexp : TRPLDOTS 
+                | prefixexp 
+                | exp PLUS exp
+                | exp MINUS exp
+                | exp TIMES exp
+                | exp DIVIDE exp
+                | exp POWER exp
+                '''
                 ###############################################
                 ## HANDLING 2 ARGUEMENTS ##
                 ##############################################
@@ -247,50 +399,28 @@ class LuaParser(object):
                         #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
                         self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
                     
-        def p_exp_reloper(p):
-            '''exp : exp LT exp
+        def p_retexp_reloper(p):
+            '''retexp : exp LT exp
             | exp LE exp
             | exp GT exp
             | exp GE exp
             | exp NE exp
-            | exp CHECKEQ exp
-            | exp and exp
-            | exp or exp
-            | exp MODULO exp
-            | exp DBLDOTS exp
-            | tableconstructor
-            | unop exp  %prec unop'''
-             
-        def p_retexplist_exp(p):
-            '''retexplist : retexplist COMMA retexp
-            | retexp '''
+            | exp CHECKEQ exp'''
+
+        def p_retexp_and(p):
+                '''retexp : exp and M_andor exp'''
+        
+        def p_retexp_or(p):
+                '''retexp : exp or M_andor exp'''
+
+        def p_retexp_misc(p):
+                '''retexp : exp MODULO exp
+                | exp DBLDOTS exp
+                | tableconstructor
+                | unop exp  %prec unop'''
 
 
-        def p_retexp_oper(p):
-            '''retexp :  nil 
-            | false 
-            | true 
-            | Number 
-            | STRING 
-            | TRPLDOTS 
-            | prefixexp 
-            | exp PLUS exp
-            | exp MINUS exp
-            | exp TIMES exp
-            | exp DIVIDE exp
-            | exp POWER exp
-            | exp LT exp
-            | exp LE exp
-            | exp GT exp
-            | exp GE exp
-            | exp NE exp
-            | exp CHECKEQ exp
-            | exp and exp
-            | exp or exp
-            | exp MODULO exp
-            | exp DBLDOTS exp
-            | tableconstructor
-	    | unop exp  %prec unop'''
+                ######################################3
             
         def p_Number_ints(p):
             '''Number : INTEGER 
@@ -309,17 +439,25 @@ class LuaParser(object):
 
 
         def p_prefixexp_exp(p):
-            ''' prefixexp : var 
-            |  LPAREN exp RPAREN 
-            | functioncall'''
-            p[0] = p[1]
-            #print(vars(p[0]),vars(p),"pre")
+               ''' prefixexp : var 
+               |  LPAREN exp RPAREN 
+               | functioncall'''
+               if len(p) == 2:
+                       p[0] = p[1]
+               else:
+                       p[0] = p[2]
+        
+        
+        def p_unop_not(p):
+                '''unop : not'''
+                p[0] = Symbol()
+                p[0].Value = 'NOT'
+            
         def p_unop_ops(p):
             '''unop : MINUS
-            | not
             | HASH'''
             # Error rule for syntax errors
-
+            
         def p_tableconstructor_fieldlist(p):
             '''tableconstructor : LCURLY fieldlist RCURLY 
             | LCURLY RCURLY'''
@@ -355,7 +493,8 @@ class LuaParser(object):
             ('left','LPAREN'),
             ('right','RPAREN'),
             ('right','COMMA'),
-            ('left','LT','GT','LE','GE','NE','CHECKEQ','and','or'),
+            ('left','and','or'),
+            ('left','LT','GT','LE','GE','NE','CHECKEQ'),
             ('right','DBLDOTS'),
             ('left', 'PLUS', 'MINUS'),
             ('left', 'TIMES', 'DIVIDE','MODULO'),
@@ -363,8 +502,11 @@ class LuaParser(object):
             ('right', 'POWER')
         )
 
-        #self.parser = yacc.yacc(debug=True,debuglog=log,start='sdash')
-        self.parser = yacc.yacc(start='sdash')
+        #self.parser = yacc.yacc(debug=True,debuglog=Log,start='sdash')
+        #lex.lex(debug=True,debuglog=log)
+        #yacc.yacc(debug=True,debuglog=log)
+
+        self.parser = yacc.yacc(start='sdash',debug=True,debuglog=log)
 
 
         
@@ -376,8 +518,8 @@ if __name__ == '__main__':
         #print("Hello")
         parserClass = LuaParser()
         parser = parserClass.parser      
-        #    result = parser.parse(data,tracking=True)
-        result = parser.parse(data)
+        result = parser.parse(data,tracking=True,debug=log)
+        #result = parser.parse(data)
         print(parserClass.TAC.print_OpCodes())
         print([vars(parserClass.SymbolTable.scope['Main'].Vars[x]) for x in parserClass.SymbolTable.scope['Main'].Vars])
         #print("Hello")

@@ -5,11 +5,7 @@ class ThreeOp(object):
     SymtabEntry3 = None
     Target = None
     Operator = None
-    PosList = []
-    NegList = []
-    NextList = []
-    Quad = None
-
+    
 class TACList():
     def __init__(self,):
         self.TAC=[]
@@ -29,6 +25,14 @@ class TACList():
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
 
+        if operator == 'goto':
+            OpCode.InstrType = "GoTo"
+
+        if operator in ['<','>','=>','<=','==','~=']:
+            OpCode.InstrType = 'IfElse'
+            OpCode.Operator = tmp_list[0]
+            OpCode.SymtabEntry1 = tmp_list[1]
+            OpCode.SymtabEntry2 = tmp_list[2]
 
         self.mile += 1
         self.nextMile += 1
@@ -37,8 +41,8 @@ class TACList():
 
     def backpatch(self, PatchList, GodMile):
         for instr in PatchList:
-            if i < self.nextMile and self.TAC[i].InstrType =='GoTo':
-                self.TAC[i].Target = GodMile
+            if instr < self.nextMile and self.TAC[instr].InstrType =='GoTo' or  self.TAC[instr].InstrType =='IfElse':
+                self.TAC[instr].Target = GodMile
         
     def print_OpCodes(self):
         for code in self.TAC:
