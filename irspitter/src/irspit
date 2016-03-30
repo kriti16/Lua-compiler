@@ -151,29 +151,41 @@ class LuaParser(object):
             | local function names funcbody'''
 
         def p_stat_namelist(p):
-                '''stat : local namelist 
-                | local namelist EQUALS explist
-                '''
-                if len(p) == 5:
-                        if len(p[2]) != len(p[4]):
-                                print("KNOCK! KNOCK! Wrong number")
-                        minarg = min(len(p[2]),len(p[4]))
-                        p[2] = p[2]+[p[2][0]]
-                        del p[2][0]
-                        for i in range(0,minarg):
-                                tempSymbol = Symbol()
-                                tempSymbol.Iden = p[2][i]
-                                if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
-                                        tempVar = self.SymbolTable.create_temp()
-                                        tempSymbol.Locate = tempVar
-                                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
-                                else:
-                                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
-                                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
-                                p[0] = Symbol()
-                                self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
-
-
+            '''stat : local namelist 
+            | local namelist EQUALS explist
+            '''
+            if len(p) == 5:
+                if len(p[2]) != len(p[4]):
+                    print("KNOCK! KNOCK! Wrong number")
+                minarg = min(len(p[2]),len(p[4]))
+                p[2] = p[2]+[p[2][0]]
+                del p[2][0]
+                for i in range(0,minarg):
+                    tempSymbol = Symbol()
+                    tempSymbol.Iden = p[2][i]
+                    if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
+                        tempVar = self.SymbolTable.create_temp()
+                        tempSymbol.Locate = tempVar
+                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
+                    else:
+                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
+                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
+                    p[0] = Symbol()
+                    self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
+            else:
+                for i in range(len(p[2])):
+                    tempSymbol = Smbol()
+                    tempSymbol.Iden = p[2][i]
+                    if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
+                        tempVar = self.SymbolTable.create_temp()
+                        tempSymbol.Locate = tempVar
+                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
+                    else:
+                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
+                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
+                    p[0] = Symbol()
+                    self.TAC.inject('=',[tempSymbol.Locate,'nil'])
+                
             
         def p_stat_functioncall(p):
             '''stat : functioncall
@@ -214,6 +226,11 @@ class LuaParser(object):
         def p_dotid(p):
             '''dotid : SDOT names dotid 
             | empty'''
+            
+            if len(p) == 2:
+                p[0] = []
+            else:
+                p[0] = p[3] + [p[2]]
 
         def p_comvar(p):
             '''comvar : COMMA var comvar 
