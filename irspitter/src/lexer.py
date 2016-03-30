@@ -7,7 +7,7 @@ from collections import defaultdict
 class Lualexer(object):
     def __init__(self):
         keywords =  ('and', 'break', 'do', 'else', 'elseif','print',
-                          'end', 'false', 'for', 'function', 'if',
+                          'end', 'false', 'for', 'function', 'if','scan',
                           'in', 'local', 'nil', 'not', 'or', 'repeat',
                           'return', 'then', 'true', 'until', 'while')
 

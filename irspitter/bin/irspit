@@ -200,7 +200,8 @@ class LuaParser(object):
 
         def p_functioncall_prefix(p):
             '''functioncall : prefixexp args
-            | print args'''
+            | print args
+            | scan args'''
             if p[1] == 'print':
                 p[0] = Symbol()
                 for arg in p[2]:
@@ -211,6 +212,20 @@ class LuaParser(object):
                             self.TAC.inject('prints',[arg.Locate])
                         elif arg.Type == 'FLOAT':
                             self.TAC.inject('printd',[arg.Locate])
+                        else:
+                            raise Exception
+                    except:
+                        print("You cannot print an object of type :"+arg.Type)
+            if p[1] == 'scan':
+                p[0] = Symbol()
+                for arg in p[2]:
+                    try:
+                        if arg.Type == 'INTEGER':
+                            self.TAC.inject('scan',[arg.Locate])
+                        elif arg.Type == 'STRING':
+                            self.TAC.inject('scans',[arg.Locate])
+                        elif arg.Type == 'FLOAT':
+                            self.TAC.inject('scand',[arg.Locate])
                         else:
                             raise Exception
                     except:
