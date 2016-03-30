@@ -83,9 +83,11 @@ class LuaParser(object):
             for i in range(0,minarg):
                 if not self.SymbolTable.isPresentIdent(p[1][i]):
                         tempVar = self.SymbolTable.create_temp()
+                        p[1][i].Type = p[3][minarg-1-i].Type
                         p[1][i].Locate = tempVar
                         self.SymbolTable.addVar(p[1][i])
                 else:
+                        p[1][i].Type = p[3][minarg-1-i].Type
                         p[1][i].Locate = self.SymbolTable.getIdent(p[1][i]).Locate
                         p[1][i].Type = self.SymbolTable.getIdent(p[1][i]).Type
                 p[0] = Symbol()
@@ -202,8 +204,19 @@ class LuaParser(object):
             if p[1] == 'print':
                 p[0] = Symbol()
                 for arg in p[2]:
-                    self.TAC.inject('print',[arg.Locate])
-                
+                    try:
+                        if arg.Type == 'INTEGER':
+                            self.TAC.inject('print',[arg.Locate])
+                        elif arg.Type == 'STRING':
+                            self.TAC.inject('prints',[arg.Locate])
+                        elif arg.Type == 'FLOAT':
+                            self.TAC.inject('printd',[arg.Locate])
+                        else:
+                            raise Exception
+                    except:
+                        print("You cannot print an object of type :"+arg.Type)
+                    
+                            
         def p_args_explist(p):
             '''args : LPAREN RPAREN
             | LPAREN explist RPAREN
@@ -371,8 +384,7 @@ class LuaParser(object):
             | STRING
             '''
             p[0] = p[1]
-
-
+            
         def p_exp_true(p):
                 '''exp : true'''
                 p[0].PosList = [self.TAC.nextMile]
@@ -401,6 +413,7 @@ class LuaParser(object):
                 if len(p) == 2:    
                         if self.SymbolTable.isPresentIdent(p[1]):
                                 p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
+                                p[1].Type = self.SymbolTable.getIdent(p[1]).Type
                                 p[0] = deepcopy(p[1])
                         else:
                                 p[0] = deepcopy(p[1])
@@ -508,7 +521,6 @@ class LuaParser(object):
             | STRING
             '''
             p[0] = p[1]
-
 
         def p_retexp_true(p):
                 '''retexp : true'''

@@ -7,150 +7,150 @@
    yacc.py: 409:State  : 19
    yacc.py: 433:Stack  : ID . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7f8d20a71d00> ('x')
+   yacc.py: 503:Result : <str @ 0x7fb2312e5d00> ('x')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : names . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['x'] and goto state 11
-   yacc.py: 503:Result : <Symbol @ 0x7f8d20a27a90> (<SymbolTable.Symbol object at 0x7f8d20a2 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7fb23129ba90> (<SymbolTable.Symbol object at 0x7fb23129 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 11
    yacc.py: 433:Stack  : var . LexToken(EQUALS,'=',1,2)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 61
-   yacc.py: 542:Result : <NoneType @ 0x7f8d2088eda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7fb231102da0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 61
    yacc.py: 428:Defaulted state 61: Reduce using 47
    yacc.py: 433:Stack  : var empty . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 60
-   yacc.py: 503:Result : <list @ 0x7f8d1953e5f0> ([])
+   yacc.py: 503:Result : <list @ 0x7fb229db2638> ([])
    yacc.py: 408:
    yacc.py: 409:State  : 60
    yacc.py: 428:Defaulted state 60: Reduce using 64
    yacc.py: 433:Stack  : var comvar . LexToken(EQUALS,'=',1,2)
-   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7f8d20a27a90>,[]] and goto state 9
-   yacc.py: 503:Result : <list @ 0x7f8d19d2d248> ([<SymbolTable.Symbol object at 0x7f8d20a ...)
+   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7fb23129ba90>,[]] and goto state 9
+   yacc.py: 503:Result : <list @ 0x7fb22a5a0290> ([<SymbolTable.Symbol object at 0x7fb2312 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 9
    yacc.py: 433:Stack  : varlist . LexToken(EQUALS,'=',1,2)
    yacc.py: 443:Action : Shift and goto state 57
    yacc.py: 408:
    yacc.py: 409:State  : 57
-   yacc.py: 433:Stack  : varlist EQUALS . LexToken(INTEGER,'2',1,4)
-   yacc.py: 443:Action : Shift and goto state 32
+   yacc.py: 433:Stack  : varlist EQUALS . LexToken(FLOAT,'2.0',1,4)
+   yacc.py: 443:Action : Shift and goto state 39
    yacc.py: 408:
-   yacc.py: 409:State  : 32
-   yacc.py: 433:Stack  : varlist EQUALS INTEGER . LexToken(print,'print',1,6)
-   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['2'] and goto state 40
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d06750> (<SymbolTable.Symbol object at 0x7f8d19d0 ...)
+   yacc.py: 409:State  : 39
+   yacc.py: 433:Stack  : varlist EQUALS FLOAT . LexToken(print,'print',1,8)
+   yacc.py: 469:Action : Reduce rule [Number -> FLOAT] with ['2.0'] and goto state 40
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a579710> (<SymbolTable.Symbol object at 0x7fb22a57 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 40
-   yacc.py: 433:Stack  : varlist EQUALS Number . LexToken(print,'print',1,6)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7f8d19d06750>] and goto state 119
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d06750> (<SymbolTable.Symbol object at 0x7f8d19d0 ...)
+   yacc.py: 433:Stack  : varlist EQUALS Number . LexToken(print,'print',1,8)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fb22a579710>] and goto state 119
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a579710> (<SymbolTable.Symbol object at 0x7fb22a57 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 119
-   yacc.py: 433:Stack  : varlist EQUALS exp . LexToken(print,'print',1,6)
-   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7f8d19d06750>] and goto state 126
-   yacc.py: 503:Result : <list @ 0x7f8d19d2da28> ([<SymbolTable.Symbol object at 0x7f8d19d ...)
+   yacc.py: 433:Stack  : varlist EQUALS exp . LexToken(print,'print',1,8)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7fb22a579710>] and goto state 126
+   yacc.py: 503:Result : <list @ 0x7fb22a5a0a70> ([<SymbolTable.Symbol object at 0x7fb22a5 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 126
-   yacc.py: 433:Stack  : varlist EQUALS explist . LexToken(print,'print',1,6)
-   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7f8d19d2d248>,'=',<list @ 0x7f8d19d2da28>] and goto state 14
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19568e50> (<SymbolTable.Symbol object at 0x7f8d1956 ...)
+   yacc.py: 433:Stack  : varlist EQUALS explist . LexToken(print,'print',1,8)
+   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7fb22a5a0290>,'=',<list @ 0x7fb22a5a0a70>] and goto state 14
+   yacc.py: 503:Result : <Symbol @ 0x7fb229ddce10> (<SymbolTable.Symbol object at 0x7fb229dd ...)
    yacc.py: 408:
    yacc.py: 409:State  : 14
-   yacc.py: 433:Stack  : stat . LexToken(print,'print',1,6)
-   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7f8d19568e50>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7f8d20a27a90> (<SymbolTable.Symbol object at 0x7f8d20a2 ...)
+   yacc.py: 433:Stack  : stat . LexToken(print,'print',1,8)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7fb229ddce10>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7fb23129ba90> (<SymbolTable.Symbol object at 0x7fb23129 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
-   yacc.py: 433:Stack  : chunk . LexToken(print,'print',1,6)
+   yacc.py: 433:Stack  : chunk . LexToken(print,'print',1,8)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7f8d2088eda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7fb231102da0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
-   yacc.py: 433:Stack  : chunk empty . LexToken(print,'print',1,6)
+   yacc.py: 433:Stack  : chunk empty . LexToken(print,'print',1,8)
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 45
-   yacc.py: 503:Result : <Symbol @ 0x7f8d20a10390> (<SymbolTable.Symbol object at 0x7f8d20a1 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7fb231284390> (<SymbolTable.Symbol object at 0x7fb23128 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 45
-   yacc.py: 433:Stack  : chunk M_chunk . LexToken(print,'print',1,6)
+   yacc.py: 433:Stack  : chunk M_chunk . LexToken(print,'print',1,8)
    yacc.py: 443:Action : Shift and goto state 18
    yacc.py: 408:
    yacc.py: 409:State  : 18
-   yacc.py: 433:Stack  : chunk M_chunk print . LexToken(LPAREN,'(',1,11)
+   yacc.py: 433:Stack  : chunk M_chunk print . LexToken(LPAREN,'(',1,13)
    yacc.py: 443:Action : Shift and goto state 52
    yacc.py: 408:
    yacc.py: 409:State  : 52
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN . LexToken(ID,'x',1,12)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN . LexToken(ID,'x',1,14)
    yacc.py: 443:Action : Shift and goto state 19
    yacc.py: 408:
    yacc.py: 409:State  : 19
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN ID . LexToken(RPAREN,')',1,13)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN ID . LexToken(RPAREN,')',1,15)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7f8d20a71d00> ('x')
+   yacc.py: 503:Result : <str @ 0x7fb2312e5d00> ('x')
    yacc.py: 408:
    yacc.py: 409:State  : 5
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN names . LexToken(RPAREN,')',1,13)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN names . LexToken(RPAREN,')',1,15)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['x'] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d06750> (<SymbolTable.Symbol object at 0x7f8d19d0 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a579710> (<SymbolTable.Symbol object at 0x7fb22a57 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN var . LexToken(RPAREN,')',1,13)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7f8d19d06750>] and goto state 30
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d06750> (<SymbolTable.Symbol object at 0x7f8d19d0 ...)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN var . LexToken(RPAREN,')',1,15)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fb22a579710>] and goto state 30
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a579710> (<SymbolTable.Symbol object at 0x7fb22a57 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 30
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN prefixexp . LexToken(RPAREN,')',1,13)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7f8d19d06750>] and goto state 119
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19568e50> (<SymbolTable.Symbol object at 0x7f8d1956 ...)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN prefixexp . LexToken(RPAREN,')',1,15)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fb22a579710>] and goto state 119
+   yacc.py: 503:Result : <Symbol @ 0x7fb229ddce10> (<SymbolTable.Symbol object at 0x7fb229dd ...)
    yacc.py: 408:
    yacc.py: 409:State  : 119
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN exp . LexToken(RPAREN,')',1,13)
-   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7f8d19568e50>] and goto state 118
-   yacc.py: 503:Result : <list @ 0x7f8d1953e5f0> ([<SymbolTable.Symbol object at 0x7f8d195 ...)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN exp . LexToken(RPAREN,')',1,15)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7fb229ddce10>] and goto state 118
+   yacc.py: 503:Result : <list @ 0x7fb229db2638> ([<SymbolTable.Symbol object at 0x7fb229d ...)
    yacc.py: 408:
    yacc.py: 409:State  : 118
-   yacc.py: 433:Stack  : chunk M_chunk print LPAREN explist . LexToken(RPAREN,')',1,13)
+   yacc.py: 433:Stack  : chunk M_chunk print LPAREN explist . LexToken(RPAREN,')',1,15)
    yacc.py: 443:Action : Shift and goto state 183
    yacc.py: 408:
    yacc.py: 409:State  : 183
    yacc.py: 433:Stack  : chunk M_chunk print LPAREN explist RPAREN . $end
-   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7f8d1953e5f0>,')'] and goto state 79
-   yacc.py: 503:Result : <list @ 0x7f8d1953e5f0> ([<SymbolTable.Symbol object at 0x7f8d195 ...)
+   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7fb229db2638>,')'] and goto state 79
+   yacc.py: 503:Result : <list @ 0x7fb229db2638> ([<SymbolTable.Symbol object at 0x7fb229d ...)
    yacc.py: 408:
    yacc.py: 409:State  : 79
    yacc.py: 433:Stack  : chunk M_chunk print args . $end
-   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7f8d1953e5f0>] and goto state 12
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d1b8d0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7fb229db2638>] and goto state 12
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a58e890> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 12
    yacc.py: 433:Stack  : chunk M_chunk functioncall . $end
-   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7f8d19d1b8d0>] and goto state 112
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d1b8d0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7fb22a58e890>] and goto state 112
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a58e890> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 112
    yacc.py: 433:Stack  : chunk M_chunk stat . $end
-   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7f8d20a27a90>,<Symbol @ 0x7f8d20a10390>,<Symbol @ 0x7f8d19d1b8d0>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d1bdd0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7fb23129ba90>,<Symbol @ 0x7fb231284390>,<Symbol @ 0x7fb22a58e890>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a58ed90> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
    yacc.py: 433:Stack  : chunk . $end
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7f8d2088eda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7fb231102da0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
    yacc.py: 433:Stack  : chunk empty . $end
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 45
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d1b8d0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a58e890> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 45
    yacc.py: 433:Stack  : chunk M_chunk . $end
-   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7f8d19d1bdd0>,<Symbol @ 0x7f8d19d1b8d0>] and goto state 22
-   yacc.py: 503:Result : <Symbol @ 0x7f8d19d1bdd0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7fb22a58ed90>,<Symbol @ 0x7fb22a58e890>] and goto state 22
+   yacc.py: 503:Result : <Symbol @ 0x7fb22a58ed90> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 22
    yacc.py: 433:Stack  : sdash . $end
-   yacc.py: 564:Done   : Returning <Symbol @ 0x7f8d19d1bdd0> (<SymbolTable.Symbol object at 0x7f8d19d1 ...)
+   yacc.py: 564:Done   : Returning <Symbol @ 0x7fb22a58ed90> (<SymbolTable.Symbol object at 0x7fb22a58 ...)
    yacc.py: 565:PLY: PARSE DEBUG END

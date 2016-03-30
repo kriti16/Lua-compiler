@@ -37,7 +37,13 @@ class TACList():
         if operator == 'print':
             OpCode.InstrType = 'Print'
             OpCode.SymtabEntry1 = tmp_list[0]
-
+        if operator == 'prints':
+            OpCode.InstrType = 'Prints'
+            OpCode.SymtabEntry1 = tmp_list[0]
+        if operator == 'printd':
+            OpCode.InstrType = 'Printd'
+            OpCode.SymtabEntry1 = tmp_list[0]
+        
         self.mile += 1
         self.nextMile += 1
         self.TAC.append(OpCode)
@@ -67,4 +73,8 @@ class TACList():
                 print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
             if code.InstrType == 'Print':
                 print "print "+str(code.SymtabEntry1)
+            if code.InstrType == 'Prints':
+                print "prints "+str(code.SymtabEntry1)
+            if code.InstrType == 'Printd':
+                print "printd "+str(code.SymtabEntry1)
             
