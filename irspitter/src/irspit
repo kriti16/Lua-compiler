@@ -190,21 +190,34 @@ class LuaParser(object):
         def p_stat_functioncall(p):
             '''stat : functioncall
             '''
-        
+            p[0] = p[1]
         def p_funcbody_parlist(p):
             '''funcbody : LPAREN RPAREN block end
             | LPAREN  parlist RPAREN block end'''
 
 
         def p_functioncall_prefix(p):
-            '''functioncall : prefixexp args'''
-
-
+            '''functioncall : prefixexp args
+            | print args'''
+            if p[1] == 'print':
+                p[0] = Symbol()
+                for arg in p[2]:
+                    self.TAC.inject('print',[arg.Locate])
+                
         def p_args_explist(p):
             '''args : LPAREN RPAREN
             | LPAREN explist RPAREN
-            | tableconstructor
             | STRING'''
+            if len(p) == 2:
+                p[0] = p[1]
+            elif len(p)  == 3:
+                p[0] = Symbol()
+                p[0].Type = 'Nil'
+            else:
+                p[0] = p[2]
+                
+        def p_args_tablecons(p):
+            '''args : tableconstructor'''
 
         def p_parlist_namelist(p):
             '''parlist : namelist 
@@ -369,6 +382,8 @@ class LuaParser(object):
                 '''exp : false'''
                 p[0].NegList = [self.TAC.nextMile]
                 self.TAC.inject('goto',[])
+
+
         def p_exp_mathoper(p):
                 '''exp : TRPLDOTS 
                 | function 

@@ -10,7 +10,7 @@ class Symbol(object):
         self.NextList = []
         self.Quad = -1
         self.Scope = None
-
+        
     
 class LifeTime(object):
     def __init__(self):
@@ -27,7 +27,9 @@ class SymbolTable(object):
         MainScope.Type = 'Main'
         self.scope = {'L0' : MainScope}
         self.CurrScope = 'L0'
-
+        self.funcBase = 'f'
+        self.funcNo = 0
+        
     def create_Scope(self):
         self.scopeNum += 1
         scope_name = self.CurrScope + "_"+str(self.scopeNum)

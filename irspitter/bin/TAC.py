@@ -34,6 +34,9 @@ class TACList():
             OpCode.Operator = tmp_list[0]
             OpCode.SymtabEntry1 = tmp_list[1]
             OpCode.SymtabEntry2 = tmp_list[2]
+        if operator == 'print':
+            OpCode.InstrType = 'Print'
+            OpCode.SymtabEntry1 = tmp_list[0]
 
         self.mile += 1
         self.nextMile += 1
@@ -62,4 +65,6 @@ class TACList():
 
             if code.Operator in ['<','>','=>','<=','==','~=']:
                 print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
+            if code.InstrType == 'Print':
+                print "print "+str(code.SymtabEntry1)
             
