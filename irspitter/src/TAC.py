@@ -44,13 +44,16 @@ class TACList():
         if operator == 'printd':
             OpCode.InstrType = 'Printd'
             OpCode.SymtabEntry1 = tmp_list[0]
-        
+        if operator == 'Func':
+            OpCode.InstrType = 'Func'
+            OpCode.SymtabEntry1 = tmp_list[0]
+            
         self.mile += 1
         self.nextMile += 1
         if self.ST.CurrFunc not in self.TAC.keys(): 
             self.TAC[self.ST.CurrFunc] = []
         self.TAC[self.ST.CurrFunc].append(OpCode)
-        
+        #print [vars(x) for x in self.TAC[self.ST.CurrFunc]]
             
 
 
@@ -65,11 +68,11 @@ class TACList():
 
     def print_ir_code(self):
         for functions in self.ST.funcList:
-            print functions
             for code in self.TAC[functions]:
                 if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
-
+                if code.InstrType == 'Func':
+                    print 'fun '+code.SymtabEntry1
                 if code.InstrType == 'Assign':
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
 

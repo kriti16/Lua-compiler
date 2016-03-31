@@ -50,7 +50,7 @@ class LuaParser(object):
                 p[0] = Symbol()
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
                 p[0].NextList = p[3].NextList 
-            print(p[0].NextList,"chunk")
+            
         def p_chunk_stat(p):
                 '''chunk : chunk M_chunk stat
                 | stat'''
@@ -152,7 +152,6 @@ class LuaParser(object):
         def p_stat_function(p):
             '''stat : function funcname funcbody 
             | local function names funcbody'''
-            print("Changed Function")
             if len(p) == 4:
                 p[0] = p[3]
 
@@ -169,13 +168,10 @@ class LuaParser(object):
                 for i in range(0,minarg):
                     tempSymbol = Symbol()
                     tempSymbol.Iden = p[2][i]
-                    if not self.ST.isPresentIdent(tempSymbol,self.ST.CurrScope,True):
-                        tempVar = self.ST.create_temp()
-                        tempSymbol.Locate = tempVar
-                        self.ST.addVar(tempSymbol,self.ST.CurrScope)
-                    else:
-                        tempSymbol.Locate = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Locate
-                        tempSymbol.Type = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Type
+                    tempSymbol.Type = p[4][minarg-1-i].Type
+                    tempVar = self.ST.create_temp()
+                    tempSymbol.Locate = tempVar
+                    self.ST.addVar(tempSymbol,self.ST.CurrScope)
                     p[0] = Symbol()
                     self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
             else:
@@ -208,7 +204,6 @@ class LuaParser(object):
 
         def p_func_end(p):
             '''M_func_end : empty'''
-            print("Leavng")
             self.ST.leave_func()
         def p_functioncall_prefix(p):
             '''functioncall : prefixexp args
@@ -227,7 +222,7 @@ class LuaParser(object):
                         else:
                             raise Exception
                     except:
-                        print("You cannot print an object of type :",arg.Type,len(p[2]))
+                        print("You cannot print an object of type :",arg.Type)
             if p[1] == 'scan':
                 p[0] = Symbol()
                 for arg in p[2]:
@@ -241,7 +236,7 @@ class LuaParser(object):
                         else:
                             raise Exception
                     except:
-                        print("You cannot print an object of type :",arg.Type)
+                        print("You cannot  an object of type :",arg.Type)
                     
                             
         def p_args_explist(p):
@@ -254,7 +249,6 @@ class LuaParser(object):
                 p[0] = Symbol()
                 p[0].Type = 'Nil'
             else:
-                print("In args Setting type to ",p[2][0].Type,len(p[2]))
                 p[0] = p[2]
                 
         def p_args_tablecons(p):
@@ -282,15 +276,12 @@ class LuaParser(object):
                     p[0].Iden = p[1]
                     p[0].Type = 'Function'
                     self.ST.add_func(p[1])
-                    print("Changed Function")
-                
+                    self.TAC.inject('Func',[p[1]])
                 else:
                     raise Exception
             except:
                 print("Dot Colon syntax in function")
-              
-            print(vars(p[0]))
-                    
+                
         def p_dotid(p):
             '''dotid : SDOT names dotid 
             | empty'''
@@ -417,7 +408,6 @@ class LuaParser(object):
             | exp COMMA explist'''
             if len(p) == 2:
                 p[0] = [p[1]]
-                print("In exp list",p[1].Type,len(p))
             else:
                 p[0] =p[1]+ [p[3]]
             
@@ -728,8 +718,8 @@ if __name__ == '__main__':
         result = parser.parse(data,tracking=True,debug=log)
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
-        for keys in parserClass.ST.scope.keys():
-                print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
-        print(vars(parserClass.TAC))
+#        for keys in parserClass.ST.scope.keys():
+#print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
+#        print(vars(parserClass.TAC))
         print(parserClass.TAC.print_ir_code())
         #print("Hello")

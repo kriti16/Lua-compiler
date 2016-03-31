@@ -1,16 +1,20 @@
 y = 2
 function f1()
    y = 2
-   rf = 222
+   y = 222
+   do
+      local y = 3333
+      print(y)
+   end
+   print(y)
    function z()
       y = 3
-      function uu()
-         jh = 2
-         end
+      print(y)
    end
-   rf = 322
-   print(r)
+   y = 322
+   print(y)
 end
+print(y)
 function g1()
    y = 2
 end

@@ -46,7 +46,6 @@ class SymbolTable(object):
         tempSc = LifeTime()
         tempSc.Type = 'Function'
         tempSc.Parent = self.CurrScope
-        print "Setting parent of "+Name+" to "+self.CurrScope
         self.scope[Name] = tempSc
         self.CurrScope = Name
         self.CurrFunc = Name
@@ -93,7 +92,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return scope
-            elif scope == 'main':
+            elif self.scope[scope].Type == 'Function':
                 return -1
             else:
                 par_scope = self.findParent(scope)
@@ -105,9 +104,8 @@ class SymbolTable(object):
         
     def addVar(self,var,sc = None):
         if sc == None:
-            sc = 'main'
+            sc = self.CurrFunc
         self.scope[sc].Vars[var.Iden]=deepcopy(var)
-
         
         
     def getIdent(self,var, sc = None):
