@@ -7,6 +7,7 @@ function f1()
       print(y)
    end
    print(y)
+   z()
    function z()
       y = 3
       print(y)

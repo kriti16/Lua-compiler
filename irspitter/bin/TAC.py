@@ -47,8 +47,14 @@ class TACList():
         if operator == 'Func':
             OpCode.InstrType = 'Func'
             OpCode.SymtabEntry1 = tmp_list[0]
-            
-        self.mile += 1
+        if operator == 'call':
+            OpCode.InstrType = 'FunCall'
+            OpCode.SymtabEntry1 = tmp_list[0]
+            if len(tmp_list) == 1:
+                OpCode.SymtabEntry2 = '_empty'
+            else:
+                OpCode.SymtabEntry2 = tmp_list[1]
+                self.mile += 1
         self.nextMile += 1
         if self.ST.CurrFunc not in self.TAC.keys(): 
             self.TAC[self.ST.CurrFunc] = []
@@ -87,4 +93,7 @@ class TACList():
                     print "prints "+str(code.SymtabEntry1)
                 if code.InstrType == 'Printd':
                     print "printd "+str(code.SymtabEntry1)
-            
+                if code.InstrType == 'FunCall':
+                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)
+                
+                

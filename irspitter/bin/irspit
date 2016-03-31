@@ -223,7 +223,10 @@ class LuaParser(object):
                             raise Exception
                     except:
                         print("You cannot print an object of type :",arg.Type)
-            if p[1] == 'scan':
+                        sys.exit(0)
+                p[0] = Symbol()
+                p[0].Type = 'Error'
+            elif p[1] == 'scan':
                 p[0] = Symbol()
                 for arg in p[2]:
                     try:
@@ -236,9 +239,15 @@ class LuaParser(object):
                         else:
                             raise Exception
                     except:
-                        print("You cannot  an object of type :",arg.Type)
-                    
-                            
+                        print("You cannot scan an object of type :",arg.Type)
+                        sys.exit(0)
+                p[0].Type = 'Error'
+
+
+            elif len(p) == 3:
+                p[0] = Symbol()
+                p[0].Iden = p[1]
+                self.TAC.inject('call',[p[1].Iden])
         def p_args_explist(p):
             '''args : LPAREN RPAREN
             | LPAREN explist RPAREN
@@ -721,5 +730,5 @@ if __name__ == '__main__':
 #        for keys in parserClass.ST.scope.keys():
 #print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
 #        print(vars(parserClass.TAC))
-        print(parserClass.TAC.print_ir_code())
+        parserClass.TAC.print_ir_code()
         #print("Hello")

@@ -1,0 +1,16 @@
+t0 = 2
+print t0
+fun f1
+t1 = 2
+t1 = 222
+t2 = 3333
+print t2
+print t1
+_empty = call z
+t1 = 322
+print t1
+fun z
+t3 = 3
+print t3
+fun g1
+t4 = 2
