@@ -25,31 +25,32 @@ class LuaParser(object):
         lexer = lexerClass.lexer
         tokens = lexerClass.tokenList
         errors_list = []
-        self.TAC = TACList()
-        self.SymbolTable = SymbolTable()
+        self.ST = SymbolTable()
+        self.TAC = TACList(self.ST)
+
         def p_sdash_last(p):
-        	'''sdash : chunk M_chunk
-        	| chunk laststat M_chunk
-                | laststat M_chunk
-        	| chunk laststat M_chunk SEMI'''
-                p[0] = p[1]
-                if len(p) == 3:
-                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
-                elif len(p) == 4:
-                        self.TAC.backpatch(p[2].NextList,p[3].Quad)
-                else:
-                        self.TAC.backpatch(p[3].NextList,p[4].Quad)
+            '''sdash : chunk M_chunk
+            | chunk laststat M_chunk
+            | laststat M_chunk
+            | chunk laststat M_chunk SEMI'''
+            p[0] = p[1]
+            if len(p) == 3:
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+            elif len(p) == 4:
+                self.TAC.backpatch(p[2].NextList,p[3].Quad)
+            else:
+                self.TAC.backpatch(p[3].NextList,p[4].Quad)
                 
         def p_chunk_semi(p):
-                '''chunk : chunk M_chunk stat SEMI
-    	        | stat SEMI
-                '''
-                p[0] = deepcopy(p[1])
-                if len(p) > 3:
-                        p[0] = Symbol()
-                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
-                        p[0].NextList = p[3].NextList 
-                print(p[0].NextList,"chunk")
+            '''chunk : chunk M_chunk stat SEMI
+    	    | stat SEMI
+            '''
+            p[0] = deepcopy(p[1])
+            if len(p) > 3:
+                p[0] = Symbol()
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                p[0].NextList = p[3].NextList 
+            print(p[0].NextList,"chunk")
         def p_chunk_stat(p):
                 '''chunk : chunk M_chunk stat
                 | stat'''
@@ -81,15 +82,15 @@ class LuaParser(object):
             p[1] = p[1]+[p[1][0]]
             del p[1][0]
             for i in range(0,minarg):
-                if not self.SymbolTable.isPresentIdent(p[1][i]):
-                        tempVar = self.SymbolTable.create_temp()
+                if not self.ST.isPresentIdent(p[1][i]):
+                        tempVar = self.ST.create_temp()
                         p[1][i].Type = p[3][minarg-1-i].Type
                         p[1][i].Locate = tempVar
-                        self.SymbolTable.addVar(p[1][i])
+                        self.ST.addVar(p[1][i])
                 else:
                         p[1][i].Type = p[3][minarg-1-i].Type
-                        p[1][i].Locate = self.SymbolTable.getIdent(p[1][i]).Locate
-                        p[1][i].Type = self.SymbolTable.getIdent(p[1][i]).Type
+                        p[1][i].Locate = self.ST.getIdent(p[1][i]).Locate
+                        p[1][i].Type = self.ST.getIdent(p[1][i]).Type
                 p[0] = Symbol()
                 self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
 
@@ -140,17 +141,20 @@ class LuaParser(object):
 
         def p_sc_beg(p):
                 '''M_sc_beg : empty'''
-                self.SymbolTable.add_scope('DO')
+                self.ST.add_scope('DO')
                 
         
         def p_sc_end(p):
                 '''M_sc_end : empty'''
-                self.SymbolTable.leave_scope()
+                self.ST.leave_scope()
         
             
         def p_stat_function(p):
             '''stat : function funcname funcbody 
             | local function names funcbody'''
+            print("Changed Function")
+            if len(p) == 4:
+                p[0] = p[3]
 
         def p_stat_namelist(p):
             '''stat : local namelist 
@@ -165,26 +169,26 @@ class LuaParser(object):
                 for i in range(0,minarg):
                     tempSymbol = Symbol()
                     tempSymbol.Iden = p[2][i]
-                    if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
-                        tempVar = self.SymbolTable.create_temp()
+                    if not self.ST.isPresentIdent(tempSymbol,self.ST.CurrScope,True):
+                        tempVar = self.ST.create_temp()
                         tempSymbol.Locate = tempVar
-                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
+                        self.ST.addVar(tempSymbol,self.ST.CurrScope)
                     else:
-                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
-                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
+                        tempSymbol.Locate = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Locate
+                        tempSymbol.Type = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Type
                     p[0] = Symbol()
                     self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
             else:
                 for i in range(len(p[2])):
                     tempSymbol = Smbol()
                     tempSymbol.Iden = p[2][i]
-                    if not self.SymbolTable.isPresentIdent(tempSymbol,self.SymbolTable.CurrScope,True):
-                        tempVar = self.SymbolTable.create_temp()
+                    if not self.ST.isPresentIdent(tempSymbol,self.ST.CurrScope,True):
+                        tempVar = self.ST.create_temp()
                         tempSymbol.Locate = tempVar
-                        self.SymbolTable.addVar(tempSymbol,self.SymbolTable.CurrScope)
+                        self.ST.addVar(tempSymbol,self.ST.CurrScope)
                     else:
-                        tempSymbol.Locate = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Locate
-                        tempSymbol.Type = self.SymbolTable.getIdent(tempSymbol,self.SymbolTable.CurrScope).Type
+                        tempSymbol.Locate = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Locate
+                        tempSymbol.Type = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Type
                     p[0] = Symbol()
                     self.TAC.inject('=',[tempSymbol.Locate,'nil'])
                 
@@ -194,10 +198,18 @@ class LuaParser(object):
             '''
             p[0] = p[1]
         def p_funcbody_parlist(p):
-            '''funcbody : LPAREN RPAREN block end
+            '''funcbody : LPAREN RPAREN block M_func_end end
             | LPAREN  parlist RPAREN block end'''
+            if len(p) == 6:
+                p[0] = p[3]
+            else:
+                p[0] = [4]
 
 
+        def p_func_end(p):
+            '''M_func_end : empty'''
+            print("Leavng")
+            self.ST.leave_func()
         def p_functioncall_prefix(p):
             '''functioncall : prefixexp args
             | print args
@@ -215,7 +227,7 @@ class LuaParser(object):
                         else:
                             raise Exception
                     except:
-                        print("You cannot print an object of type :"+arg.Type)
+                        print("You cannot print an object of type :",arg.Type,len(p[2]))
             if p[1] == 'scan':
                 p[0] = Symbol()
                 for arg in p[2]:
@@ -223,13 +235,13 @@ class LuaParser(object):
                         if arg.Type == 'INTEGER':
                             self.TAC.inject('scan',[arg.Locate])
                         elif arg.Type == 'STRING':
-                            self.TAC.inject('scans',[arg.Locate])
+                            self.TAC.ingnject('scans',[arg.Locate])
                         elif arg.Type == 'FLOAT':
                             self.TAC.inject('scand',[arg.Locate])
                         else:
                             raise Exception
                     except:
-                        print("You cannot print an object of type :"+arg.Type)
+                        print("You cannot print an object of type :",arg.Type)
                     
                             
         def p_args_explist(p):
@@ -242,6 +254,7 @@ class LuaParser(object):
                 p[0] = Symbol()
                 p[0].Type = 'Nil'
             else:
+                print("In args Setting type to ",p[2][0].Type,len(p[2]))
                 p[0] = p[2]
                 
         def p_args_tablecons(p):
@@ -259,11 +272,25 @@ class LuaParser(object):
             '''laststat : return retexplist 
             | return 
             | break'''
-
+            
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
-            | names'''
-
+            | names '''
+            try:
+                if len(p) == 2:
+                    p[0] = Symbol()
+                    p[0].Iden = p[1]
+                    p[0].Type = 'Function'
+                    self.ST.add_func(p[1])
+                    print("Changed Function")
+                
+                else:
+                    raise Exception
+            except:
+                print("Dot Colon syntax in function")
+              
+            print(vars(p[0]))
+                    
         def p_dotid(p):
             '''dotid : SDOT names dotid 
             | empty'''
@@ -386,10 +413,11 @@ class LuaParser(object):
             'namelist :  names  comid'
             p[0] = [p[1]] + p[2]
         def p_explist_exp(p):
-            '''explist : exp COMMA explist
-            | exp '''
+            '''explist : exp 
+            | exp COMMA explist'''
             if len(p) == 2:
                 p[0] = [p[1]]
+                print("In exp list",p[1].Type,len(p))
             else:
                 p[0] =p[1]+ [p[3]]
             
@@ -426,17 +454,17 @@ class LuaParser(object):
                 ## HANDLING 2 ARGUEMENTS ##
                 ##############################################
                 if len(p) == 2:    
-                        if self.SymbolTable.isPresentIdent(p[1]):
-                                p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
-                                p[1].Type = self.SymbolTable.getIdent(p[1]).Type
+                        if self.ST.isPresentIdent(p[1]):
+                                p[1].Locate = self.ST.getIdent(p[1]).Locate
+                                p[1].Type = self.ST.getIdent(p[1]).Type
                                 p[0] = deepcopy(p[1])
                         else:
                                 p[0] = deepcopy(p[1])
                 if len(p) == 4:
-                        if self.SymbolTable.isPresentIdent(p[0]):
-                                tempVar = self.SymbolTable.getIdent(p[0]).Locate
+                        if self.ST.isPresentIdent(p[0]):
+                                tempVar = self.ST.getIdent(p[0]).Locate
                         else:
-                                tempVar = self.SymbolTable.create_temp()
+                                tempVar = self.ST.create_temp()
                                 tempSymbol = Symbol()
                                 p[0] = tempSymbol
                                 p[0].Locate= tempVar
@@ -446,7 +474,7 @@ class LuaParser(object):
                         if p[1].Type == 'FLOAT' or p[1].Type == 'FLOAT':
                                 p[0].Type = 'FLOAT'
                                 
-                        #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
+                        #print([vars(self.ST.scope['Main'].Vars[x]) for x in self.ST.scope['Main'].Vars])
                         self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
                     
         def p_exp_reloper(p):
@@ -559,14 +587,14 @@ class LuaParser(object):
                 ## HANDLING 2 ARGUEMENTS ##
                 ##############################################
                 if len(p) == 2:    
-                        if self.SymbolTable.isPresentIdent(p[1]):
-                                p[1].Locate = self.SymbolTable.getIdent(p[1]).Locate
+                        if self.ST.isPresentIdent(p[1]):
+                                p[1].Locate = self.ST.getIdent(p[1]).Locate
                                 p[0] = p[1]
                 if len(p) == 4:
-                        if self.SymbolTable.isPresentIdent(p[0]):
-                                tempVar = self.SymbolTable.getIdent(p[0]).Locate
+                        if self.ST.isPresentIdent(p[0]):
+                                tempVar = self.ST.getIdent(p[0]).Locate
                         else:
-                                tempVar = self.SymbolTable.create_temp()
+                                tempVar = self.ST.create_temp()
                                 tempSymbol = Symbol()
                                 p[0] = tempSymbol
                                 p[0].Locate= tempVar
@@ -700,7 +728,8 @@ if __name__ == '__main__':
         result = parser.parse(data,tracking=True,debug=log)
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
-#        for keys in parserClass.SymbolTable.scope.keys():
-#                print([vars(parserClass.SymbolTable.scope[keys].Vars[x]) for x in parserClass.SymbolTable.scope[keys].Vars])
+        for keys in parserClass.ST.scope.keys():
+                print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
+        print(vars(parserClass.TAC))
         print(parserClass.TAC.print_ir_code())
         #print("Hello")

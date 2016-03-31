@@ -1,11 +1,11 @@
-array A[3]
-i = 3
+array A[5]
+i = 5
 sum = 0
 i = i - 1
 x = call inp
 A[i] = x
 if i > 0 goto 3
-i = 3
+i = 5
 i = i - 1
 tmp = A[i]
 sum = sum + tmp

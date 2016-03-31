@@ -114,7 +114,7 @@ class RegisterFinder(object):
                 furthest_line.append(dct)
                 #print furthest_line
         reg_Use = sorted(furthest_line, key=lambda k: k['use'],reverse=True)
-        #print reg_Use
+        #print reg_Use,"furthest"
         return reg_Use[0]['reg']
     def storeMem(self,reg,regDesc,AddrDesc):
         #print regDesc,reg
