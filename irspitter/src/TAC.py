@@ -25,7 +25,9 @@ class TACList():
             OpCode.InstrType = "Assign"
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
-
+        if operator == 'param':
+            OpCode.InstrType = 'param'
+            OpCode.SymtabEntry1 = tmp_list[0]
         if operator == 'goto':
             OpCode.InstrType = "GoTo"
             if len(tmp_list) >0:
@@ -54,6 +56,10 @@ class TACList():
                 OpCode.SymtabEntry2 = '_empty'
             else:
                 OpCode.SymtabEntry2 = tmp_list[1]
+            if len(tmp_list) == 3:
+                OpCode.SymtabEntry3 = tmp_list[2]
+            else:
+                OpCode.SymtabEntry3 = 0
                 self.mile += 1
         if operator == 'return':
             OpCode.InstrType = 'Return'
@@ -120,5 +126,6 @@ class TACList():
                 if code.InstrType == 'Printd':
                     print "printd "+str(code.SymtabEntry1)
                 if code.InstrType == 'FunCall':
-                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)
-                
+                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)+" "+str(code.SymtabEntry3)
+                if code.InstrType == 'param':
+                    print "param "+code.SymtabEntry1

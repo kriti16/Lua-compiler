@@ -5,8 +5,8 @@ all: out
 	@rm -rf out out.o out.s
 
 out: out.s
-	@as --gstabs --32 out.s  -o out.o
-	@gcc -m32 out.o -o out
+	#@as --gstabs --32 out.s  -o out.o
+	@gcc -m32 out.s -o out
 	
 out.s:
 	@python FinalRun.py testF.ir > out.s
