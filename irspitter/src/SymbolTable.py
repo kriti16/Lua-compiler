@@ -17,7 +17,9 @@ class LifeTime(object):
         self.Vars = {}
         self.Type = None
         self.Parent = None
-    
+        self.args = 0
+        self.start = 0
+        self.backup = 0
 class SymbolTable(object):
     def __init__(self):
         self.tempBase = 't'
@@ -25,11 +27,11 @@ class SymbolTable(object):
         self.scopeNum = 0
         MainScope = LifeTime()
         MainScope.Type = 'Main'
-        self.scope = {'L0' : MainScope}
-        self.CurrScope = 'L0'
-        self.funcBase = 'f'
+        self.scope = {'main' : MainScope}
+        self.CurrScope = 'main'
         self.funcNo = 0
-        
+        self.funcList = ['main']
+        self.CurrFunc = 'main'
     def create_Scope(self):
         self.scopeNum += 1
         scope_name = self.CurrScope + "_"+str(self.scopeNum)
@@ -40,6 +42,18 @@ class SymbolTable(object):
         return self.tempBase+str(self.tempNo-1)
 
 
+    def add_func(self, Name):
+        self.funcList.append(Name)
+        tempSc = LifeTime()
+        tempSc.Type = 'Function'
+        tempSc.Parent = self.CurrScope
+        self.scope[Name] = tempSc
+        self.CurrScope = Name
+        self.CurrFunc = Name
+    def leave_func(self):
+        self.CurrFunc = self.scope[self.CurrScope].Parent
+        self.CurrScope = self.scope[self.CurrScope].Parent
+        
     def add_scope(self,Type):
         getName = self.create_Scope()
         tempSc = LifeTime()
@@ -47,13 +61,15 @@ class SymbolTable(object):
         tempSc.Type = Type
         self.scope[getName] = tempSc
         self.CurrScope = getName
+
         
     def leave_scope(self):
         self.CurrScope = self.scope[self.CurrScope].Parent
-    
-    def findParent(self,scope):
-        return "_".join(scope.split('_')[0:-1])
+
         
+    def findParent(self,scope):
+        return self.scope[scope].Parent
+    
     def isPresentIdent(self,key,scope=None,stubborn=False):
         #scope is None at start
         if scope == None:
@@ -61,7 +77,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return True
-            elif scope == 'L0' or stubborn:
+            elif self.scope[scope].Type == 'Function' or stubborn:
                 return False
             else:
                 par_scope = self.findParent(scope)
@@ -76,7 +92,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return scope
-            elif scope == 'L0':
+            elif self.scope[scope].Type == 'Function':
                 return -1
             else:
                 par_scope = self.findParent(scope)
@@ -84,19 +100,19 @@ class SymbolTable(object):
         except:
             return -1
 
-    
+
+        
     def addVar(self,var,sc = None):
         if sc == None:
-            sc = 'L0'
+            sc = self.CurrFunc
         self.scope[sc].Vars[var.Iden]=deepcopy(var)
-
+        
         
     def getIdent(self,var, sc = None):
         if sc == None:
-            sc = 'L0'
+            sc = 'main'
         #try:
         if self.isPresentIdent(var):
             sc = self.getIdentScope(var)
             return self.scope[sc].Vars[var.Iden]
-        #except:
-        #    return False
+        

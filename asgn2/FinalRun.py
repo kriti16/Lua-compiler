@@ -352,5 +352,6 @@ if __name__=='__main__':
     runner.Run()
     if runner.Sleep == 0:
         runner.footer()
+    #print runner.leaders
     #runner.footer()
     #print vars(runner)

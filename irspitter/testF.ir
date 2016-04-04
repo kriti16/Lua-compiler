@@ -1,0 +1,3 @@
+5 [2] {'start': 2, 'args': 0, 'Type': 'Function', 'Parent': 'main', 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b77d0>, 'j': <SymbolTable.Symbol object at 0x7f5ca28b7510>}} ['main', 'f']
+6 [3] {'start': 2, 'args': 0, 'Type': 'Function', 'Parent': 'main', 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b77d0>, 'j': <SymbolTable.Symbol object at 0x7f5ca28b7510>}} ['main', 'f']
+8 [3] {'start': 0, 'args': 0, 'Type': 'Main', 'Parent': None, 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b7250>, 'dd': <SymbolTable.Symbol object at 0x7f5ca28b7590>}} ['main', 'f']

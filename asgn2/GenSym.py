@@ -207,24 +207,42 @@ class GenSym(object):
                                 dict_dead = {}
                                 
                                 try:
-                                        if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
+                                        if check_variable(TOC.SymtabEntry1)  :
                                                 raise Exception()
                                         dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
                                         dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+
+                                except:
+                                        pass
+                                
+                                try:
+                                        if check_variable(TOC.SymtabEntry2):
+                                                raise Exception()
                                         dict_dead[TOC.SymtabEntry2]=dict_perm[TOC.SymtabEntry2]
                                         dict_next[TOC.SymtabEntry2]=next_use[TOC.SymtabEntry2]
                                 except:
                                         pass
+                                
+                                
                                 try:
-                                        if check_variable(TOC.SymtabEntry1) or  check_variable(TOC.SymtabEntry2):
+                                        if check_variable(TOC.SymtabEntry1):
                                                 raise Exception()
                                         dict_perm[TOC.SymtabEntry1]=1
                                         next_use[TOC.SymtabEntry1]=i+1
                                         
+                                except:
+                                        pass
+                                
+                                try:
+                                        if   check_variable(TOC.SymtabEntry2):
+                                                raise Exception()
+                                       
                                         dict_perm[TOC.SymtabEntry2]=1
                                         next_use[TOC.SymtabEntry2]=i+1
                                 except:
                                         pass
+                                
+
                                 
                                 self.deadAlive.insert(0,dict_dead)
                                 self.nextUse.insert(0,dict_next)

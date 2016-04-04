@@ -7,11 +7,12 @@ class ThreeOp(object):
     Operator = None
     
 class TACList():
-    def __init__(self,):
-        self.TAC=[]
+    def __init__(self,ST):
+        self.TAC={}
         self.mile = -1
         self.nextMile = 0
-        
+        self.ST = ST
+    
     def inject(self,operator,tmp_list):
         OpCode = ThreeOp()
         if operator in ['+','-','*','/','%','>>','<<','and','or']:
@@ -43,38 +44,70 @@ class TACList():
         if operator == 'printd':
             OpCode.InstrType = 'Printd'
             OpCode.SymtabEntry1 = tmp_list[0]
-        
-        self.mile += 1
+        if operator == 'Func':
+            OpCode.InstrType = 'Func'
+            OpCode.SymtabEntry1 = tmp_list[0]
+        if operator == 'call':
+            OpCode.InstrType = 'FunCall'
+            OpCode.SymtabEntry1 = tmp_list[0]
+            if len(tmp_list) == 1:
+                OpCode.SymtabEntry2 = '_empty'
+            else:
+                OpCode.SymtabEntry2 = tmp_list[1]
+                self.mile += 1
+        if operator == 'return':
+            OpCode.InstrType = 'Return'
+            OpCode.SymtabEntry1 = tmp_list[0]
         self.nextMile += 1
-        self.TAC.append(OpCode)
+        if self.ST.CurrFunc not in self.TAC.keys(): 
+            self.TAC[self.ST.CurrFunc] = []
+        self.TAC[self.ST.CurrFunc].append(OpCode)
+        #print [vars(x) for x in self.TAC[self.ST.CurrFunc]]
+            
 
 
     def backpatch(self, PatchList, GodMile):
         for instr in PatchList:
-            if instr < self.nextMile and self.TAC[instr].InstrType =='GoTo' or  self.TAC[instr].InstrType =='IfElse':
-                self.TAC[instr].Target = GodMile
+            print GodMile,PatchList,vars(self.ST.scope[self.ST.CurrFunc]),self.ST.funcList
+        #    for funcs in self.ST.funcList:
+        #        if funcs != self.ST.CurrFunc:
+        #            instr -= len(self.TAC[funcs])
+            if instr < self.nextMile and self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse':
+                self.TAC[self.ST.CurrFunc][instr].Target = GodMile
         
     def print_OpCodes(self):
         for code in self.TAC:
             print vars(code)
 
+    def get_mile(self):
+        instr = self.nextMile
+        for funcs in self.ST.funcList:
+                if funcs != self.ST.CurrFunc:
+                    instr -= len(self.TAC[funcs])
+        return instr
+    
     def print_ir_code(self):
-        for code in self.TAC:
-            if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
-                print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
+        for functions in self.ST.funcList:
+            for code in self.TAC[functions]:
+                if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
+                    print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
+                if code.InstrType == 'Func':
+                    print 'fun '+code.SymtabEntry1
+                if code.InstrType == 'Assign':
+                    print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
 
-            if code.InstrType == 'Assign':
-                print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
-
-            if code.InstrType == 'GoTo':
-                print "goto "+str(code.Target)
-
-            if code.Operator in ['<','>','=>','<=','==','~=']:
-                print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
-            if code.InstrType == 'Print':
-                print "print "+str(code.SymtabEntry1)
-            if code.InstrType == 'Prints':
-                print "prints "+str(code.SymtabEntry1)
-            if code.InstrType == 'Printd':
-                print "printd "+str(code.SymtabEntry1)
-            
+                if code.InstrType == 'GoTo':
+                    print "goto "+str(code.Target)
+                if code.InstrType == 'Return':
+                    print "ret "+str(code.SymtabEntry1)
+                if code.Operator in ['<','>','=>','<=','==','~=']:
+                    print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
+                if code.InstrType == 'Print':
+                    print "print "+str(code.SymtabEntry1)
+                if code.InstrType == 'Prints':
+                    print "prints "+str(code.SymtabEntry1)
+                if code.InstrType == 'Printd':
+                    print "printd "+str(code.SymtabEntry1)
+                if code.InstrType == 'FunCall':
+                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)
+                
