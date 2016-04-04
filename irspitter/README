@@ -1,1 +1,20 @@
-+ Varlist and ExpList have same length
+# CS335 Group 6 Assignment 4
+
+## Build and Exection instructions
+1. Give a 'make' instruction in the asgn4 folder
+2. ./bin/irgen test/fun.lua for running
+
+* Do a make clean to clean the binaries.
+* There are 5 test files fun.lua, loop.lua, ifelse.lua, prime.lua, scope.lua
+
+
+##Constructs and Functionality supported by our compiler
+* Simple arithmetics
+* While loops
+* Repeat until loops
+* Nested if else
+* Functions with multiple parameters
+* Nested Function declaration
+* Scope rules for variable
+* Break statements
+* Simple library support like print
