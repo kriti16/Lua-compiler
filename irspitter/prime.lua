@@ -21,3 +21,4 @@ if isPrime(x)==1 then
 else
 	print(0)
 end
+d = {}

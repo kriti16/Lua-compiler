@@ -274,7 +274,7 @@ class LuaParser(object):
                 
         def p_args_tablecons(p):
             '''args : tableconstructor'''
-
+            p[0]=p[1]
         def p_parlist_namelist(p):
             '''parlist : namelist'''
             reversedList = deepcopy(p[1])
@@ -584,7 +584,8 @@ class LuaParser(object):
         def p_exp_misc(p):
                 '''exp : exp DBLDOTS exp
                 | tableconstructor'''
-
+                if len(p) == 2:
+                    p[0] = p[1]
         def p_exp_unop(p):
                 '''exp : unop exp %prec unop'''
                 if p[1].Value == 'NOT':
@@ -774,24 +775,56 @@ class LuaParser(object):
         def p_tableconstructor_fieldlist(p):
             '''tableconstructor : LCURLY fieldlist RCURLY 
             | LCURLY RCURLY'''
-
+            if len(p) == 3:
+                p[0] = Symbol()
+                p[0].args = 0
+                p[0].Type = "Dictionary0"
+            else:
+                p[0] = Symbol()
+                p[0].args = p[2]
+                p[0].Type = "Dictionary"+str(p[2])
+            
+            tempS = Symbol()
+            tempVar = self.ST.create_temp()
+            tempS.Locate = tempVar
+            self.ST.addVar(tempS)
+            self.TAC.inject('call',['CreateDict',tempVar,1])
+            p[0].Locate = tempVar
         def p_fieldlist_fieldseplist(p):
             '''fieldlist : field fieldseplist fieldsep
             | field fieldseplist'''
-            
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
         def p_fieldseplist_field(p):
             ''' fieldseplist : fieldseplist fieldsep field 
             | empty'''
-
+            
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
+                
         def p_field_exp(p):
             '''field : LSQUARE exp RSQUARE EQUALS exp 
             | names EQUALS exp 
             | exp'''
-
+            
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
+                
         def p_fieldsep_seps(p):
           '''fieldsep : COMMA 
           | SEMI'''
-
+          
+          try:
+              raise Exception
+          except:
+              print("Implementation depends on future action")
+                
         def p_error(p):
             print("Syntax error with token "+p.value)
             print ("\n")
@@ -834,8 +867,9 @@ if __name__ == '__main__':
         result = parser.parse(data,tracking=True,debug=log)
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
-#        for keys in parserClass.ST.scope.keys():
-#print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
+        for keys in parserClass.ST.scope.keys():
+            print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
 #        print(vars(parserClass.TAC))
         parserClass.TAC.print_ir_code()
+        
         #print("Hello")

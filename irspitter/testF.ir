@@ -1,3 +1,6 @@
+[{'Locate': 't0', 'Quad': -1, 'Iden': 'h', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': 'INTEGER'}, {'Locate': 't8', 'Quad': -1, 'Iden': 'dd', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': None}]
+[{'Locate': 't4', 'Quad': -1, 'Iden': 'k', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': 'INTEGER'}, {'Locate': 't3', 'Quad': -1, 'Iden': 't', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': 'INTEGER'}]
+[{'Locate': 't2', 'Quad': -1, 'Iden': 'j', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': 'INTEGER'}, {'Locate': 't1', 'Quad': -1, 'Iden': 'jj', 'Scope': None, 'Value': None, 'BreakList': [], 'PosList': [], 'NextList': [], 'NegList': [], 'Type': None}]
 t0 = 3333
 param t0
 t7 = call f 1
