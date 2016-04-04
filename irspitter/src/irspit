@@ -297,8 +297,9 @@ class LuaParser(object):
                     print ("More than one return value not supported")
                     sys.exit(0)
         def p_laststat_break(p):
-            '''laststat : break M_break'''
-            p[0].NextList = p[2].NextList
+            '''laststat : break '''
+            #p[0].NextList = []
+
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
             | names '''
