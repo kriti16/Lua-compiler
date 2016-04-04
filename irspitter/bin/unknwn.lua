@@ -1,7 +1,9 @@
 a = 3
 b = 2
-function f(x,y)
-   x = x - y
+function f()
+   a = 2
+   a = a - b
    print(x)
 end
-f(a,b)
+f()
+print(a)
