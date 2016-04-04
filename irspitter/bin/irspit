@@ -202,9 +202,8 @@ class LuaParser(object):
                 p[0] = p[3]
             else:
                 p[0] = p[4]
-                print(p[2])
                 self.ST.scope[self.ST.CurrFunc].args = len(p[2])
-                print("inside",self.ST.scope[self.ST.CurrFunc].args,self.ST.CurrFunc)
+                
 
 
         def p_func_end(p):
@@ -227,8 +226,6 @@ class LuaParser(object):
                 p[0] = Symbol()
                 for arg in p[2]:
                     self.TAC.inject('scan',[arg.Locate])
-                    
-                    sys.exit(0)
                 p[0].Type = 'Error'
             elif len(p) == 3:
                 if self.ST.isPresentIdent(p[0]):
@@ -238,7 +235,6 @@ class LuaParser(object):
                     tempSymbol = Symbol()
                     p[0] = tempSymbol
                     p[0].Locate= tempVar
-                print(len(p[2]) ,self.ST.scope[p[1].Iden].args,p[1].Iden,self.ST.CurrFunc)
                 try:
                     if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
                         raise Exception
@@ -264,6 +260,15 @@ class LuaParser(object):
 
         def p_parlist_namelist(p):
             '''parlist : namelist'''
+            reversedList = deepcopy(p[1])
+            reversedList.reverse()
+            for arg in reversedList:
+                tempS = Symbol()
+                tempVar = self.ST.create_temp()
+                tempS.Iden = arg
+                tempS.Locate = tempVar
+                self.ST.addVar(tempS)
+                self.TAC.inject('pop',[tempS])
             p[0] = p[1]
 
         def p_parlist_other(p):
@@ -443,7 +448,7 @@ class LuaParser(object):
             if len(p) == 2:
                 p[0] = [p[1]]
             else:
-                p[0] =p[1]+ [p[3]]
+                p[0] =[p[1]]+ p[3]
             
         def p_exp_primi(p):
             '''exp :  nil 
