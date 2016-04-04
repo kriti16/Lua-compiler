@@ -7,4 +7,3 @@ while x<10 and y >2 do
       y = 4
    end
 end
-

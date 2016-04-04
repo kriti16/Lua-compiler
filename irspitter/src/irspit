@@ -39,7 +39,7 @@ class LuaParser(object):
             elif len(p) == 4:
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
             else:
-                self.TAC.backpatch(p[3].NextList,p[2].Quad)
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
                 
         def p_chunk_semi(p):
             '''chunk : chunk M_chunk stat SEMI
@@ -102,7 +102,7 @@ class LuaParser(object):
             '''stat :  for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
 	    | for namelist in explist do block end'''
-
+            
 
 
             
@@ -201,7 +201,10 @@ class LuaParser(object):
             if len(p) == 6:
                 p[0] = p[3]
             else:
-                p[0] = [4]
+                p[0] = p[4]
+                print(p[2])
+                self.ST.scope[self.ST.CurrFunc].args = len(p[2])
+                print("inside",self.ST.scope[self.ST.CurrFunc].args,self.ST.CurrFunc)
 
 
         def p_func_end(p):
@@ -235,6 +238,15 @@ class LuaParser(object):
                     tempSymbol = Symbol()
                     p[0] = tempSymbol
                     p[0].Locate= tempVar
+                print(len(p[2]) ,self.ST.scope[p[1].Iden].args,p[1].Iden,self.ST.CurrFunc)
+                try:
+                    if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
+                        raise Exception
+                except:
+                    print("Incorrect number of Arguements for function ")
+                    
+                for args in p[2]:
+                    self.TAC.inject('param',[args.Locate])
                 self.TAC.inject('call',[p[1].Iden,p[0].Locate,len(p[2])])
         def p_args_explist(p):
             '''args : LPAREN RPAREN
@@ -251,10 +263,13 @@ class LuaParser(object):
             '''args : tableconstructor'''
 
         def p_parlist_namelist(p):
-            '''parlist : namelist 
-            |  namelist comtrp  %prec comtrp
-            | TRPLDOTS'''
+            '''parlist : namelist'''
+            p[0] = p[1]
 
+        def p_parlist_other(p):
+            '''parlist : namelist comtrp  %prec comtrp
+            | TRPLDOTS'''
+            
         def p_comtrp_parlist(p):
             'comtrp : COMMA TRPLDOTS'
 
@@ -387,7 +402,6 @@ class LuaParser(object):
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
                         p[0].NextList = p[2].NegList+p[7].NextList+p[8].NextList
-                        print(p[0].NextList,"LL")
 
         
         def p_if_else_b1(p):
