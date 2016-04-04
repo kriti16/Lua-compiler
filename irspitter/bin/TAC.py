@@ -40,6 +40,9 @@ class TACList():
         if operator == 'print':
             OpCode.InstrType = 'Print'
             OpCode.SymtabEntry1 = tmp_list[0]
+        if operator == 'pop':
+            OpCode.InstrType = 'PopVar'
+            OpCode.SymtabEntry1 = tmp_list[0]
         if operator == 'prints':
             OpCode.InstrType = 'Prints'
             OpCode.SymtabEntry1 = tmp_list[0]
@@ -126,3 +129,5 @@ class TACList():
                     print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)+" "+str(code.SymtabEntry3)
                 if code.InstrType == 'param':
                     print "param "+code.SymtabEntry1
+                if code.InstrType == 'PopVar':
+                    print "popVar "+code.SymtabEntry1.Locate

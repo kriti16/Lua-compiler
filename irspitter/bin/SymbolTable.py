@@ -77,7 +77,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return True
-            elif self.scope[scope].Type == 'Function' or stubborn:
+            elif self.scope[scope].Type == 'Main' or stubborn:
                 return False
             else:
                 par_scope = self.findParent(scope)
@@ -92,7 +92,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return scope
-            elif self.scope[scope].Type == 'Function':
+            elif self.scope[scope].Type == 'Main':
                 return -1
             else:
                 par_scope = self.findParent(scope)
