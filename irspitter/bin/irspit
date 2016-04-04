@@ -37,7 +37,7 @@ class LuaParser(object):
             '''sdash : chunk M_chunk laststat 
             | laststat M_chunk
             | chunk  M_chunk laststat SEMI'''
-            p[0] = p[1]
+            p[0] = deepcopy(p[1])
             if len(p) == 3:
                 p[0].BreakList = p[1].BreakList
             elif len(p) == 4:
@@ -68,10 +68,7 @@ class LuaParser(object):
                     p[0] = Symbol()
                     self.TAC.backpatch(p[1].NextList,p[2].Quad)
                     p[0].NextList = p[3].NextList
-                    p[0].BreakList += p[3].BreakList 
-                else:
-                    p[0].NextList = p[1].NextList 
-                    p[0].BreakList += p[1].BreakList
+                    p[0].BreakList =p[1].BreakList + p[3].BreakList
                 
         
         def p_Marker_chunk(p):
@@ -112,7 +109,11 @@ class LuaParser(object):
             '''stat :  for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
 	    | for namelist in explist do block end'''
-            
+            try:
+                raise Exception
+            except:
+                print("We are hoping to implement it in the final project. Need to make-do with 'while', 'repeat' and 'until' for now. Oh Wait! That's a lot of options.")
+                sys.exit(0)
 
 
             
@@ -163,13 +164,19 @@ class LuaParser(object):
         def p_stat_function(p):
             '''stat : function funcname funcbody 
             | local function names funcbody'''
-            if len(p) == 4:
-                p[0] = p[3]
-
+            try:
+                if len(p) == 4:
+                    p[0] = p[3]
+                else:
+                    raise Exception
+            except:
+                print("We don't support local functions yet!")
+                
         def p_stat_namelist(p):
             '''stat : local namelist 
             | local namelist EQUALS explist
             '''
+            
             if len(p) == 5:
                 if len(p[2]) != len(p[4]):
                     print("KNOCK! KNOCK! Wrong number")
@@ -245,11 +252,11 @@ class LuaParser(object):
                     tempSymbol = Symbol()
                     p[0] = tempSymbol
                     p[0].Locate= tempVar
-                try:
-                    if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
-                        raise Exception
-                except:
-                    print("Incorrect number of Arguements for function ")
+                #try:
+                #    if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
+                #        raise Exception
+                #except:
+                #    print("Incorrect number of Arguements for function ",p[1].Iden,self.ST.CurrFunc)
                     
                 for args in p[2]:
                     self.TAC.inject('param',[args.Locate])
@@ -364,12 +371,12 @@ class LuaParser(object):
 
         def p_if_noelse(p):
                 '''stat : if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail  end '''
-                try:
-                        if p[2].Type != 'Boolean' :
-                                raise Exception("Not Boolean")
-                except:
-                        print("ERROR! Boolean Type not found")
-                        sys.exit(0)
+                #try:
+                #        if p[2].Type != 'Boolean' :
+                #                raise Exception("Not Boolean")
+                #except:
+                #        print("ERROR! Boolean Type not found")
+                #        sys.exit(0)
                 self.TAC.backpatch(p[2].PosList, p[5].Quad)
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
