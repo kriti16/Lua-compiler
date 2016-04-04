@@ -55,6 +55,9 @@ class TACList():
             else:
                 OpCode.SymtabEntry2 = tmp_list[1]
                 self.mile += 1
+        if operator == 'return':
+            OpCode.InstrType = 'Return'
+            OpCode.SymtabEntry1 = tmp_list[0]
         self.nextMile += 1
         if self.ST.CurrFunc not in self.TAC.keys(): 
             self.TAC[self.ST.CurrFunc] = []
@@ -65,16 +68,35 @@ class TACList():
 
     def backpatch(self, PatchList, GodMile):
         for instr in PatchList:
-            if instr < self.nextMile and self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[instr][self.ST.CurrFunc].InstrType =='IfElse':
+            #print GodMile,PatchList,vars(self.ST.scope[self.ST.CurrFunc]),self.ST.funcList,instr,self.nextMile
+            #print len(self.TAC[self.ST.CurrFunc])
+            #for funcs in self.ST.funcList:
+            #    if funcs != self.ST.CurrFunc:
+            #        GodMile += len(self.TAC[funcs])
+            #        print GodMile,"Godmile"
+            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse'):
                 self.TAC[self.ST.CurrFunc][instr].Target = GodMile
+                #print GodMile,"IFFF"
         
     def print_OpCodes(self):
         for code in self.TAC:
             print vars(code)
 
+    def get_mile(self):
+        instr = self.nextMile 
+        #for funcs in self.ST.funcList:
+        #        if funcs != self.ST.CurrFunc:
+        #            instr -= len(self.TAC[funcs])
+        return instr
+    
     def print_ir_code(self):
+        total_count = 0
+        temp_count = 0
         for functions in self.ST.funcList:
+            total_count += temp_count
+            temp_count = 0
             for code in self.TAC[functions]:
+                temp_count += 1
                 if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
                 if code.InstrType == 'Func':
@@ -83,10 +105,14 @@ class TACList():
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
 
                 if code.InstrType == 'GoTo':
-                    print "goto "+str(code.Target)
-
+                    try:
+                        print "goto "+str(code.Target+total_count)
+                    except:
+                        print "goto "+str(code.Target)+str(total_count)
+                if code.InstrType == 'Return':
+                    print "ret "+str(code.SymtabEntry1)
                 if code.Operator in ['<','>','=>','<=','==','~=']:
-                    print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
+                    print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target+total_count)
                 if code.InstrType == 'Print':
                     print "print "+str(code.SymtabEntry1)
                 if code.InstrType == 'Prints':

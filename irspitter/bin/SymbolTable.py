@@ -17,7 +17,8 @@ class LifeTime(object):
         self.Vars = {}
         self.Type = None
         self.Parent = None
-    
+        self.args = 0
+        self.start = 0
 class SymbolTable(object):
     def __init__(self):
         self.tempBase = 't'

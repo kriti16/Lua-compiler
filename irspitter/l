@@ -1,0 +1,6 @@
+h = 1
+if h > 2 then
+gg = 1
+else
+gg = 2
+end

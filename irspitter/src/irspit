@@ -30,16 +30,16 @@ class LuaParser(object):
 
         def p_sdash_last(p):
             '''sdash : chunk M_chunk
-            | chunk laststat M_chunk
+            | chunk M_chunk laststat 
             | laststat M_chunk
-            | chunk laststat M_chunk SEMI'''
+            | chunk  M_chunk laststat SEMI'''
             p[0] = p[1]
             if len(p) == 3:
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
             elif len(p) == 4:
-                self.TAC.backpatch(p[2].NextList,p[3].Quad)
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
             else:
-                self.TAC.backpatch(p[3].NextList,p[4].Quad)
+                self.TAC.backpatch(p[3].NextList,p[2].Quad)
                 
         def p_chunk_semi(p):
             '''chunk : chunk M_chunk stat SEMI
@@ -57,16 +57,17 @@ class LuaParser(object):
                 
                 p[0] = deepcopy(p[1])
                 if len(p) > 2:
-                        p[0] = Symbol()
-                        self.TAC.backpatch(p[1].NextList,p[2].Quad)
-                        p[0].NextList = p[3].NextList 
-                        
+                    p[0] = Symbol()
+                    self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                    p[0].NextList = p[3].NextList 
+                else:
+                    p[0].NextList = p[1].NextList 
 
         
         def p_Marker_chunk(p):
                 '''M_chunk : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
 
                 
         def p_block_chunk(p):
@@ -116,12 +117,12 @@ class LuaParser(object):
         def p_Marker_while1(p):
                 '''M_while1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
 
         def p_Marker_while2(p):
                 '''M_while2 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
                 
                 
         def p_stat_repeat(p):
@@ -192,10 +193,11 @@ class LuaParser(object):
         def p_stat_functioncall(p):
             '''stat : functioncall
             '''
+            
             p[0] = p[1]
         def p_funcbody_parlist(p):
             '''funcbody : LPAREN RPAREN block M_func_end end
-            | LPAREN  parlist RPAREN block end'''
+            | LPAREN  parlist RPAREN block M_func_end end'''
             if len(p) == 6:
                 p[0] = p[3]
             else:
@@ -205,6 +207,8 @@ class LuaParser(object):
         def p_func_end(p):
             '''M_func_end : empty'''
             self.ST.leave_func()
+            self.TAC.nextMile = self.ST.scope[self.ST.CurrFunc].backup
+            self.TAC.mile= self.ST.scope[self.ST.CurrFunc].backup - 1
         def p_functioncall_prefix(p):
             '''functioncall : prefixexp args
             | print args
@@ -212,42 +216,26 @@ class LuaParser(object):
             if p[1] == 'print':
                 p[0] = Symbol()
                 for arg in p[2]:
-                    try:
-                        if arg.Type == 'INTEGER':
-                            self.TAC.inject('print',[arg.Locate])
-                        elif arg.Type == 'STRING':
-                            self.TAC.inject('prints',[arg.Locate])
-                        elif arg.Type == 'FLOAT':
-                            self.TAC.inject('printd',[arg.Locate])
-                        else:
-                            raise Exception
-                    except:
-                        print("You cannot print an object of type :",arg.Type)
-                        sys.exit(0)
+                        self.TAC.inject('print',[arg.Locate])
+                    
                 p[0] = Symbol()
                 p[0].Type = 'Error'
             elif p[1] == 'scan':
                 p[0] = Symbol()
                 for arg in p[2]:
-                    try:
-                        if arg.Type == 'INTEGER':
-                            self.TAC.inject('scan',[arg.Locate])
-                        elif arg.Type == 'STRING':
-                            self.TAC.ingnject('scans',[arg.Locate])
-                        elif arg.Type == 'FLOAT':
-                            self.TAC.inject('scand',[arg.Locate])
-                        else:
-                            raise Exception
-                    except:
-                        print("You cannot scan an object of type :",arg.Type)
-                        sys.exit(0)
+                    self.TAC.inject('scan',[arg.Locate])
+                    
+                    sys.exit(0)
                 p[0].Type = 'Error'
-
-
             elif len(p) == 3:
-                p[0] = Symbol()
-                p[0].Iden = p[1]
-                self.TAC.inject('call',[p[1].Iden])
+                if self.ST.isPresentIdent(p[0]):
+                    tempVar = self.ST.getIdent(p[0]).Locate
+                else:
+                    tempVar = self.ST.create_temp()
+                    tempSymbol = Symbol()
+                    p[0] = tempSymbol
+                    p[0].Locate= tempVar
+                self.TAC.inject('call',[p[1].Iden,p[0].Locate,len(p[2])])
         def p_args_explist(p):
             '''args : LPAREN RPAREN
             | LPAREN explist RPAREN
@@ -255,8 +243,7 @@ class LuaParser(object):
             if len(p) == 2:
                 p[0] = p[1]
             elif len(p)  == 3:
-                p[0] = Symbol()
-                p[0].Type = 'Nil'
+                p[0] = []
             else:
                 p[0] = p[2]
                 
@@ -271,10 +258,26 @@ class LuaParser(object):
         def p_comtrp_parlist(p):
             'comtrp : COMMA TRPLDOTS'
 
-        def p_laststat_break(p):
+        def p_laststat_return(p):
             '''laststat : return retexplist 
-            | return 
-            | break'''
+            | return '''
+            if len(p) == 2:
+                tempS = Symbol()
+                tempS.Locate = 0
+                tempS.Value = 0
+                self.TAC.inject('return',[tempS])
+            else:
+                try :
+                    if len(p[2]) >1:
+                        raise Exception
+                    else:
+                        self.TAC.inject('return',[p[2][0].Locate])
+                    p[0] = p[2][0]
+                except:
+                    print ("More than one return value not supported")
+                    sys.exit(0)
+        def p_laststat_break(p):
+            '''laststat : break'''
             
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
@@ -284,8 +287,12 @@ class LuaParser(object):
                     p[0] = Symbol()
                     p[0].Iden = p[1]
                     p[0].Type = 'Function'
+                    self.ST.scope[self.ST.CurrFunc].backup = self.TAC.get_mile()
                     self.ST.add_func(p[1])
+                    self.TAC.mile = -1
+                    self.TAC.nextMile = 0
                     self.TAC.inject('Func',[p[1]])
+                    self.ST.scope[self.ST.CurrFunc].start = self.TAC.get_mile()
                 else:
                     raise Exception
             except:
@@ -331,7 +338,7 @@ class LuaParser(object):
                 self.TAC.backpatch(p[2].PosList, p[5].Quad)
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
-                p[0].NextList = p[2].NegList + p[6].NextList + p[9].NextList
+                p[0].NextList = p[6].NextList + p[7].NextList + p[8].NextList
                 
                 
                 
@@ -342,13 +349,14 @@ class LuaParser(object):
         def p_if_1(p):
                 '''M_if1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
                 
         def p_if_block_end(p):
                 '''M_if_block_end :  empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
-                
+                p[0].NextList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+                p[0].Quad = self.TAC.get_mile()
         def p_if_tail(p):
                 '''M_if_tail : empty'''
                 p[0] = Symbol()
@@ -360,35 +368,38 @@ class LuaParser(object):
                 if len(p) > 2:
                         p[0].NextList = p[4].NextList
                 else:
-                        p[0].NextList = self.TAC.nextMile
+                        p[0].NextList = [self.TAC.get_mile()]
         def p_if_else_marker(p):
                 '''M_else : empty'''
                 p[0] = Symbol()
-
         def p_if_else_block(p):
                 '''M_else_block : empty'''
                 p[0] = Symbol()
+                p[0].NextList = [self.TAC.get_mile()]
         
         def p_ifblock_elseif(p):
                 '''ifblock : elseif exp M_bool  then M_else_block1 block M_else_block_end ifblock M_ifblock_end 
                 | opt_else '''
                 p[0] = Symbol()
                 if len(p) == 2:
-                        p[0].NextList = p[1].NextList
+                    p[0].NextList = p[1].NextList
                 elif len(p) > 3:
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
-                        
+                        p[0].NextList = p[2].NegList+p[7].NextList+p[8].NextList
+                        print(p[0].NextList,"LL")
 
         
         def p_if_else_b1(p):
                 '''M_else_block1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
         def p_if_else_bend(p):
                 '''M_else_block_end : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].NextList = [self.TAC.get_mile()]
+                p[0].Quad = self.TAC.get_mile()
+                self.TAC.inject('goto',[])
 
         def p_if_else_ifblock_end(p):
                 '''M_ifblock_end : empty'''
@@ -429,12 +440,12 @@ class LuaParser(object):
             
         def p_exp_true(p):
                 '''exp : true'''
-                p[0].PosList = [self.TAC.nextMile]
+                p[0].PosList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
         def p_exp_false(p):
                 '''exp : false'''
-                p[0].NegList = [self.TAC.nextMile]
+                p[0].NegList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
 
@@ -486,8 +497,10 @@ class LuaParser(object):
             #print(vars(p),vars(p[1]),vars(p[3]))
             p[0] = Symbol()
             p[0].Type = 'Boolean'
-            p[0].PosList = [self.TAC.nextMile]
-            p[0].NegList = [self.TAC.nextMile+1]
+#            p[0].PosList = [self.TAC.nextMile]
+#            p[0].NegList = [self.TAC.nextMile+1]
+            p[0].PosList = [self.TAC.get_mile()]
+            p[0].NegList = [self.TAC.get_mile()+1]
             self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
             self.TAC.inject('goto',[])
             
@@ -523,10 +536,6 @@ class LuaParser(object):
                 p[0].PosList = p[4].PosList
                 p[0].NegList = p[1].NegList + p[4].NegList
                 p[0].Type = 'Boolean'
-        def p_M_andor(p):
-                '''M_andor : empty'''
-                p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
         
         def p_exp_misc(p):
                 '''exp : exp MODULO exp
@@ -546,49 +555,44 @@ class LuaParser(object):
                         p[0].PosList = p[2].NegList
                         p[0].NegList = p[2].PosList
                 ############################RETURN############################
-
-
-
-        def p_retexplist_exp(p):
-            '''retexplist : retexplist COMMA retexp
-            | retexp '''
-            if len(p) == 2:
-                p[0] = [p[1]]
-            else:
-                p[0] =p[1]+ [p[3]]
-            
         def p_retexp_primi(p):
             '''retexp :  nil 
             | Number 
             | STRING
             '''
             p[0] = p[1]
-
+            
         def p_retexp_true(p):
                 '''retexp : true'''
-                p[0].PosList = [self.TAC.nextMile]
+                p[0].PosList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
         def p_retexp_false(p):
                 '''retexp : false'''
-                p[0].NegList = [self.TAC.nextMile]
-                
+                p[0].NegList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+
+
         def p_retexp_mathoper(p):
-                '''retexp : TRPLDOTS 
-                | prefixexp 
+                '''retexp : TRPLDOTS  
+	        | prefixexp 
                 | exp PLUS exp
                 | exp MINUS exp
                 | exp TIMES exp
                 | exp DIVIDE exp
                 | exp POWER exp
                 '''
+                
                 ###############################################
                 ## HANDLING 2 ARGUEMENTS ##
                 ##############################################
                 if len(p) == 2:    
                         if self.ST.isPresentIdent(p[1]):
                                 p[1].Locate = self.ST.getIdent(p[1]).Locate
-                                p[0] = p[1]
+                                p[1].Type = self.ST.getIdent(p[1]).Type
+                                p[0] = deepcopy(p[1])
+                        else:
+                                p[0] = deepcopy(p[1])
                 if len(p) == 4:
                         if self.ST.isPresentIdent(p[0]):
                                 tempVar = self.ST.getIdent(p[0]).Locate
@@ -603,7 +607,7 @@ class LuaParser(object):
                         if p[1].Type == 'FLOAT' or p[1].Type == 'FLOAT':
                                 p[0].Type = 'FLOAT'
                                 
-                        #print([vars(self.SymbolTable.scope['Main'].Vars[x]) for x in self.SymbolTable.scope['Main'].Vars])
+                        #print([vars(self.ST.scope['Main'].Vars[x]) for x in self.ST.scope['Main'].Vars])
                         self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
                     
         def p_retexp_reloper(p):
@@ -613,19 +617,79 @@ class LuaParser(object):
             | exp GE exp
             | exp NE exp
             | exp CHECKEQ exp'''
+            #print(vars(p),vars(p[1]),vars(p[3]))
+            p[0] = Symbol()
+            p[0].Type = 'Boolean'
+            p[0].PosList = [self.TAC.get_mile()]
+            p[0].NegList = [self.TAC.get_mile()+1]
+            self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
+            self.TAC.inject('goto',[])
+            
 
+            
         def p_retexp_and(p):
-                '''retexp : exp and M_andor exp'''
-        
-        def p_retexp_or(p):
                 '''retexp : exp or M_andor exp'''
-
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                
+                        
+                self.TAC.backpatch(p[1].NegList, p[3].Quad)
+                #print (p[0],"sssssssssss")
+                p[0] = Symbol()
+                p[0].PosList = p[1].PosList + p[4].PosList
+                p[0].NegList = p[4].NegList
+                p[0].Type = 'Boolean'
+        def p_retexp_or(p):
+                '''retexp : exp and M_andor exp'''
+                
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                self.TAC.backpatch(p[1].PosList, p[3].Quad)
+                p[0] = Symbol()
+                p[0].PosList = p[4].PosList
+                p[0].NegList = p[1].NegList + p[4].NegList
+                p[0].Type = 'Boolean'
+        def p_M_andor(p):
+                '''M_andor : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+        
         def p_retexp_misc(p):
                 '''retexp : exp MODULO exp
                 | exp DBLDOTS exp
-                | tableconstructor
-                | unop exp  %prec unop'''
+                | tableconstructor'''
 
+        def p_retexp_unop(p):
+                '''retexp : unop exp %prec unop'''
+                if p[1].Value == 'NOT':
+                        try:
+                                if p[2].Type != 'Boolean' :
+                                        raise Exception("Not Boolean")
+                        except:
+                                print("ERROR! Boolean Type not found")
+                                sys.exit(0)
+                        p[0] = deepcopy(p[2])
+                        p[0].PosList = p[2].NegList
+                        p[0].NegList = p[2].PosList
+       
+
+
+        def p_retexplist_exp(p):
+            '''retexplist : retexplist COMMA retexp
+            | retexp '''
+            if len(p) == 2:
+                p[0] = [p[1]]
+            else:
+                p[0] =p[1]+ [p[3]]
+            
 
                 ######################################3
             
