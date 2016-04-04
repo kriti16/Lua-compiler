@@ -30,16 +30,16 @@ class LuaParser(object):
 
         def p_sdash_last(p):
             '''sdash : chunk M_chunk
-            | chunk laststat M_chunk
+            | chunk M_chunk laststat 
             | laststat M_chunk
-            | chunk laststat M_chunk SEMI'''
+            | chunk  M_chunk laststat SEMI'''
             p[0] = p[1]
             if len(p) == 3:
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
             elif len(p) == 4:
-                self.TAC.backpatch(p[2].NextList,p[3].Quad)
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
             else:
-                self.TAC.backpatch(p[3].NextList,p[4].Quad)
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
                 
         def p_chunk_semi(p):
             '''chunk : chunk M_chunk stat SEMI
@@ -67,7 +67,7 @@ class LuaParser(object):
         def p_Marker_chunk(p):
                 '''M_chunk : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
 
                 
         def p_block_chunk(p):
@@ -102,7 +102,7 @@ class LuaParser(object):
             '''stat :  for names EQUALS exp COMMA exp  do block end 
             | for names EQUALS exp COMMA exp COMMA exp do block end 
 	    | for namelist in explist do block end'''
-
+            
 
 
             
@@ -117,12 +117,12 @@ class LuaParser(object):
         def p_Marker_while1(p):
                 '''M_while1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
 
         def p_Marker_while2(p):
                 '''M_while2 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
                 
                 
         def p_stat_repeat(p):
@@ -197,16 +197,21 @@ class LuaParser(object):
             p[0] = p[1]
         def p_funcbody_parlist(p):
             '''funcbody : LPAREN RPAREN block M_func_end end
-            | LPAREN  parlist RPAREN block end'''
+            | LPAREN  parlist RPAREN block M_func_end end'''
             if len(p) == 6:
                 p[0] = p[3]
             else:
-                p[0] = [4]
+                p[0] = p[4]
+                print(p[2])
+                self.ST.scope[self.ST.CurrFunc].args = len(p[2])
+                print("inside",self.ST.scope[self.ST.CurrFunc].args,self.ST.CurrFunc)
 
 
         def p_func_end(p):
             '''M_func_end : empty'''
             self.ST.leave_func()
+            self.TAC.nextMile = self.ST.scope[self.ST.CurrFunc].backup
+            self.TAC.mile= self.ST.scope[self.ST.CurrFunc].backup - 1
         def p_functioncall_prefix(p):
             '''functioncall : prefixexp args
             | print args
@@ -233,6 +238,15 @@ class LuaParser(object):
                     tempSymbol = Symbol()
                     p[0] = tempSymbol
                     p[0].Locate= tempVar
+                print(len(p[2]) ,self.ST.scope[p[1].Iden].args,p[1].Iden,self.ST.CurrFunc)
+                try:
+                    if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
+                        raise Exception
+                except:
+                    print("Incorrect number of Arguements for function ")
+                    
+                for args in p[2]:
+                    self.TAC.inject('param',[args.Locate])
                 self.TAC.inject('call',[p[1].Iden,p[0].Locate,len(p[2])])
         def p_args_explist(p):
             '''args : LPAREN RPAREN
@@ -249,10 +263,13 @@ class LuaParser(object):
             '''args : tableconstructor'''
 
         def p_parlist_namelist(p):
-            '''parlist : namelist 
-            |  namelist comtrp  %prec comtrp
-            | TRPLDOTS'''
+            '''parlist : namelist'''
+            p[0] = p[1]
 
+        def p_parlist_other(p):
+            '''parlist : namelist comtrp  %prec comtrp
+            | TRPLDOTS'''
+            
         def p_comtrp_parlist(p):
             'comtrp : COMMA TRPLDOTS'
 
@@ -285,9 +302,12 @@ class LuaParser(object):
                     p[0] = Symbol()
                     p[0].Iden = p[1]
                     p[0].Type = 'Function'
+                    self.ST.scope[self.ST.CurrFunc].backup = self.TAC.get_mile()
                     self.ST.add_func(p[1])
+                    self.TAC.mile = -1
+                    self.TAC.nextMile = 0
                     self.TAC.inject('Func',[p[1]])
-                    self.ST.scope[self.ST.CurrFunc].start = self.TAC.nextMile
+                    self.ST.scope[self.ST.CurrFunc].start = self.TAC.get_mile()
                 else:
                     raise Exception
             except:
@@ -333,7 +353,7 @@ class LuaParser(object):
                 self.TAC.backpatch(p[2].PosList, p[5].Quad)
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
-                p[0].NextList = p[2].NegList + p[6].NextList + p[9].NextList
+                p[0].NextList = p[6].NextList + p[7].NextList + p[8].NextList
                 
                 
                 
@@ -344,13 +364,14 @@ class LuaParser(object):
         def p_if_1(p):
                 '''M_if1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
                 
         def p_if_block_end(p):
                 '''M_if_block_end :  empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
-                
+                p[0].NextList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+                p[0].Quad = self.TAC.get_mile()
         def p_if_tail(p):
                 '''M_if_tail : empty'''
                 p[0] = Symbol()
@@ -362,36 +383,38 @@ class LuaParser(object):
                 if len(p) > 2:
                         p[0].NextList = p[4].NextList
                 else:
-                        p[0].NextList = self.TAC.nextMile
+                        p[0].NextList = [self.TAC.get_mile()]
         def p_if_else_marker(p):
                 '''M_else : empty'''
                 p[0] = Symbol()
-
         def p_if_else_block(p):
                 '''M_else_block : empty'''
                 p[0] = Symbol()
+                p[0].NextList = [self.TAC.get_mile()]
         
         def p_ifblock_elseif(p):
                 '''ifblock : elseif exp M_bool  then M_else_block1 block M_else_block_end ifblock M_ifblock_end 
                 | opt_else '''
                 p[0] = Symbol()
                 if len(p) == 2:
-                        p[0].NextList = p[1].NextList
+                    p[0].NextList = p[1].NextList
                 elif len(p) > 3:
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
-                        
+                        p[0].NextList = p[7].NextList+p[8].NextList
 
         
         def p_if_else_b1(p):
                 '''M_else_block1 : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
         def p_if_else_bend(p):
                 '''M_else_block_end : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
-
+                p[0].NextList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+                p[0].Quad = self.TAC.get_mile()
+                
         def p_if_else_ifblock_end(p):
                 '''M_ifblock_end : empty'''
                 p[0] = Symbol()
@@ -431,12 +454,12 @@ class LuaParser(object):
             
         def p_exp_true(p):
                 '''exp : true'''
-                p[0].PosList = [self.TAC.nextMile]
+                p[0].PosList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
         def p_exp_false(p):
                 '''exp : false'''
-                p[0].NegList = [self.TAC.nextMile]
+                p[0].NegList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
 
@@ -555,12 +578,12 @@ class LuaParser(object):
             
         def p_retexp_true(p):
                 '''retexp : true'''
-                p[0].PosList = [self.TAC.nextMile]
+                p[0].PosList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
         def p_retexp_false(p):
                 '''retexp : false'''
-                p[0].NegList = [self.TAC.nextMile]
+                p[0].NegList = [self.TAC.get_mile()]
                 self.TAC.inject('goto',[])
 
 
@@ -611,8 +634,8 @@ class LuaParser(object):
             #print(vars(p),vars(p[1]),vars(p[3]))
             p[0] = Symbol()
             p[0].Type = 'Boolean'
-            p[0].PosList = [self.TAC.nextMile]
-            p[0].NegList = [self.TAC.nextMile+1]
+            p[0].PosList = [self.TAC.get_mile()]
+            p[0].NegList = [self.TAC.get_mile()+1]
             self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
             self.TAC.inject('goto',[])
             
@@ -651,7 +674,7 @@ class LuaParser(object):
         def p_M_andor(p):
                 '''M_andor : empty'''
                 p[0] = Symbol()
-                p[0].Quad = self.TAC.nextMile
+                p[0].Quad = self.TAC.get_mile()
         
         def p_retexp_misc(p):
                 '''retexp : exp MODULO exp

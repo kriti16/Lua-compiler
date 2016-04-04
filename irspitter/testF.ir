@@ -1,3 +1,36 @@
-5 [2] {'start': 2, 'args': 0, 'Type': 'Function', 'Parent': 'main', 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b77d0>, 'j': <SymbolTable.Symbol object at 0x7f5ca28b7510>}} ['main', 'f']
-6 [3] {'start': 2, 'args': 0, 'Type': 'Function', 'Parent': 'main', 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b77d0>, 'j': <SymbolTable.Symbol object at 0x7f5ca28b7510>}} ['main', 'f']
-8 [3] {'start': 0, 'args': 0, 'Type': 'Main', 'Parent': None, 'Vars': {'h': <SymbolTable.Symbol object at 0x7f5ca28b7250>, 'dd': <SymbolTable.Symbol object at 0x7f5ca28b7590>}} ['main', 'f']
+1 0 g g
+Incorrect number of Arguements for function 
+0 0 g f
+['jj']
+inside 1 main
+1 0 f main
+Incorrect number of Arguements for function 
+t0 = 3333
+param t0
+t7 = call f 1
+t8 = t7
+print t8
+fun f
+t1 = 2
+if t1 > 1 goto 9
+goto 11
+t2 = 2
+goto 17
+if t1 > 3 goto 13
+goto 16
+t6 = call g 0
+t2 = t6
+goto 17
+t2 = 3
+ret t2
+fun g
+t3 = 2
+if t3 == 2 goto 22
+goto 25
+t4 = 2
+ret t4
+goto 26
+t4 = 4
+param t4
+t5 = call g 1
+ret t5

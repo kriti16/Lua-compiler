@@ -204,7 +204,7 @@ class LuaParser(object):
                 p[0] = p[4]
                 print(p[2])
                 self.ST.scope[self.ST.CurrFunc].args = len(p[2])
-                print("inside",self.ST.scope[self.ST.CurrFunc].args,self.ST.CurrFunc)
+                
 
 
         def p_func_end(p):
@@ -401,7 +401,7 @@ class LuaParser(object):
                 elif len(p) > 3:
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
-                        p[0].NextList = p[2].NegList+p[7].NextList+p[8].NextList
+                        p[0].NextList = p[7].NextList+p[8].NextList
 
         
         def p_if_else_b1(p):
@@ -412,9 +412,9 @@ class LuaParser(object):
                 '''M_else_block_end : empty'''
                 p[0] = Symbol()
                 p[0].NextList = [self.TAC.get_mile()]
-                p[0].Quad = self.TAC.get_mile()
                 self.TAC.inject('goto',[])
-
+                p[0].Quad = self.TAC.get_mile()
+                
         def p_if_else_ifblock_end(p):
                 '''M_ifblock_end : empty'''
                 p[0] = Symbol()

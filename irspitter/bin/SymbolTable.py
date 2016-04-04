@@ -19,6 +19,7 @@ class LifeTime(object):
         self.Parent = None
         self.args = 0
         self.start = 0
+        self.backup = 0
 class SymbolTable(object):
     def __init__(self):
         self.tempBase = 't'
@@ -31,7 +32,6 @@ class SymbolTable(object):
         self.funcNo = 0
         self.funcList = ['main']
         self.CurrFunc = 'main'
-        
     def create_Scope(self):
         self.scopeNum += 1
         scope_name = self.CurrScope + "_"+str(self.scopeNum)
@@ -50,7 +50,6 @@ class SymbolTable(object):
         self.scope[Name] = tempSc
         self.CurrScope = Name
         self.CurrFunc = Name
-
     def leave_func(self):
         self.CurrFunc = self.scope[self.CurrScope].Parent
         self.CurrScope = self.scope[self.CurrScope].Parent

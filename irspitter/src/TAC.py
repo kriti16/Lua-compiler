@@ -90,9 +90,6 @@ class TACList():
 
     def get_mile(self):
         instr = self.nextMile 
-        #for funcs in self.ST.funcList:
-        #        if funcs != self.ST.CurrFunc:
-        #            instr -= len(self.TAC[funcs])
         return instr
     
     def print_ir_code(self):

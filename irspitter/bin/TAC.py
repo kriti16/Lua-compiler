@@ -25,7 +25,9 @@ class TACList():
             OpCode.InstrType = "Assign"
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
-
+        if operator == 'param':
+            OpCode.InstrType = 'param'
+            OpCode.SymtabEntry1 = tmp_list[0]
         if operator == 'goto':
             OpCode.InstrType = "GoTo"
             if len(tmp_list) >0:
@@ -54,6 +56,10 @@ class TACList():
                 OpCode.SymtabEntry2 = '_empty'
             else:
                 OpCode.SymtabEntry2 = tmp_list[1]
+            if len(tmp_list) == 3:
+                OpCode.SymtabEntry3 = tmp_list[2]
+            else:
+                OpCode.SymtabEntry3 = 0
                 self.mile += 1
         if operator == 'return':
             OpCode.InstrType = 'Return'
@@ -68,27 +74,32 @@ class TACList():
 
     def backpatch(self, PatchList, GodMile):
         for instr in PatchList:
-            print GodMile,PatchList,vars(self.ST.scope[self.ST.CurrFunc]),self.ST.funcList
-        #    for funcs in self.ST.funcList:
-        #        if funcs != self.ST.CurrFunc:
-        #            instr -= len(self.TAC[funcs])
-            if instr < self.nextMile and self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse':
+            #print GodMile,PatchList,vars(self.ST.scope[self.ST.CurrFunc]),self.ST.funcList,instr,self.nextMile
+            #print len(self.TAC[self.ST.CurrFunc])
+            #for funcs in self.ST.funcList:
+            #    if funcs != self.ST.CurrFunc:
+            #        GodMile += len(self.TAC[funcs])
+            #        print GodMile,"Godmile"
+            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse'):
                 self.TAC[self.ST.CurrFunc][instr].Target = GodMile
+                #print GodMile,"IFFF"
         
     def print_OpCodes(self):
         for code in self.TAC:
             print vars(code)
 
     def get_mile(self):
-        instr = self.nextMile
-        for funcs in self.ST.funcList:
-                if funcs != self.ST.CurrFunc:
-                    instr -= len(self.TAC[funcs])
+        instr = self.nextMile 
         return instr
     
     def print_ir_code(self):
+        total_count = 0
+        temp_count = 0
         for functions in self.ST.funcList:
+            total_count += temp_count
+            temp_count = 0
             for code in self.TAC[functions]:
+                temp_count += 1
                 if code.Operator in ['+','-','*','/','%','>>','<<','and','or']:
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)+" "+code.Operator+" "+str(code.SymtabEntry3)
                 if code.InstrType == 'Func':
@@ -97,11 +108,14 @@ class TACList():
                     print str(code.SymtabEntry1)+" = "+str(code.SymtabEntry2)
 
                 if code.InstrType == 'GoTo':
-                    print "goto "+str(code.Target)
+                    try:
+                        print "goto "+str(code.Target+total_count)
+                    except:
+                        print "goto "+str(code.Target)+str(total_count)
                 if code.InstrType == 'Return':
                     print "ret "+str(code.SymtabEntry1)
                 if code.Operator in ['<','>','=>','<=','==','~=']:
-                    print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target)
+                    print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target+total_count)
                 if code.InstrType == 'Print':
                     print "print "+str(code.SymtabEntry1)
                 if code.InstrType == 'Prints':
@@ -109,5 +123,6 @@ class TACList():
                 if code.InstrType == 'Printd':
                     print "printd "+str(code.SymtabEntry1)
                 if code.InstrType == 'FunCall':
-                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)
-                
+                    print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)+" "+str(code.SymtabEntry3)
+                if code.InstrType == 'param':
+                    print "param "+code.SymtabEntry1
