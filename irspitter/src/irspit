@@ -27,25 +27,32 @@ class LuaParser(object):
         errors_list = []
         self.ST = SymbolTable()
         self.TAC = TACList(self.ST)
+        def p_sdash_chunk(p):
+            '''sdash : chunk M_chunk'''
+            p[0] = p[1]
+            self.TAC.backpatch(p[1].NextList,p[2].Quad)
+
 
         def p_sdash_last(p):
-            '''sdash : chunk M_chunk
-            | chunk M_chunk laststat 
+            '''sdash : chunk M_chunk laststat 
             | laststat M_chunk
             | chunk  M_chunk laststat SEMI'''
             p[0] = p[1]
             if len(p) == 3:
-                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                p[0].BreakList = p[1].BreakList
             elif len(p) == 4:
+                p[0].BreakList = p[3].BreakList
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
             else:
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
-                
+                p[0].BreakList = p[3].BreakList
+           
         def p_chunk_semi(p):
             '''chunk : chunk M_chunk stat SEMI
     	    | stat SEMI
             '''
             p[0] = deepcopy(p[1])
+            p[0].BreakList += p[3].BreakList
             if len(p) > 3:
                 p[0] = Symbol()
                 self.TAC.backpatch(p[1].NextList,p[2].Quad)
@@ -56,13 +63,16 @@ class LuaParser(object):
                 | stat'''
                 
                 p[0] = deepcopy(p[1])
+                
                 if len(p) > 2:
                     p[0] = Symbol()
                     self.TAC.backpatch(p[1].NextList,p[2].Quad)
-                    p[0].NextList = p[3].NextList 
+                    p[0].NextList = p[3].NextList
+                    p[0].BreakList += p[3].BreakList 
                 else:
                     p[0].NextList = p[1].NextList 
-
+                    p[0].BreakList += p[1].BreakList
+                
         
         def p_Marker_chunk(p):
                 '''M_chunk : empty'''
@@ -72,7 +82,7 @@ class LuaParser(object):
                 
         def p_block_chunk(p):
             ''' block : sdash'''
-            p[0] = p[1]
+            p[0] = deepcopy(p[1])
 
             
         def p_stat_var_exp(p):
@@ -111,9 +121,9 @@ class LuaParser(object):
                 self.TAC.backpatch(p[6].NextList,p[2].Quad)
                 self.TAC.backpatch(p[3].PosList,p[5].Quad)
                 p[0] = Symbol()
-                p[0].NextList = p[3].NegList
+                p[0].NextList = p[3].NegList+p[6].BreakList
                 self.TAC.inject('goto',[p[2].Quad])
-
+                p[0].BreakList = p[6].BreakList
         def p_Marker_while1(p):
                 '''M_while1 : empty'''
                 p[0] = Symbol()
@@ -139,7 +149,7 @@ class LuaParser(object):
         def p_stat_doblock(p):
             '''stat : do M_sc_beg block M_sc_end end '''
             p[0] = deepcopy(p[3])
-
+            
         def p_sc_beg(p):
                 '''M_sc_beg : empty'''
                 self.ST.add_scope('DO')
@@ -296,10 +306,14 @@ class LuaParser(object):
                 except:
                     print ("More than one return value not supported")
                     sys.exit(0)
+
         def p_laststat_break(p):
             '''laststat : break '''
+            self.TAC.inject('goto',[])
             #p[0].NextList = []
-
+            p[0]=Symbol()
+            p[0].Type = 'break'
+            p[0].BreakList = [self.TAC.get_mile()-1]
         def p_funcname_names(p):
             '''funcname : names dotid COLON 
             | names '''
@@ -360,7 +374,7 @@ class LuaParser(object):
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
                 p[0].NextList = p[6].NextList + p[7].NextList + p[8].NextList
-                
+                p[0].BreakList = p[6].BreakList + p[8].BreakList
                 
                 
         def p_if_bool(p):
@@ -388,6 +402,7 @@ class LuaParser(object):
                 p[0] = Symbol()
                 if len(p) > 2:
                         p[0].NextList = p[4].NextList
+                        p[0].BreakList = p[3].BreakList
                 else:
                         p[0].NextList = [self.TAC.get_mile()]
         def p_if_else_marker(p):
@@ -404,11 +419,12 @@ class LuaParser(object):
                 p[0] = Symbol()
                 if len(p) == 2:
                     p[0].NextList = p[1].NextList
+                    p[0].BreakList = p[1].BreakList
                 elif len(p) > 3:
                         self.TAC.backpatch(p[2].PosList,p[5].Quad)
                         self.TAC.backpatch(p[2].NegList,p[7].Quad)
                         p[0].NextList = p[7].NextList+p[8].NextList
-
+                        p[0].BreakList = p[6].BreakList + p[8].BreakList
         
         def p_if_else_b1(p):
                 '''M_else_block1 : empty'''
@@ -478,6 +494,7 @@ class LuaParser(object):
                 | exp TIMES exp
                 | exp DIVIDE exp
                 | exp POWER exp
+                | exp MODULO exp
                 '''
                 
                 ###############################################
@@ -558,8 +575,7 @@ class LuaParser(object):
                 p[0].Type = 'Boolean'
         
         def p_exp_misc(p):
-                '''exp : exp MODULO exp
-                | exp DBLDOTS exp
+                '''exp : exp DBLDOTS exp
                 | tableconstructor'''
 
         def p_exp_unop(p):

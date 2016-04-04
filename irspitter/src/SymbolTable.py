@@ -10,7 +10,7 @@ class Symbol(object):
         self.NextList = []
         self.Quad = -1
         self.Scope = None
-        
+        self.BreakList = []
     
 class LifeTime(object):
     def __init__(self):
