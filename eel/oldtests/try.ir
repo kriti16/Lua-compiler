@@ -1,0 +1,6 @@
+a = 5
+a = call inc
+print a
+fun inc
+a = a + 1
+ret a

@@ -1,0 +1,9 @@
+a = 25 - 3
+print a
+b = 3 - a
+print b
+a = a / 10
+print a
+print b
+b = b / 2
+print b

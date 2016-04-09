@@ -1,0 +1,875 @@
+#! /usr/bin/python2
+from __future__ import print_function
+from lexer import Lualexer
+import ply.yacc as yacc
+import sys
+import logging
+from TAC import TACList
+from SymbolTable import *
+import logging
+from copy import deepcopy
+import sys
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
+
+class LuaParser(object):
+
+    def __init__(self):
+        lexerClass = Lualexer()
+        lexer = lexerClass.lexer
+        tokens = lexerClass.tokenList
+        errors_list = []
+        self.ST = SymbolTable()
+        self.TAC = TACList(self.ST)
+        def p_sdash_chunk(p):
+            '''sdash : chunk M_chunk'''
+            p[0] = p[1]
+            self.TAC.backpatch(p[1].NextList,p[2].Quad)
+
+
+        def p_sdash_last(p):
+            '''sdash : chunk M_chunk laststat 
+            | laststat M_chunk
+            | chunk  M_chunk laststat SEMI'''
+            p[0] = deepcopy(p[1])
+            if len(p) == 3:
+                p[0].BreakList = p[1].BreakList
+            elif len(p) == 4:
+                p[0].BreakList = p[3].BreakList
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+            else:
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                p[0].BreakList = p[3].BreakList
+           
+        def p_chunk_semi(p):
+            '''chunk : chunk M_chunk stat SEMI
+    	    | stat SEMI
+            '''
+            p[0] = deepcopy(p[1])
+            p[0].BreakList += p[3].BreakList
+            if len(p) > 3:
+                p[0] = Symbol()
+                self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                p[0].NextList = p[3].NextList 
+            
+        def p_chunk_stat(p):
+                '''chunk : chunk M_chunk stat
+                | stat'''
+                
+                p[0] = deepcopy(p[1])
+                
+                if len(p) > 2:
+                    p[0] = Symbol()
+                    self.TAC.backpatch(p[1].NextList,p[2].Quad)
+                    p[0].NextList = p[3].NextList
+                    p[0].BreakList =p[1].BreakList + p[3].BreakList
+                
+        
+        def p_Marker_chunk(p):
+                '''M_chunk : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+
+                
+        def p_block_chunk(p):
+            ''' block : sdash'''
+            p[0] = deepcopy(p[1])
+
+            
+        def p_stat_var_exp(p):
+            '''stat :  varlist EQUALS explist'''
+            if (len(p[1]) != len(p[3])):
+                print("Not elements on either side not equal")
+            minarg = min(len(p[1]),len(p[3]))
+            p[1] = p[1]+[p[1][0]]
+            del p[1][0]
+            for i in range(0,minarg):
+                if not self.ST.isPresentIdent(p[1][i]):
+                        tempVar = self.ST.create_temp()
+                        p[1][i].Type = p[3][minarg-1-i].Type
+                        p[1][i].Locate = tempVar
+                        self.ST.addVar(p[1][i])
+                else:
+                        p[1][i].Type = p[3][minarg-1-i].Type
+                        p[1][i].Locate = self.ST.getIdent(p[1][i]).Locate
+                        p[1][i].Type = self.ST.getIdent(p[1][i]).Type
+                p[0] = Symbol()
+                self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
+
+        
+
+            
+        def p_for_block(p):
+            '''stat :  for names EQUALS exp COMMA exp  do block end 
+            | for names EQUALS exp COMMA exp COMMA exp do block end 
+	    | for namelist in explist do block end'''
+            try:
+                raise Exception
+            except:
+                print("We are hoping to implement it in the final project. Need to make-do with 'while', 'repeat' and 'until' for now. Oh Wait! That's a lot of options.")
+                sys.exit(0)
+
+
+            
+        def p_stat_while(p):
+                '''stat : while M_while1 exp do M_while2 block end'''
+                self.TAC.backpatch(p[6].NextList,p[2].Quad)
+                self.TAC.backpatch(p[3].PosList,p[5].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[3].NegList+p[6].BreakList
+                self.TAC.inject('goto',[p[2].Quad])
+                p[0].BreakList = p[6].BreakList
+        def p_Marker_while1(p):
+                '''M_while1 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+
+        def p_Marker_while2(p):
+                '''M_while2 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+                
+                
+        def p_stat_repeat(p):
+	        '''stat : repeat M_while1 block until M_while2 exp '''
+                self.TAC.backpatch(p[3].NextList,p[5].Quad)
+                self.TAC.backpatch(p[6].NegList,p[2].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[6].PosList
+                self.TAC.inject('goto',[p[2].Quad])
+
+
+
+                
+        def p_stat_doblock(p):
+            '''stat : do M_sc_beg block M_sc_end end '''
+            p[0] = deepcopy(p[3])
+            
+        def p_sc_beg(p):
+                '''M_sc_beg : empty'''
+                self.ST.add_scope('DO')
+                
+        
+        def p_sc_end(p):
+                '''M_sc_end : empty'''
+                self.ST.leave_scope()
+        
+            
+        def p_stat_function(p):
+            '''stat : function funcname funcbody 
+            | local function names funcbody'''
+            try:
+                if len(p) == 4:
+                    p[0] = p[3]
+                else:
+                    raise Exception
+            except:
+                print("We don't support local functions yet!")
+                
+        def p_stat_namelist(p):
+            '''stat : local namelist 
+            | local namelist EQUALS explist
+            '''
+            
+            if len(p) == 5:
+                if len(p[2]) != len(p[4]):
+                    print("KNOCK! KNOCK! Wrong number")
+                minarg = min(len(p[2]),len(p[4]))
+                p[2] = p[2]+[p[2][0]]
+                del p[2][0]
+                for i in range(0,minarg):
+                    tempSymbol = Symbol()
+                    tempSymbol.Iden = p[2][i]
+                    tempSymbol.Type = p[4][minarg-1-i].Type
+                    tempVar = self.ST.create_temp()
+                    tempSymbol.Locate = tempVar
+                    self.ST.addVar(tempSymbol,self.ST.CurrScope)
+                    p[0] = Symbol()
+                    self.TAC.inject('=',[tempSymbol.Locate,p[4][minarg-1-i].Locate])
+            else:
+                for i in range(len(p[2])):
+                    tempSymbol = Smbol()
+                    tempSymbol.Iden = p[2][i]
+                    if not self.ST.isPresentIdent(tempSymbol,self.ST.CurrScope,True):
+                        tempVar = self.ST.create_temp()
+                        tempSymbol.Locate = tempVar
+                        self.ST.addVar(tempSymbol,self.ST.CurrScope)
+                    else:
+                        tempSymbol.Locate = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Locate
+                        tempSymbol.Type = self.ST.getIdent(tempSymbol,self.ST.CurrScope).Type
+                    p[0] = Symbol()
+                    self.TAC.inject('=',[tempSymbol.Locate,'nil'])
+                
+            
+        def p_stat_functioncall(p):
+            '''stat : functioncall
+            '''
+            
+            p[0] = p[1]
+        def p_funcbody_parlist(p):
+            '''funcbody : LPAREN RPAREN block M_func_end end
+            | LPAREN  parlist RPAREN block M_func_end end'''
+            if len(p) == 6:
+                p[0] = p[3]
+            else:
+                p[0] = p[4]
+                self.ST.scope[self.ST.CurrFunc].args = len(p[2])
+                
+
+
+        def p_func_end(p):
+            '''M_func_end : empty'''
+            self.ST.leave_func()
+            self.TAC.nextMile = self.ST.scope[self.ST.CurrFunc].backup
+            self.TAC.mile= self.ST.scope[self.ST.CurrFunc].backup - 1
+        def p_functioncall_prefix(p):
+            '''functioncall : prefixexp args
+            | print args
+            | scan args'''
+            if p[1] == 'print':
+                p[0] = Symbol()
+                for arg in p[2]:
+                        self.TAC.inject('print',[arg.Locate])
+                    
+                p[0] = Symbol()
+                p[0].Type = 'Error'
+            elif p[1] == 'scan':
+                p[0] = Symbol()
+                for arg in p[2]:
+                    self.TAC.inject('scan',[arg.Locate])
+                p[0].Type = 'Error'
+            elif len(p) == 3:
+                if self.ST.isPresentIdent(p[0]):
+                    tempVar = self.ST.getIdent(p[0]).Locate
+                else:
+                    tempVar = self.ST.create_temp()
+                    tempSymbol = Symbol()
+                    p[0] = tempSymbol
+                    p[0].Locate= tempVar
+                #try:
+                #    if p[1].Iden not in self.ST.funcList or len(p[2]) != self.ST.scope[p[1].Iden].args:
+                #        raise Exception
+                #except:
+                #    print("Incorrect number of Arguements for function ",p[1].Iden,self.ST.CurrFunc)
+                    
+                for args in p[2]:
+                    self.TAC.inject('param',[args.Locate])
+                self.TAC.inject('call',[p[1].Iden,p[0].Locate,len(p[2])])
+        def p_args_explist(p):
+            '''args : LPAREN RPAREN
+            | LPAREN explist RPAREN
+            | STRING'''
+            if len(p) == 2:
+                p[0] = p[1]
+            elif len(p)  == 3:
+                p[0] = []
+            else:
+                p[0] = p[2]
+                
+        def p_args_tablecons(p):
+            '''args : tableconstructor'''
+            p[0]=p[1]
+        def p_parlist_namelist(p):
+            '''parlist : namelist'''
+            reversedList = deepcopy(p[1])
+            reversedList.reverse()
+            for arg in reversedList:
+                tempS = Symbol()
+                tempVar = self.ST.create_temp()
+                tempS.Iden = arg
+                tempS.Locate = tempVar
+                self.ST.addVar(tempS)
+                self.TAC.inject('pop',[tempS])
+            p[0] = p[1]
+
+        def p_parlist_other(p):
+            '''parlist : namelist comtrp  %prec comtrp
+            | TRPLDOTS'''
+            
+        def p_comtrp_parlist(p):
+            'comtrp : COMMA TRPLDOTS'
+
+        def p_laststat_return(p):
+            '''laststat : return retexplist 
+            | return '''
+            if len(p) == 2:
+                tempS = Symbol()
+                tempS.Locate = 0
+                tempS.Value = 0
+                self.TAC.inject('return',[tempS])
+            else:
+                try :
+                    if len(p[2]) >1:
+                        raise Exception
+                    else:
+                        self.TAC.inject('return',[p[2][0].Locate])
+                    p[0] = p[2][0]
+                except:
+                    print ("More than one return value not supported")
+                    sys.exit(0)
+
+        def p_laststat_break(p):
+            '''laststat : break '''
+            self.TAC.inject('goto',[])
+            #p[0].NextList = []
+            p[0]=Symbol()
+            p[0].Type = 'break'
+            p[0].BreakList = [self.TAC.get_mile()-1]
+        def p_funcname_names(p):
+            '''funcname : names dotid COLON 
+            | names '''
+            try:
+                if len(p) == 2:
+                    p[0] = Symbol()
+                    p[0].Iden = p[1]
+                    p[0].Type = 'Function'
+                    self.ST.scope[self.ST.CurrFunc].backup = self.TAC.get_mile()
+                    self.ST.add_func(p[1])
+                    self.TAC.mile = -1
+                    self.TAC.nextMile = 0
+                    self.TAC.inject('Func',[p[1]])
+                    self.ST.scope[self.ST.CurrFunc].start = self.TAC.get_mile()
+                else:
+                    raise Exception
+            except:
+                print("Dot Colon syntax in function")
+                
+        def p_dotid(p):
+            '''dotid : SDOT names dotid 
+            | empty'''
+            
+            if len(p) == 2:
+                p[0] = []
+            else:
+                p[0] = p[3] + [p[2]]
+
+        def p_comvar(p):
+            '''comvar : COMMA var comvar 
+            | empty'''
+            if len(p) == 2:
+                p[0] = []
+            else:
+                p[0] = p[3] + [p[2]]
+
+        def p_comid(p):
+                '''comid : COMMA names comid 
+                | empty'''
+                if len(p) == 2:
+                        p[0] = []
+                else:
+                        p[0] = [p[2]] + p[3]
+                
+                    
+
+
+
+        def p_if_noelse(p):
+                '''stat : if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail  end '''
+                #try:
+                #        if p[2].Type != 'Boolean' :
+                #                raise Exception("Not Boolean")
+                #except:
+                #        print("ERROR! Boolean Type not found")
+                #        sys.exit(0)
+                self.TAC.backpatch(p[2].PosList, p[5].Quad)
+                self.TAC.backpatch(p[2].NegList, p[7].Quad)
+                p[0] = Symbol()
+                p[0].NextList = p[6].NextList + p[7].NextList + p[8].NextList
+                p[0].BreakList = p[6].BreakList + p[8].BreakList
+                
+                
+        def p_if_bool(p):
+                '''M_bool : empty'''
+                p[0] = Symbol()
+        
+        def p_if_1(p):
+                '''M_if1 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+                
+        def p_if_block_end(p):
+                '''M_if_block_end :  empty'''
+                p[0] = Symbol()
+                p[0].NextList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+                p[0].Quad = self.TAC.get_mile()
+        def p_if_tail(p):
+                '''M_if_tail : empty'''
+                p[0] = Symbol()
+        
+        def p_opt_else(p):
+                '''opt_else : else M_else block M_else_block
+                | empty'''
+                p[0] = Symbol()
+                if len(p) > 2:
+                        p[0].NextList = p[4].NextList
+                        p[0].BreakList = p[3].BreakList
+                else:
+                        p[0].NextList = [self.TAC.get_mile()]
+        def p_if_else_marker(p):
+                '''M_else : empty'''
+                p[0] = Symbol()
+        def p_if_else_block(p):
+                '''M_else_block : empty'''
+                p[0] = Symbol()
+                p[0].NextList = [self.TAC.get_mile()]
+        
+        def p_ifblock_elseif(p):
+                '''ifblock : elseif exp M_bool  then M_else_block1 block M_else_block_end ifblock M_ifblock_end 
+                | opt_else '''
+                p[0] = Symbol()
+                if len(p) == 2:
+                    p[0].NextList = p[1].NextList
+                    p[0].BreakList = p[1].BreakList
+                elif len(p) > 3:
+                        self.TAC.backpatch(p[2].PosList,p[5].Quad)
+                        self.TAC.backpatch(p[2].NegList,p[7].Quad)
+                        p[0].NextList = p[7].NextList+p[8].NextList
+                        p[0].BreakList = p[6].BreakList + p[8].BreakList
+        
+        def p_if_else_b1(p):
+                '''M_else_block1 : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+        def p_if_else_bend(p):
+                '''M_else_block_end : empty'''
+                p[0] = Symbol()
+                p[0].NextList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+                p[0].Quad = self.TAC.get_mile()
+                
+        def p_if_else_ifblock_end(p):
+                '''M_ifblock_end : empty'''
+                p[0] = Symbol()
+        
+                
+            
+        def p_varlist_var(p):
+            '''varlist : var comvar '''
+            p[0] = [p[1]] + p[2]
+            
+        def p_var_names(p):
+            '''var :  names 
+            | prefixexp LSQUARE exp RSQUARE 
+            | prefixexp SDOT names '''
+            if len(p) == 2:
+                tempSymbol = Symbol()
+                tempSymbol.Iden = p[1]
+                p[0] = tempSymbol
+            
+        def p_namelist_names(p):
+            'namelist :  names  comid'
+            p[0] = [p[1]] + p[2]
+        def p_explist_exp(p):
+            '''explist : exp 
+            | exp COMMA explist'''
+            if len(p) == 2:
+                p[0] = [p[1]]
+            else:
+                p[0] =[p[1]]+ p[3]
+            
+        def p_exp_primi(p):
+            '''exp :  nil 
+            | Number 
+            | STRING
+            '''
+            p[0] = p[1]
+            
+        def p_exp_true(p):
+                '''exp : true'''
+                p[0].PosList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+
+        def p_exp_false(p):
+                '''exp : false'''
+                p[0].NegList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+
+
+        def p_exp_mathoper(p):
+                '''exp : TRPLDOTS 
+                | function 
+	        | prefixexp 
+                | exp PLUS exp
+                | exp MINUS exp
+                | exp TIMES exp
+                | exp DIVIDE exp
+                | exp POWER exp
+                | exp MODULO exp
+                '''
+                
+                ###############################################
+                ## HANDLING 2 ARGUEMENTS ##
+                ##############################################
+                if len(p) == 2:    
+                        if self.ST.isPresentIdent(p[1]):
+                                p[1].Locate = self.ST.getIdent(p[1]).Locate
+                                p[1].Type = self.ST.getIdent(p[1]).Type
+                                p[0] = deepcopy(p[1])
+                        else:
+                                p[0] = deepcopy(p[1])
+                if len(p) == 4:
+                        if self.ST.isPresentIdent(p[0]):
+                                tempVar = self.ST.getIdent(p[0]).Locate
+                        else:
+                                tempVar = self.ST.create_temp()
+                                tempSymbol = Symbol()
+                                p[0] = tempSymbol
+                                p[0].Locate= tempVar
+
+                        if (p[1].Type == 'INTEGER' or p[1].Type == 'HEX') and (p[3].Type == 'INTEGER' or p[1].Type == 'HEX'):
+                                p[0].Type = 'INTEGER'
+                        if p[1].Type == 'FLOAT' or p[1].Type == 'FLOAT':
+                                p[0].Type = 'FLOAT'
+                                
+                        #print([vars(self.ST.scope['Main'].Vars[x]) for x in self.ST.scope['Main'].Vars])
+                        self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
+                    
+        def p_exp_reloper(p):
+            '''exp : exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp'''
+            #print(vars(p),vars(p[1]),vars(p[3]))
+            p[0] = Symbol()
+            p[0].Type = 'Boolean'
+#            p[0].PosList = [self.TAC.nextMile]
+#            p[0].NegList = [self.TAC.nextMile+1]
+            p[0].PosList = [self.TAC.get_mile()]
+            p[0].NegList = [self.TAC.get_mile()+1]
+            self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
+            self.TAC.inject('goto',[])
+            
+
+            
+        def p_exp_and(p):
+                '''exp : exp or M_andor exp'''
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                
+                        
+                self.TAC.backpatch(p[1].NegList, p[3].Quad)
+                #print (p[0],"sssssssssss")
+                p[0] = Symbol()
+                p[0].PosList = p[1].PosList + p[4].PosList
+                p[0].NegList = p[4].NegList
+                p[0].Type = 'Boolean'
+        def p_exp_or(p):
+                '''exp : exp and M_andor exp'''
+                
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                self.TAC.backpatch(p[1].PosList, p[3].Quad)
+                p[0] = Symbol()
+                p[0].PosList = p[4].PosList
+                p[0].NegList = p[1].NegList + p[4].NegList
+                p[0].Type = 'Boolean'
+        
+        def p_exp_misc(p):
+                '''exp : exp DBLDOTS exp
+                | tableconstructor'''
+                if len(p) == 2:
+                    p[0] = p[1]
+        def p_exp_unop(p):
+                '''exp : unop exp %prec unop'''
+                if p[1].Value == 'NOT':
+                        try:
+                                if p[2].Type != 'Boolean' :
+                                        raise Exception("Not Boolean")
+                        except:
+                                print("ERROR! Boolean Type not found")
+                                sys.exit(0)
+                        p[0] = deepcopy(p[2])
+                        p[0].PosList = p[2].NegList
+                        p[0].NegList = p[2].PosList
+                ############################RETURN############################
+        def p_retexp_primi(p):
+            '''retexp :  nil 
+            | Number 
+            | STRING
+            '''
+            p[0] = p[1]
+            
+        def p_retexp_true(p):
+                '''retexp : true'''
+                p[0].PosList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+
+        def p_retexp_false(p):
+                '''retexp : false'''
+                p[0].NegList = [self.TAC.get_mile()]
+                self.TAC.inject('goto',[])
+
+
+        def p_retexp_mathoper(p):
+                '''retexp : TRPLDOTS  
+	        | prefixexp 
+                | exp PLUS exp
+                | exp MINUS exp
+                | exp TIMES exp
+                | exp DIVIDE exp
+                | exp POWER exp
+                '''
+                
+                ###############################################
+                ## HANDLING 2 ARGUEMENTS ##
+                ##############################################
+                if len(p) == 2:    
+                        if self.ST.isPresentIdent(p[1]):
+                                p[1].Locate = self.ST.getIdent(p[1]).Locate
+                                p[1].Type = self.ST.getIdent(p[1]).Type
+                                p[0] = deepcopy(p[1])
+                        else:
+                                p[0] = deepcopy(p[1])
+                if len(p) == 4:
+                        if self.ST.isPresentIdent(p[0]):
+                                tempVar = self.ST.getIdent(p[0]).Locate
+                        else:
+                                tempVar = self.ST.create_temp()
+                                tempSymbol = Symbol()
+                                p[0] = tempSymbol
+                                p[0].Locate= tempVar
+
+                        if (p[1].Type == 'INTEGER' or p[1].Type == 'HEX') and (p[3].Type == 'INTEGER' or p[1].Type == 'HEX'):
+                                p[0].Type = 'INTEGER'
+                        if p[1].Type == 'FLOAT' or p[1].Type == 'FLOAT':
+                                p[0].Type = 'FLOAT'
+                                
+                        #print([vars(self.ST.scope['Main'].Vars[x]) for x in self.ST.scope['Main'].Vars])
+                        self.TAC.inject(p[2],[tempVar,p[1].Locate,p[2],p[3].Locate])
+                    
+        def p_retexp_reloper(p):
+            '''retexp : exp LT exp
+            | exp LE exp
+            | exp GT exp
+            | exp GE exp
+            | exp NE exp
+            | exp CHECKEQ exp'''
+            #print(vars(p),vars(p[1]),vars(p[3]))
+            p[0] = Symbol()
+            p[0].Type = 'Boolean'
+            p[0].PosList = [self.TAC.get_mile()]
+            p[0].NegList = [self.TAC.get_mile()+1]
+            self.TAC.inject(p[2],[p[2],p[1].Locate,p[3].Locate])
+            self.TAC.inject('goto',[])
+            
+
+            
+        def p_retexp_and(p):
+                '''retexp : exp or M_andor exp'''
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                
+                        
+                self.TAC.backpatch(p[1].NegList, p[3].Quad)
+                #print (p[0],"sssssssssss")
+                p[0] = Symbol()
+                p[0].PosList = p[1].PosList + p[4].PosList
+                p[0].NegList = p[4].NegList
+                p[0].Type = 'Boolean'
+        def p_retexp_or(p):
+                '''retexp : exp and M_andor exp'''
+                
+                try:
+                        if p[1].Type != 'Boolean' or p[4].Type != 'Boolean':
+                                raise Exception("Not Boolean")
+                except:
+                        print("ERROR! Boolean Type not found")
+                        sys.exit(0)
+                self.TAC.backpatch(p[1].PosList, p[3].Quad)
+                p[0] = Symbol()
+                p[0].PosList = p[4].PosList
+                p[0].NegList = p[1].NegList + p[4].NegList
+                p[0].Type = 'Boolean'
+        def p_M_andor(p):
+                '''M_andor : empty'''
+                p[0] = Symbol()
+                p[0].Quad = self.TAC.get_mile()
+        
+        def p_retexp_misc(p):
+                '''retexp : exp MODULO exp
+                | exp DBLDOTS exp
+                | tableconstructor'''
+
+        def p_retexp_unop(p):
+                '''retexp : unop exp %prec unop'''
+                if p[1].Value == 'NOT':
+                        try:
+                                if p[2].Type != 'Boolean' :
+                                        raise Exception("Not Boolean")
+                        except:
+                                print("ERROR! Boolean Type not found")
+                                sys.exit(0)
+                        p[0] = deepcopy(p[2])
+                        p[0].PosList = p[2].NegList
+                        p[0].NegList = p[2].PosList
+       
+
+
+        def p_retexplist_exp(p):
+            '''retexplist : retexplist COMMA retexp
+            | retexp '''
+            if len(p) == 2:
+                p[0] = [p[1]]
+            else:
+                p[0] =p[1]+ [p[3]]
+            
+
+                ######################################3
+            
+        def p_Number_ints(p):
+            '''Number : INTEGER 
+            | FLOAT 
+            | HEX '''
+            tempNum = Symbol()
+            tempNum.Type = p.slice[1].type
+            tempNum.Value=p[1]
+            tempNum.Locate = p[1]
+            p[0] = tempNum
+            #print (vars(p[0]))
+
+        def p_empty(p):
+            'empty : '
+            pass
+
+
+        def p_prefixexp_exp(p):
+                ''' prefixexp : var 
+                |  LPAREN exp RPAREN 
+                | functioncall'''
+                if len(p) == 2:
+                        p[0] = p[1]
+                else:
+                        p[0] = p[2]
+                
+        def p_unop_not(p):
+                '''unop : not'''
+                p[0] = Symbol()
+                p[0].Value = 'NOT'
+                
+        def p_unop_ops(p):
+            '''unop : MINUS
+            | HASH'''
+            # Error rule for syntax errors
+            
+        def p_tableconstructor_fieldlist(p):
+            '''tableconstructor : LCURLY fieldlist RCURLY 
+            | LCURLY RCURLY'''
+            if len(p) == 3:
+                p[0] = Symbol()
+                p[0].args = 0
+                p[0].Type = "Dictionary0"
+            else:
+                p[0] = Symbol()
+                p[0].args = p[2]
+                p[0].Type = "Dictionary"+str(p[2])
+            
+            tempS = Symbol()
+            tempVar = self.ST.create_temp()
+            tempS.Locate = tempVar
+            self.ST.addVar(tempS)
+            self.TAC.inject('call',['CreateDict',tempVar,1])
+            p[0].Locate = tempVar
+        def p_fieldlist_fieldseplist(p):
+            '''fieldlist : field fieldseplist fieldsep
+            | field fieldseplist'''
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
+        def p_fieldseplist_field(p):
+            ''' fieldseplist : fieldseplist fieldsep field 
+            | empty'''
+            
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
+                
+        def p_field_exp(p):
+            '''field : LSQUARE exp RSQUARE EQUALS exp 
+            | names EQUALS exp 
+            | exp'''
+            
+            try:
+                raise Exception
+            except:
+                print("Implementation depends on future action")
+                
+        def p_fieldsep_seps(p):
+          '''fieldsep : COMMA 
+          | SEMI'''
+          
+          try:
+              raise Exception
+          except:
+              print("Implementation depends on future action")
+                
+        def p_error(p):
+            print("Syntax error with token "+p.value)
+            print ("\n")
+
+        def p_names_id(p):
+            '''names : ID
+            | RESID'''
+            p[0] = p[1]
+
+        precedence = (
+            ('nonassoc','comtrp'),
+            ('left','LPAREN'),
+            ('right','RPAREN'),
+            ('right','COMMA'),
+            ('left','and','or'),
+            ('left','LT','GT','LE','GE','NE','CHECKEQ'),
+            ('right','DBLDOTS'),
+            ('left', 'PLUS', 'MINUS'),
+            ('left', 'TIMES', 'DIVIDE','MODULO'),
+            ('right', 'unop'),  #uminus left to handle
+            ('right', 'POWER')
+        )
+
+        #self.parser = yacc.yacc(debug=True,debuglog=Log,start='sdash')
+        #lex.lex(debug=True,debuglog=log)
+        #yacc.yacc(debug=True,debuglog=log)
+
+        self.parser = yacc.yacc(start='sdash',debug=True,debuglog=log)
+
+
+        
+if __name__ == '__main__':
+        fname=sys.argv[1]
+        f = open(fname,'r')
+        data = f.read()
+        f.close()
+        #print("Hello")
+        parserClass = LuaParser()
+        parser = parserClass.parser      
+        result = parser.parse(data,tracking=True,debug=log)
+        #result = parser.parse(data)
+        #print(parserClass.TAC.print_OpCodes())
+#        for keys in parserClass.ST.scope.keys():
+#           print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
+#        print(vars(parserClass.TAC))
+        parserClass.TAC.print_ir_code()
+        
+        #print("Hello")

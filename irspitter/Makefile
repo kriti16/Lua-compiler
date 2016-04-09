@@ -1,6 +1,8 @@
 .PHONY: all clean
 
-all: clean1 copy
+all: clean1 copy out
+	@./eel
+	@rm -rf out out.o out.s
 
 copy:./src/lexer.py
 	@cp -r ./src/ ./bin/

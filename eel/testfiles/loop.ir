@@ -1,0 +1,17 @@
+res = 0
+i = 0
+goto 15
+j = 0
+goto 12
+k = 0
+goto 9
+res = res + 1
+k = k + 1
+if k <= 9 goto 7
+goto 11
+j = j + 1
+if j <= 9 goto 5
+goto 14
+i = i + 1
+if i <= 9 goto 3
+print res

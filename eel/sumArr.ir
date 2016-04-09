@@ -1,0 +1,16 @@
+array A[5]
+i = 3
+sum = 0
+i = i - 1
+x = call inp
+A[i] = x
+if i > 0 goto 3
+i = 3
+i = i - 1
+tmp = A[i]
+sum = sum + tmp
+if i > 0 goto 8
+print sum
+fun inp
+scanf x
+ret x
