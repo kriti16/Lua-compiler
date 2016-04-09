@@ -102,8 +102,7 @@ class GenSym(object):
                                 OpCode.SymtabEntry1 = arr_list[0]
 #                                print arr_list[1].split(']')[0]
                                 OpCode.SymtabEntry2 = arr_list[1].split(']')[0]
-
-	                self.list_of_3op.append(OpCode)
+                        self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
                 #pprint ([vars(x) for x in self.list_of_3op])
@@ -119,17 +118,22 @@ class GenSym(object):
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
                                 continue
                         if TOC.InstrType == 'GoTo':
-                                self.leaders[str(i+1)]=leader_count
-                                leader_count += 1
-                                self.leaders[TOC.Target]=leader_count
-                                leader_count += 1
+                                #if self.list_of_3op[i-1].InstrType == 'Return':
+                                #        continue
+	                        if str(i+1) not in self.leaders.keys():
+                                        self.leaders[str(i+1)]=leader_count
+                                        leader_count += 1
+                                if TOC.Target not in self.leaders.keys():
+                                        self.leaders[TOC.Target]=leader_count
+                                        leader_count += 1
+                                #sprint "b",TOC.Target,i+1,self.leaders
                                 continue
-                                #print "b",self.leaders
+                         
                         if TOC.InstrType == 'FunCall':
                                 self.leaders[str(i+1)] = leader_count
                                 #print vars(TOC),i+1
                                 leader_count += 1
-                                #print "e",self.leaders
+                                #print "e",str(i+1),str(leader_count)
                         if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1

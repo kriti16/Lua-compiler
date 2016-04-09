@@ -1,0 +1,5 @@
+# How to test
+> Write the code in test.lua
+> Run $lua tes.lua
+> Do make
+> Compare

@@ -225,6 +225,7 @@ class LuaParser(object):
 
         def p_func_end(p):
             '''M_func_end : empty'''
+            self.TAC.inject('=',['_empty_',0])
             self.ST.leave_func()
             self.TAC.nextMile = self.ST.scope[self.ST.CurrFunc].backup
             self.TAC.mile= self.ST.scope[self.ST.CurrFunc].backup - 1

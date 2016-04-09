@@ -62,7 +62,7 @@ class Runner(object):
             #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
-            if str(i) in self.leaders.keys() and ops.InstrType != 'Func' and ops.InstrType != 'FunCall':
+            if str(i) in self.leaders.keys() and ops.InstrType != 'Func' :#and ops.InstrType != 'FunCall':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
             if ops.InstrType == 'Array':
