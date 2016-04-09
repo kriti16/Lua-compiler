@@ -96,12 +96,12 @@ class GenSym(object):
                                 OpCode.SymtabEntry1 = tmp_list[3]
                                 OpCode.SymtabEntry2 = tmp_list[0]
                                 #print OpCode.InstrType,len(tmp_list),tmp_list
-                        elif tmp_list[0] == 'array':
-                                OpCode.InstrType = "Array"
-                                arr_list = tmp_list[1].split('[')
-                                OpCode.SymtabEntry1 = arr_list[0]
-#                                print arr_list[1].split(']')[0]
-                                OpCode.SymtabEntry2 = arr_list[1].split(']')[0]
+#                         elif tmp_list[0] == 'array':
+#                                 OpCode.InstrType = "Array"
+#                                 arr_list = tmp_list[1].split('[')
+#                                 OpCode.SymtabEntry1 = arr_list[0]
+# #                                print arr_list[1].split(']')[0]
+#                                 OpCode.SymtabEntry2 = arr_list[1].split(']')[0]
                         self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
