@@ -866,6 +866,7 @@ if __name__ == '__main__':
         parserClass = LuaParser()
         parser = parserClass.parser      
         result = parser.parse(data,tracking=True,debug=log)
+        parserClass.TAC.inject('=',['_empty_',0])
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
 #        for keys in parserClass.ST.scope.keys():
