@@ -57,7 +57,7 @@ class GenSym(object):
                                 OpCode.SymtabEntry1 = tmp_list[1]
                         elif tmp_list[0] == 'popVar':
                                 OpCode.InstrType = 'Pop'
-                                OpCode.SymtabEntry1 = tmp_list[1]
+                                OpCode.SymtabEntry2 = tmp_list[1]
                         elif len(tmp_list)==3 and tmp_list[1]=='=' and '[' in tmp_list[0] :
                                 OpCode.InstrType = "PtrWrite" #B[z] = A
                                 arr_var = tmp_list[0].split('[')
@@ -101,7 +101,7 @@ class GenSym(object):
                                 OpCode.InstrType = 'FunCall'
                                 OpCode.SymtabEntry1 = tmp_list[3]
                                 OpCode.SymtabEntry2 = tmp_list[0]
-                                
+                                OpCode.SymtabEntry3 = tmp_list[4]
                                 #print OpCode.InstrType,len(tmp_list),tmp_list
 #                         elif tmp_list[0] == 'array':
 #                                 OpCode.InstrType = "Array"

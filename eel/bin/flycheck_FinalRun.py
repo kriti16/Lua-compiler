@@ -91,7 +91,6 @@ class Runner(object):
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tCALL "+ops.SymtabEntry1
                 print "\tMOVL %EDX,"+ops.SymtabEntry2
-                print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP" 
                 i += 1
                 continue
             if ops.InstrType == 'Func':
@@ -231,7 +230,7 @@ class Runner(object):
                     if self.AddrDesc[x] == None:
                         print "\tPUSHL " + x
                     else:
-                        print "\gtPUSHL %" + self.AddrDesc[x]
+                        print "\tPUSHL %" + self.AddrDesc[x]
                     print "\tPUSHL $fmtstr"
                 print "\tCALL printf"
                 print "\tADDL $8, %ESP" 

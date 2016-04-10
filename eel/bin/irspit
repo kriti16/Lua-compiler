@@ -9,7 +9,7 @@ from SymbolTable import *
 import logging
 from copy import deepcopy
 import sys
-
+import cPickle
 logging.basicConfig(
     level = logging.DEBUG,
     filename = "parselog.txt",
@@ -220,9 +220,7 @@ class LuaParser(object):
                 p[0] = p[3]
             else:
                 p[0] = p[4]
-                self.ST.scope[self.ST.CurrFunc].args = len(p[2])
                 
-
 
         def p_func_end(p):
             '''M_func_end : empty'''
@@ -280,6 +278,7 @@ class LuaParser(object):
         def p_parlist_namelist(p):
             '''parlist : namelist'''
             reversedList = deepcopy(p[1])
+            self.ST.scope[self.ST.CurrFunc].args = len(p[1])
             reversedList.reverse()
             for arg in reversedList:
                 tempS = Symbol()
@@ -870,6 +869,9 @@ if __name__ == '__main__':
         parserClass.TAC.inject('=',['_empty_',0])
         #result = parser.parse(data)
         #print(parserClass.TAC.print_OpCodes())
+        with open('SymbolT.pkl', 'w') as f:
+                        cPickle.dump(parserClass.ST, f)
+
 #        for keys in parserClass.ST.scope.keys():
 #           print([vars(parserClass.ST.scope[keys].Vars[x]) for x in parserClass.ST.scope[keys].Vars])
 #        print(vars(parserClass.TAC))

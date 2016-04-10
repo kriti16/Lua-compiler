@@ -50,10 +50,11 @@ class SymbolTable(object):
         self.scope[Name] = tempSc
         self.CurrScope = Name
         self.CurrFunc = Name
+
     def leave_func(self):
         self.CurrFunc = self.scope[self.CurrScope].Parent
         self.CurrScope = self.scope[self.CurrScope].Parent
-        
+
     def add_scope(self,Type):
         getName = self.create_Scope()
         tempSc = LifeTime()

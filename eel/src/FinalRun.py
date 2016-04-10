@@ -4,8 +4,12 @@ from GenSym import *
 from RegisterFinder import *
 from gen import *
 from helperScripts import *
+import cPickle
 class Runner(object):
     def __init__(self,fname):
+        self.ST = None
+        with open('SymbolT.pkl', 'r') as f:
+                        self.ST = cPickle.load(f)
         Gensym = GenSym()
         Gensym.read(fname)
         Gensym.genSymTable()
@@ -19,6 +23,8 @@ class Runner(object):
         self.ArrayDesc = Gensym.ArrayDesc
         self.leaders = Gensym.leaders
         self.Sleep = 0
+        self.args = 0
+        self.currArgs = 2
         ###########Printers#####################
         #pprint ([x for x in Gensym.deadAlive])
         #print
@@ -85,6 +91,7 @@ class Runner(object):
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tCALL "+ops.SymtabEntry1
                 print "\tMOVL %EDX,"+ops.SymtabEntry2
+                print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP" 
                 i += 1
                 continue
             if ops.InstrType == 'Func':
@@ -93,6 +100,8 @@ class Runner(object):
                     self.Sleep += 1
                     
                 print ops.SymtabEntry1+":"
+                self.args = self.ST.scope[ops.SymtabEntry1].args
+                self.currArgs = 1
                 i+=1
                 continue
             if ops.InstrType == 'ParamPass':
@@ -167,6 +176,8 @@ class Runner(object):
                 print "\tJMP LEE"+str(self.leaders[ops.Target])
                 i += 1
                 continue
+
+            
             if ops.InstrType == 'PtrRead':
                 #print vars(ops)
                 x,y,z = ops.SymtabEntry1, ops.SymtabEntry2,ops.SymtabEntry3 #x = z[y]
@@ -220,7 +231,7 @@ class Runner(object):
                     if self.AddrDesc[x] == None:
                         print "\tPUSHL " + x
                     else:
-                        print "\tPUSHL %" + self.AddrDesc[x]
+                        print "\gtPUSHL %" + self.AddrDesc[x]
                     print "\tPUSHL $fmtstr"
                 print "\tCALL printf"
                 print "\tADDL $8, %ESP" 
@@ -243,7 +254,15 @@ class Runner(object):
                 #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
-            
+            if ops.InstrType == 'Pop':
+                x = ops.SymtabEntry2
+                R,self.RegDesc,self.AddrDesc=RegFind.getRegE(x,self.RegDesc,self.AddrDesc,i)
+                print "\tMOVL "+str(4*self.currArgs)+"(%ESP)"+",%"+R
+                self.AddrDesc[x]=R                        
+                setattr(self.RegDesc,R,[x])
+                self.currArgs += 1
+                i +=1
+                continue
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
                 try:

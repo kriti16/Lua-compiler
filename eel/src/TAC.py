@@ -12,7 +12,7 @@ class TACList():
         self.mile = -1
         self.nextMile = 0
         self.ST = ST
-    
+        
     def inject(self,operator,tmp_list):
         OpCode = ThreeOp()
         if operator in ['+','-','*','/','%','>>','<<','and','or']:
