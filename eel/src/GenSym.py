@@ -167,6 +167,12 @@ class GenSym(object):
                                 self.AddrMem[TOC.SymtabEntry3] = None
                                 continue
                         if TOC.InstrType == 'ParamPass':
+                                dict_perm[TOC.SymtabEntry1] = 1
+                                next_use[TOC.SymtabEntry1] = self.lines-1
+                                self.AddrDesc[TOC.SymtabEntry1] = None
+                                self.AddrMem[TOC.SymtabEntry1] = None
+                                continue
+                        if TOC.InstrType == 'Pop':
                                 continue
                         if not check_variable(TOC.SymtabEntry2) :
                                 dict_perm[TOC.SymtabEntry2] = 1

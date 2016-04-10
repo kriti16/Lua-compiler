@@ -52,6 +52,12 @@ class GenSym(object):
                         elif tmp_list[0]=='print':
                                 OpCode.InstrType='Print'
                                 OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0] == 'param':
+                                OpCode.InstrType = 'ParamPass'
+                                OpCode.SymtabEntry1 = tmp_list[1]
+                        elif tmp_list[0] == 'popVar':
+                                OpCode.InstrType = 'Pop'
+                                OpCode.SymtabEntry1 = tmp_list[1]
                         elif len(tmp_list)==3 and tmp_list[1]=='=' and '[' in tmp_list[0] :
                                 OpCode.InstrType = "PtrWrite" #B[z] = A
                                 arr_var = tmp_list[0].split('[')
@@ -95,13 +101,14 @@ class GenSym(object):
                                 OpCode.InstrType = 'FunCall'
                                 OpCode.SymtabEntry1 = tmp_list[3]
                                 OpCode.SymtabEntry2 = tmp_list[0]
+                                
                                 #print OpCode.InstrType,len(tmp_list),tmp_list
-                        elif tmp_list[0] == 'array':
-                                OpCode.InstrType = "Array"
-                                arr_list = tmp_list[1].split('[')
-                                OpCode.SymtabEntry1 = arr_list[0]
-#                                print arr_list[1].split(']')[0]
-                                OpCode.SymtabEntry2 = arr_list[1].split(']')[0]
+#                         elif tmp_list[0] == 'array':
+#                                 OpCode.InstrType = "Array"
+#                                 arr_list = tmp_list[1].split('[')
+#                                 OpCode.SymtabEntry1 = arr_list[0]
+# #                                print arr_list[1].split(']')[0]
+#                                 OpCode.SymtabEntry2 = arr_list[1].split(']')[0]
                         self.list_of_3op.append(OpCode)
                         self.lines += 1
                         #print [vars(x) for x in  self.list_of_3op]
@@ -158,6 +165,14 @@ class GenSym(object):
                                 next_use[TOC.SymtabEntry3] = self.lines-1
                                 self.AddrDesc[TOC.SymtabEntry3] = None
                                 self.AddrMem[TOC.SymtabEntry3] = None
+                                continue
+                        if TOC.InstrType == 'ParamPass':
+                                dict_perm[TOC.SymtabEntry1] = 1
+                                next_use[TOC.SymtabEntry1] = self.lines-1
+                                self.AddrDesc[TOC.SymtabEntry1] = None
+                                self.AddrMem[TOC.SymtabEntry1] = None
+                                continue
+                        if TOC.InstrType == 'Pop':
                                 continue
                         if not check_variable(TOC.SymtabEntry2) :
                                 dict_perm[TOC.SymtabEntry2] = 1
@@ -251,6 +266,30 @@ class GenSym(object):
                                 self.deadAlive.insert(0,dict_dead)
                                 self.nextUse.insert(0,dict_next)
                                 continue
+
+                        elif TOC.InstrType == 'ParamPass':
+                                dict_next = {}
+                                dict_dead = {}
+                                
+                                try:
+                                        if check_variable(TOC.SymtabEntry1)  :
+                                                raise Exception()
+                                        dict_dead[TOC.SymtabEntry1]=dict_perm[TOC.SymtabEntry1]
+                                        dict_next[TOC.SymtabEntry1]=next_use[TOC.SymtabEntry1]
+
+                                except:
+                                        pass
+
+                                try:
+                                        dict_perm[TOC.SymtabEntry1]=1
+                                        next_use[TOC.SymtabEntry1]=i+1
+                                except:
+                                        pass
+
+                                self.deadAlive.insert(0,dict_dead)
+                                self.nextUse.insert(0,dict_next)
+                                continue
+
                         
                         dict_dead={}
                         dict_next={}

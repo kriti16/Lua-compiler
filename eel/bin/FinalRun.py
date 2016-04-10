@@ -95,6 +95,20 @@ class Runner(object):
                 print ops.SymtabEntry1+":"
                 i+=1
                 continue
+            if ops.InstrType == 'ParamPass':
+                Entry1 = ops.SymtabEntry1
+                # print check_variable(Entry1)
+                try:
+                    if self.AddrDesc[Entry1]==None:
+                        raise Exception()      
+                    print "\tPUSHL %"+ self.AddrDesc[Entry1] 
+                except:     
+                    if check_variable(Entry1):     
+                        print "\tPUSHL $"+ Entry1
+                    else:
+                        print "\tPUSHL "+ str(Entry1)                       
+                i+=1
+                continue
             if ops.InstrType == 'IfElse':
                 Entry1 = ops.SymtabEntry1
                 Entry2 = ops.SymtabEntry2

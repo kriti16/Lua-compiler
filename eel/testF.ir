@@ -1,15 +1,38 @@
 t0 = 2
 if t0 < 100 goto 3
-goto 14
+goto 28
 t1 = t0 % 3
 if t1 == 0 goto 9
 goto 6
 t2 = t0 % 7
 if t2 == 0 goto 9
-goto 11
+goto 25
 print t0
-goto 11
-t3 = t0 + 1
-t0 = t3
+t3 = t0 % 23
+if t3 == 0 goto 13
+goto 24
+t4 = t0 + 10
+t0 = t4
+print t0
+t10 = t0 + 2
+param 2
+param t0
+param t10
+t11 = call f 3
+print t11
+goto 28
+goto 25
+goto 25
+t12 = t0 + 1
+t0 = t12
 goto 1
+_empty_ = 0
+fun f
+popVar t5
+popVar t6
+popVar t7
+t8 = t7 + t6
+t9 = t8 + t5
+t7 = t9
+ret t7
 _empty_ = 0

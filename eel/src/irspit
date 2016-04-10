@@ -210,8 +210,9 @@ class LuaParser(object):
         def p_stat_functioncall(p):
             '''stat : functioncall
             '''
-            
             p[0] = p[1]
+
+
         def p_funcbody_parlist(p):
             '''funcbody : LPAREN RPAREN block M_func_end end
             | LPAREN  parlist RPAREN block M_func_end end'''

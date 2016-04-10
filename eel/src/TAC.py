@@ -26,7 +26,7 @@ class TACList():
             OpCode.SymtabEntry1 = tmp_list[0]
             OpCode.SymtabEntry2 = tmp_list[1]
         if operator == 'param':
-            OpCode.InstrType = 'param'
+            OpCode.InstrType = 'ParamPass'
             OpCode.SymtabEntry1 = tmp_list[0]
         if operator == 'goto':
             OpCode.InstrType = "GoTo"
@@ -121,7 +121,7 @@ class TACList():
                     print "printd "+str(code.SymtabEntry1)
                 if code.InstrType == 'FunCall':
                     print code.SymtabEntry2+" = call "+str(code.SymtabEntry1)+" "+str(code.SymtabEntry3)
-                if code.InstrType == 'param':
+                if code.InstrType == 'ParamPass':
                     print "param "+code.SymtabEntry1
                 if code.InstrType == 'PopVar':
                     print "popVar "+code.SymtabEntry1.Locate

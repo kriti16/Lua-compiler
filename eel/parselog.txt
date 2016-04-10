@@ -7,29 +7,29 @@
    yacc.py: 409:State  : 20
    yacc.py: 433:Stack  : ID . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : names . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 12
-   yacc.py: 503:Result : <Symbol @ 0x7fddc2304a50> (<SymbolTable.Symbol object at 0x7fddc230 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b9470a50> (<SymbolTable.Symbol object at 0x7ff6b947 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 12
    yacc.py: 433:Stack  : var . LexToken(EQUALS,'=',1,2)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 62
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 62
    yacc.py: 428:Defaulted state 62: Reduce using 49
    yacc.py: 433:Stack  : var empty . LexToken(EQUALS,'=',1,2)
    yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 61
-   yacc.py: 503:Result : <list @ 0x7fddbadfd3f8> ([])
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2d3f8> ([])
    yacc.py: 408:
    yacc.py: 409:State  : 61
    yacc.py: 428:Defaulted state 61: Reduce using 66
    yacc.py: 433:Stack  : var comvar . LexToken(EQUALS,'=',1,2)
-   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7fddc2304a50>,[]] and goto state 9
-   yacc.py: 503:Result : <list @ 0x7fddbb644998> ([<SymbolTable.Symbol object at 0x7fddc23 ...)
+   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7ff6b9470a50>,[]] and goto state 9
+   yacc.py: 503:Result : <list @ 0x7ff6b2774998> ([<SymbolTable.Symbol object at 0x7ff6b94 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 9
    yacc.py: 433:Stack  : varlist . LexToken(EQUALS,'=',1,2)
@@ -42,37 +42,37 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : varlist EQUALS INTEGER . LexToken(while,'while',1,6)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['2'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb625b10> (<SymbolTable.Symbol object at 0x7fddbb62 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b2756b10> (<SymbolTable.Symbol object at 0x7ff6b275 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : varlist EQUALS Number . LexToken(while,'while',1,6)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbb625b10>] and goto state 120
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb625b10> (<SymbolTable.Symbol object at 0x7fddbb62 ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b2756b10>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b2756b10> (<SymbolTable.Symbol object at 0x7ff6b275 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 120
    yacc.py: 433:Stack  : varlist EQUALS exp . LexToken(while,'while',1,6)
-   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7fddbb625b10>] and goto state 127
-   yacc.py: 503:Result : <list @ 0x7fddbb649710> ([<SymbolTable.Symbol object at 0x7fddbb6 ...)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b2756b10>] and goto state 127
+   yacc.py: 503:Result : <list @ 0x7ff6b2779710> ([<SymbolTable.Symbol object at 0x7ff6b27 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 127
    yacc.py: 433:Stack  : varlist EQUALS explist . LexToken(while,'while',1,6)
-   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7fddbb644998>,'=',<list @ 0x7fddbb649710>] and goto state 15
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7ff6b2774998>,'=',<list @ 0x7ff6b2779710>] and goto state 15
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 15
    yacc.py: 433:Stack  : stat . LexToken(while,'while',1,6)
-   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7fddbadf7610>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7fddc2304a50> (<SymbolTable.Symbol object at 0x7fddc230 ...)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7ff6b1f27610>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b9470a50> (<SymbolTable.Symbol object at 0x7ff6b947 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
    yacc.py: 433:Stack  : chunk . LexToken(while,'while',1,6)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
    yacc.py: 433:Stack  : chunk empty . LexToken(while,'while',1,6)
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
-   yacc.py: 503:Result : <Symbol @ 0x7fddc22ed350> (<SymbolTable.Symbol object at 0x7fddc22e ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b9459350> (<SymbolTable.Symbol object at 0x7ff6b945 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 46
    yacc.py: 433:Stack  : chunk M_chunk . LexToken(while,'while',1,6)
@@ -81,12 +81,12 @@
    yacc.py: 409:State  : 22
    yacc.py: 433:Stack  : chunk M_chunk while . LexToken(ID,'z',1,12)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 67
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 67
    yacc.py: 433:Stack  : chunk M_chunk while empty . LexToken(ID,'z',1,12)
    yacc.py: 469:Action : Reduce rule [M_while1 -> empty] with [None] and goto state 84
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb625b10> (<SymbolTable.Symbol object at 0x7fddbb62 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b2756b10> (<SymbolTable.Symbol object at 0x7ff6b275 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 84
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 . LexToken(ID,'z',1,12)
@@ -95,22 +95,22 @@
    yacc.py: 409:State  : 20
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 ID . LexToken(LT,'<',1,13)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 names . LexToken(LT,'<',1,13)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e110> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c110> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 32
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 var . LexToken(LT,'<',1,13)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fddbb64e110>] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e110> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b277c110>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c110> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 prefixexp . LexToken(LT,'<',1,13)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fddbb64e110>] and goto state 152
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b277c110>] and goto state 152
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 152
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp . LexToken(LT,'<',1,13)
@@ -123,17 +123,17 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp LT INTEGER . LexToken(do,'do',1,18)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['100'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e110> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c110> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp LT Number . LexToken(do,'do',1,18)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbb64e110>] and goto state 172
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e110> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b277c110>] and goto state 172
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c110> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 172
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp LT exp . LexToken(do,'do',1,18)
-   yacc.py: 469:Action : Reduce rule [exp -> exp LT exp] with [<Symbol @ 0x7fddbadf7610>,'<',<Symbol @ 0x7fddbb64e110>] and goto state 152
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf76d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp LT exp] with [<Symbol @ 0x7ff6b1f27610>,'<',<Symbol @ 0x7ff6b277c110>] and goto state 152
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f276d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 152
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp . LexToken(do,'do',1,18)
@@ -142,12 +142,12 @@
    yacc.py: 409:State  : 211
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do . LexToken(if,'if',1,24)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 231
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 231
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do empty . LexToken(if,'if',1,24)
    yacc.py: 469:Action : Reduce rule [M_while2 -> empty] with [None] and goto state 235
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e110> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c110> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 235
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 . LexToken(if,'if',1,24)
@@ -160,22 +160,22 @@
    yacc.py: 409:State  : 20
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if ID . LexToken(MODULO,'%',1,28)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if names . LexToken(MODULO,'%',1,28)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7690> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27690> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 32
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if var . LexToken(MODULO,'%',1,28)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fddbadf7690>] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7690> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27690>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27690> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if prefixexp . LexToken(MODULO,'%',1,28)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fddbadf7690>] and goto state 48
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27690>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 48
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp . LexToken(MODULO,'%',1,28)
@@ -188,17 +188,17 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp MODULO INTEGER . LexToken(CHECKEQ,'==',1,32)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['3'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7690> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27690> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp MODULO Number . LexToken(CHECKEQ,'==',1,32)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbadf7690>] and goto state 175
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7690> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27690>] and goto state 175
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27690> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 175
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp MODULO exp . LexToken(CHECKEQ,'==',1,32)
-   yacc.py: 469:Action : Reduce rule [exp -> exp MODULO exp] with [<Symbol @ 0x7fddbadf7610>,'%',<Symbol @ 0x7fddbadf7690>] and goto state 48
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp MODULO exp] with [<Symbol @ 0x7ff6b1f27610>,'%',<Symbol @ 0x7ff6b1f27690>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 48
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp . LexToken(CHECKEQ,'==',1,32)
@@ -211,17 +211,17 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp CHECKEQ INTEGER . LexToken(or,'or',1,37)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['0'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp CHECKEQ Number . LexToken(or,'or',1,37)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbadf7610>] and goto state 171
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27610>] and goto state 171
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 171
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp CHECKEQ exp . LexToken(or,'or',1,37)
-   yacc.py: 469:Action : Reduce rule [exp -> exp CHECKEQ exp] with [<Symbol @ 0x7fddbadf7850>,'==',<Symbol @ 0x7fddbadf7610>] and goto state 48
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf77d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp CHECKEQ exp] with [<Symbol @ 0x7ff6b1f27850>,'==',<Symbol @ 0x7ff6b1f27610>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f277d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 48
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp . LexToken(or,'or',1,37)
@@ -230,12 +230,12 @@
    yacc.py: 409:State  : 100
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or . LexToken(ID,'z',1,40)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 164
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 164
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or empty . LexToken(ID,'z',1,40)
    yacc.py: 469:Action : Reduce rule [M_andor -> empty] with [None] and goto state 168
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 168
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor . LexToken(ID,'z',1,40)
@@ -244,22 +244,22 @@
    yacc.py: 409:State  : 20
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor ID . LexToken(MODULO,'%',1,41)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor names . LexToken(MODULO,'%',1,41)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf79d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f279d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 32
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor var . LexToken(MODULO,'%',1,41)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fddbadf79d0>] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf79d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f279d0>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f279d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor prefixexp . LexToken(MODULO,'%',1,41)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fddbadf79d0>] and goto state 223
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f279d0>] and goto state 223
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 223
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp . LexToken(MODULO,'%',1,41)
@@ -272,17 +272,17 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp MODULO INTEGER . LexToken(CHECKEQ,'==',1,43)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['7'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf79d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f279d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp MODULO Number . LexToken(CHECKEQ,'==',1,43)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbadf79d0>] and goto state 175
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf79d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f279d0>] and goto state 175
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f279d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 175
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp MODULO exp . LexToken(CHECKEQ,'==',1,43)
-   yacc.py: 469:Action : Reduce rule [exp -> exp MODULO exp] with [<Symbol @ 0x7fddbadf7850>,'%',<Symbol @ 0x7fddbadf79d0>] and goto state 223
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp MODULO exp] with [<Symbol @ 0x7ff6b1f27850>,'%',<Symbol @ 0x7ff6b1f279d0>] and goto state 223
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 223
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp . LexToken(CHECKEQ,'==',1,43)
@@ -295,33 +295,33 @@
    yacc.py: 409:State  : 33
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp CHECKEQ INTEGER . LexToken(then,'then',1,47)
    yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['0'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp CHECKEQ Number . LexToken(then,'then',1,47)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbadf7850>] and goto state 171
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27850>] and goto state 171
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 171
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp CHECKEQ exp . LexToken(then,'then',1,47)
-   yacc.py: 469:Action : Reduce rule [exp -> exp CHECKEQ exp] with [<Symbol @ 0x7fddbadf7890>,'==',<Symbol @ 0x7fddbadf7850>] and goto state 223
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf78d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp CHECKEQ exp] with [<Symbol @ 0x7ff6b1f27890>,'==',<Symbol @ 0x7ff6b1f27850>] and goto state 223
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f278d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 223
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp or M_andor exp . LexToken(then,'then',1,47)
-   yacc.py: 469:Action : Reduce rule [exp -> exp or M_andor exp] with [<Symbol @ 0x7fddbadf77d0>,'or',<Symbol @ 0x7fddbadf7610>,<Symbol @ 0x7fddbadf78d0>] and goto state 48
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> exp or M_andor exp] with [<Symbol @ 0x7ff6b1f277d0>,'or',<Symbol @ 0x7ff6b1f27610>,<Symbol @ 0x7ff6b1f278d0>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 48
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp . LexToken(then,'then',1,47)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 116
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 116
    yacc.py: 428:Defaulted state 116: Reduce using 53
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp empty . LexToken(then,'then',1,47)
    yacc.py: 469:Action : Reduce rule [M_bool -> empty] with [None] and goto state 115
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf78d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f278d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 115
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool . LexToken(then,'then',1,47)
@@ -330,12 +330,12 @@
    yacc.py: 409:State  : 182
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then . LexToken(print,'print',1,58)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 224
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 224
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then empty . LexToken(print,'print',1,58)
    yacc.py: 469:Action : Reduce rule [M_if1 -> empty] with [None] and goto state 225
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf77d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f277d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 225
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 . LexToken(print,'print',1,58)
@@ -352,282 +352,1173 @@
    yacc.py: 409:State  : 20
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN ID . LexToken(RPAREN,')',1,65)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN names . LexToken(RPAREN,')',1,65)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 32
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN var . LexToken(RPAREN,')',1,65)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fddbadf7850>] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7850> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27850>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27850> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN prefixexp . LexToken(RPAREN,')',1,65)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fddbadf7850>] and goto state 120
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27850>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 120
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN exp . LexToken(RPAREN,')',1,65)
-   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7fddbadf7610>] and goto state 119
-   yacc.py: 503:Result : <list @ 0x7fddbb63d7a0> ([<SymbolTable.Symbol object at 0x7fddbad ...)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f27610>] and goto state 119
+   yacc.py: 503:Result : <list @ 0x7ff6b27727a0> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
    yacc.py: 408:
    yacc.py: 409:State  : 119
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN explist . LexToken(RPAREN,')',1,65)
    yacc.py: 443:Action : Shift and goto state 184
    yacc.py: 408:
    yacc.py: 409:State  : 184
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN explist RPAREN . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7fddbb63d7a0>,')'] and goto state 80
-   yacc.py: 503:Result : <list @ 0x7fddbb63d7a0> ([<SymbolTable.Symbol object at 0x7fddbad ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print LPAREN explist RPAREN . LexToken(if,'if',1,73)
+   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7ff6b27727a0>,')'] and goto state 80
+   yacc.py: 503:Result : <list @ 0x7ff6b27727a0> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
    yacc.py: 408:
    yacc.py: 409:State  : 80
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print args . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7fddbb63d7a0>] and goto state 13
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 print args . LexToken(if,'if',1,73)
+   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7ff6b27727a0>] and goto state 13
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27b50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 13
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 functioncall . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7fddbadf7b50>] and goto state 15
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 functioncall . LexToken(if,'if',1,73)
+   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7ff6b1f27b50>] and goto state 15
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27b50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 15
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 stat . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7fddbadf7b50>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7990> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 stat . LexToken(if,'if',1,73)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7ff6b1f27b50>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27990> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk . LexToken(end,'end',1,70)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk . LexToken(if,'if',1,73)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk empty . LexToken(end,'end',1,70)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk empty . LexToken(if,'if',1,73)
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27b50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 46
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7fddbadf7990>,<Symbol @ 0x7fddbadf7b50>] and goto state 131
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7990> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk . LexToken(if,'if',1,73)
+   yacc.py: 443:Action : Shift and goto state 6
    yacc.py: 408:
-   yacc.py: 409:State  : 131
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 sdash . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7fddbadf7990>] and goto state 242
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 242
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block . LexToken(end,'end',1,70)
-   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 250
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
-   yacc.py: 408:
-   yacc.py: 409:State  : 250
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block empty . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [M_if_block_end -> empty] with [None] and goto state 251
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7990> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 251
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end . LexToken(end,'end',1,70)
-   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 258
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
-   yacc.py: 408:
-   yacc.py: 409:State  : 258
-   yacc.py: 428:Defaulted state 258: Reduce using 58
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end empty . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [opt_else -> empty] with [None] and goto state 257
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7bd0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 257
-   yacc.py: 428:Defaulted state 257: Reduce using 62
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end opt_else . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [ifblock -> opt_else] with [<Symbol @ 0x7fddbadf7bd0>] and goto state 259
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7610> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 259
-   yacc.py: 428:Defaulted state 259: Reduce using 128
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock . LexToken(end,'end',1,70)
-   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 264
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
-   yacc.py: 408:
-   yacc.py: 409:State  : 264
-   yacc.py: 428:Defaulted state 264: Reduce using 56
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock empty . LexToken(end,'end',1,70)
-   yacc.py: 469:Action : Reduce rule [M_if_tail -> empty] with [None] and goto state 265
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7bd0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 265
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail . LexToken(end,'end',1,70)
-   yacc.py: 443:Action : Shift and goto state 271
-   yacc.py: 408:
-   yacc.py: 409:State  : 271
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end . LexToken(ID,'z',1,77)
-   yacc.py: 469:Action : Reduce rule [stat -> if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end] with ['if',<Symbol @ 0x7fddbadf7890>,<Symbol @ 0x7fddbadf78d0>,'then',<Symbol @ 0x7fddbadf77d0>,<Symbol @ 0x7fddbadf7b50>,<Symbol @ 0x7fddbadf7990>,<Symbol @ 0x7fddbadf7610>,<Symbol @ 0x7fddbadf7bd0>,'end'] and goto state 15
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7c50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 15
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 stat . LexToken(ID,'z',1,77)
-   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7fddbadf7c50>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7810> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 4
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk . LexToken(ID,'z',1,77)
-   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
-   yacc.py: 408:
-   yacc.py: 409:State  : 47
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk empty . LexToken(ID,'z',1,77)
-   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7c50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 46
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk . LexToken(ID,'z',1,77)
+   yacc.py: 409:State  : 6
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if . LexToken(ID,'z',1,76)
    yacc.py: 443:Action : Shift and goto state 20
    yacc.py: 408:
    yacc.py: 409:State  : 20
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk ID . LexToken(EQUALS,'=',1,79)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if ID . LexToken(MODULO,'%',1,78)
    yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
    yacc.py: 408:
    yacc.py: 409:State  : 5
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk names . LexToken(EQUALS,'=',1,79)
-   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 12
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7c10> (<SymbolTable.Symbol object at 0x7fddbadf ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 12
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var . LexToken(EQUALS,'=',1,79)
-   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 62
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
-   yacc.py: 408:
-   yacc.py: 409:State  : 62
-   yacc.py: 428:Defaulted state 62: Reduce using 49
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var empty . LexToken(EQUALS,'=',1,79)
-   yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 61
-   yacc.py: 503:Result : <list @ 0x7fddbb63d4d0> ([])
-   yacc.py: 408:
-   yacc.py: 409:State  : 61
-   yacc.py: 428:Defaulted state 61: Reduce using 66
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var comvar . LexToken(EQUALS,'=',1,79)
-   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7fddbadf7c10>,[]] and goto state 9
-   yacc.py: 503:Result : <list @ 0x7fddbadd1ef0> ([<SymbolTable.Symbol object at 0x7fddbad ...)
-   yacc.py: 408:
-   yacc.py: 409:State  : 9
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist . LexToken(EQUALS,'=',1,79)
-   yacc.py: 443:Action : Shift and goto state 57
-   yacc.py: 408:
-   yacc.py: 409:State  : 57
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS . LexToken(ID,'z',1,81)
-   yacc.py: 443:Action : Shift and goto state 20
-   yacc.py: 408:
-   yacc.py: 409:State  : 20
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS ID . LexToken(PLUS,'+',1,82)
-   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
-   yacc.py: 503:Result : <str @ 0x7fddc22a4cd8> ('z')
-   yacc.py: 408:
-   yacc.py: 409:State  : 5
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS names . LexToken(PLUS,'+',1,82)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if names . LexToken(MODULO,'%',1,78)
    yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 32
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS var . LexToken(PLUS,'+',1,82)
-   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7fddbadf7890>] and goto state 31
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if var . LexToken(MODULO,'%',1,78)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27a50>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 31
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS prefixexp . LexToken(PLUS,'+',1,82)
-   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7fddbadf7890>] and goto state 120
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b10> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if prefixexp . LexToken(MODULO,'%',1,78)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27a50>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
-   yacc.py: 409:State  : 120
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp . LexToken(PLUS,'+',1,82)
-   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 409:State  : 48
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp . LexToken(MODULO,'%',1,78)
+   yacc.py: 443:Action : Shift and goto state 107
    yacc.py: 408:
-   yacc.py: 409:State  : 106
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS . LexToken(INTEGER,'1',1,83)
+   yacc.py: 409:State  : 107
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp MODULO . LexToken(INTEGER,'23',1,79)
    yacc.py: 443:Action : Shift and goto state 33
    yacc.py: 408:
    yacc.py: 409:State  : 33
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS INTEGER . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['1'] and goto state 41
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp MODULO INTEGER . LexToken(CHECKEQ,'==',1,82)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['23'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 41
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS Number . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7fddbadf7890>] and goto state 174
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp MODULO Number . LexToken(CHECKEQ,'==',1,82)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27a50>] and goto state 175
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
-   yacc.py: 409:State  : 174
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS exp . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7fddbadf7b10>,'+',<Symbol @ 0x7fddbadf7890>] and goto state 120
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7b50> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 409:State  : 175
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp MODULO exp . LexToken(CHECKEQ,'==',1,82)
+   yacc.py: 469:Action : Reduce rule [exp -> exp MODULO exp] with [<Symbol @ 0x7ff6b1f27610>,'%',<Symbol @ 0x7ff6b1f27a50>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 48
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp . LexToken(CHECKEQ,'==',1,82)
+   yacc.py: 443:Action : Shift and goto state 103
+   yacc.py: 408:
+   yacc.py: 409:State  : 103
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp CHECKEQ . LexToken(INTEGER,'0',1,85)
+   yacc.py: 443:Action : Shift and goto state 33
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp CHECKEQ INTEGER . LexToken(then,'then',1,87)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['0'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 41
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp CHECKEQ Number . LexToken(then,'then',1,87)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27610>] and goto state 171
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 171
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp CHECKEQ exp . LexToken(then,'then',1,87)
+   yacc.py: 469:Action : Reduce rule [exp -> exp CHECKEQ exp] with [<Symbol @ 0x7ff6b1f27a10>,'==',<Symbol @ 0x7ff6b1f27610>] and goto state 48
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27bd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 48
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp . LexToken(then,'then',1,87)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 116
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 116
+   yacc.py: 428:Defaulted state 116: Reduce using 53
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp empty . LexToken(then,'then',1,87)
+   yacc.py: 469:Action : Reduce rule [M_bool -> empty] with [None] and goto state 115
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 115
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool . LexToken(then,'then',1,87)
+   yacc.py: 443:Action : Shift and goto state 182
+   yacc.py: 408:
+   yacc.py: 409:State  : 182
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then . LexToken(ID,'z',1,101)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 224
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 224
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then empty . LexToken(ID,'z',1,101)
+   yacc.py: 469:Action : Reduce rule [M_if1 -> empty] with [None] and goto state 225
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 225
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 . LexToken(ID,'z',1,101)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 ID . LexToken(EQUALS,'=',1,103)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 names . LexToken(EQUALS,'=',1,103)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 12
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 12
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 var . LexToken(EQUALS,'=',1,103)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 62
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 62
+   yacc.py: 428:Defaulted state 62: Reduce using 49
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 var empty . LexToken(EQUALS,'=',1,103)
+   yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 61
+   yacc.py: 503:Result : <list @ 0x7ff6b276cef0> ([])
+   yacc.py: 408:
+   yacc.py: 409:State  : 61
+   yacc.py: 428:Defaulted state 61: Reduce using 66
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 var comvar . LexToken(EQUALS,'=',1,103)
+   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7ff6b1f27c50>,[]] and goto state 9
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2d2d8> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 9
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist . LexToken(EQUALS,'=',1,103)
+   yacc.py: 443:Action : Shift and goto state 57
+   yacc.py: 408:
+   yacc.py: 409:State  : 57
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS . LexToken(ID,'z',1,105)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS ID . LexToken(PLUS,'+',1,107)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS names . LexToken(PLUS,'+',1,107)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS var . LexToken(PLUS,'+',1,107)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27c10>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS prefixexp . LexToken(PLUS,'+',1,107)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27c10>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d90> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 120
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7fddbadf7b50>] and goto state 127
-   yacc.py: 503:Result : <list @ 0x7fddbb63d098> ([<SymbolTable.Symbol object at 0x7fddbad ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp . LexToken(PLUS,'+',1,107)
+   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 408:
+   yacc.py: 409:State  : 106
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp PLUS . LexToken(INTEGER,'10',1,109)
+   yacc.py: 443:Action : Shift and goto state 33
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp PLUS INTEGER . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['10'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 41
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp PLUS Number . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27c10>] and goto state 174
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 174
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp PLUS exp . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7ff6b1f27d90>,'+',<Symbol @ 0x7ff6b1f27c10>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS exp . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f27e10>] and goto state 127
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2d200> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
    yacc.py: 408:
    yacc.py: 409:State  : 127
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS explist . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7fddbadd1ef0>,'=',<list @ 0x7fddbb63d098>] and goto state 114
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 varlist EQUALS explist . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7ff6b1f2d2d8>,'=',<list @ 0x7ff6b1f2d200>] and goto state 15
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
-   yacc.py: 409:State  : 114
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk stat . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7fddbadf7810>,<Symbol @ 0x7fddbadf7c50>,<Symbol @ 0x7fddbadf7890>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf78d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 stat . LexToken(print,'print',1,121)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7ff6b1f27c10>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk . LexToken(end,'end',1,85)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk . LexToken(print,'print',1,121)
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk empty . LexToken(end,'end',1,85)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk empty . LexToken(print,'print',1,121)
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 46
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7fddbadf78d0>,<Symbol @ 0x7fddbadf7890>] and goto state 131
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf78d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk . LexToken(print,'print',1,121)
+   yacc.py: 443:Action : Shift and goto state 19
+   yacc.py: 408:
+   yacc.py: 409:State  : 19
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print . LexToken(LPAREN,'(',1,126)
+   yacc.py: 443:Action : Shift and goto state 52
+   yacc.py: 408:
+   yacc.py: 409:State  : 52
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN . LexToken(ID,'z',1,127)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN ID . LexToken(RPAREN,')',1,128)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN names . LexToken(RPAREN,')',1,128)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27dd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN var . LexToken(RPAREN,')',1,128)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27dd0>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27dd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp . LexToken(RPAREN,')',1,128)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27dd0>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN exp . LexToken(RPAREN,')',1,128)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f27d50>] and goto state 119
+   yacc.py: 503:Result : <list @ 0x7ff6b276f758> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 119
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN explist . LexToken(RPAREN,')',1,128)
+   yacc.py: 443:Action : Shift and goto state 184
+   yacc.py: 408:
+   yacc.py: 409:State  : 184
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN explist RPAREN . LexToken(function,'function',1,139)
+   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7ff6b276f758>,')'] and goto state 80
+   yacc.py: 503:Result : <list @ 0x7ff6b276f758> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 80
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print args . LexToken(function,'function',1,139)
+   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7ff6b276f758>] and goto state 13
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 13
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk functioncall . LexToken(function,'function',1,139)
+   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7ff6b1f27e50>] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 114
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk stat . LexToken(function,'function',1,139)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b1f27c50>,<Symbol @ 0x7ff6b1f27c10>,<Symbol @ 0x7ff6b1f27e50>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk . LexToken(function,'function',1,139)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk empty . LexToken(function,'function',1,139)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk . LexToken(function,'function',1,139)
+   yacc.py: 443:Action : Shift and goto state 1
+   yacc.py: 408:
+   yacc.py: 409:State  : 1
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function . LexToken(ID,'f',1,148)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function ID . LexToken(LPAREN,'(',1,149)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['f'] and goto state 25
+   yacc.py: 503:Result : <str @ 0x7ff6b94ba760> ('f')
+   yacc.py: 408:
+   yacc.py: 409:State  : 25
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function names . LexToken(LPAREN,'(',1,149)
+   yacc.py: 469:Action : Reduce rule [funcname -> names] with ['f'] and goto state 24
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 24
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname . LexToken(LPAREN,'(',1,149)
+   yacc.py: 443:Action : Shift and goto state 86
+   yacc.py: 408:
+   yacc.py: 409:State  : 86
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN . LexToken(ID,'x',1,150)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN ID . LexToken(COMMA,',',1,151)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 83
+   yacc.py: 503:Result : <str @ 0x7ff6b94bad00> ('x')
+   yacc.py: 408:
+   yacc.py: 409:State  : 83
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names . LexToken(COMMA,',',1,151)
+   yacc.py: 443:Action : Shift and goto state 125
+   yacc.py: 408:
+   yacc.py: 409:State  : 125
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA . LexToken(ID,'y',1,152)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA ID . LexToken(COMMA,',',1,153)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['y'] and goto state 188
+   yacc.py: 503:Result : <str @ 0x7ff6b9410418> ('y')
+   yacc.py: 408:
+   yacc.py: 409:State  : 188
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names . LexToken(COMMA,',',1,153)
+   yacc.py: 443:Action : Shift and goto state 125
+   yacc.py: 408:
+   yacc.py: 409:State  : 125
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names COMMA . LexToken(ID,'z',1,154)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names COMMA ID . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 188
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 188
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names COMMA names . LexToken(RPAREN,')',1,155)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 124
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 124
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names COMMA names empty . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [comid -> empty] with [None] and goto state 229
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2d758> ([])
+   yacc.py: 408:
+   yacc.py: 409:State  : 229
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names COMMA names comid . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [comid -> COMMA names comid] with [',','z',[]] and goto state 229
+   yacc.py: 503:Result : <list @ 0x7ff6b276f758> (['z'])
+   yacc.py: 408:
+   yacc.py: 409:State  : 229
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names COMMA names comid . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [comid -> COMMA names comid] with [',','y',['z']] and goto state 126
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2d758> (['y', 'z'])
+   yacc.py: 408:
+   yacc.py: 409:State  : 126
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN names comid . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [namelist -> names comid] with ['x',['y', 'z']] and goto state 153
+   yacc.py: 503:Result : <list @ 0x7ff6b276f758> (['x', 'y', 'z'])
+   yacc.py: 408:
+   yacc.py: 409:State  : 153
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN namelist . LexToken(RPAREN,')',1,155)
+   yacc.py: 469:Action : Reduce rule [parlist -> namelist] with [['x', 'y', 'z']] and goto state 155
+   yacc.py: 503:Result : <list @ 0x7ff6b276f758> (['x', 'y', 'z'])
+   yacc.py: 408:
+   yacc.py: 409:State  : 155
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist . LexToken(RPAREN,')',1,155)
+   yacc.py: 443:Action : Shift and goto state 214
+   yacc.py: 408:
+   yacc.py: 409:State  : 214
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN . LexToken(ID,'x',1,169)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN ID . LexToken(EQUALS,'=',1,171)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b94bad00> ('x')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN names . LexToken(EQUALS,'=',1,171)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['x'] and goto state 12
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 12
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN var . LexToken(EQUALS,'=',1,171)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 62
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 62
+   yacc.py: 428:Defaulted state 62: Reduce using 49
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN var empty . LexToken(EQUALS,'=',1,171)
+   yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 61
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2dcf8> ([])
+   yacc.py: 408:
+   yacc.py: 409:State  : 61
+   yacc.py: 428:Defaulted state 61: Reduce using 66
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN var comvar . LexToken(EQUALS,'=',1,171)
+   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7ff6b1f27fd0>,[]] and goto state 9
+   yacc.py: 503:Result : <list @ 0x7ff6b2772998> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 9
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist . LexToken(EQUALS,'=',1,171)
+   yacc.py: 443:Action : Shift and goto state 57
+   yacc.py: 408:
+   yacc.py: 409:State  : 57
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS . LexToken(ID,'x',1,173)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS ID . LexToken(PLUS,'+',1,174)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b94bad00> ('x')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS names . LexToken(PLUS,'+',1,174)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['x'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d250> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS var . LexToken(PLUS,'+',1,174)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d250>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d250> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS prefixexp . LexToken(PLUS,'+',1,174)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d250>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp . LexToken(PLUS,'+',1,174)
+   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 408:
+   yacc.py: 409:State  : 106
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS . LexToken(ID,'y',1,176)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS ID . LexToken(PLUS,'+',1,178)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['y'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410418> ('y')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS names . LexToken(PLUS,'+',1,178)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['y'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d390> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS var . LexToken(PLUS,'+',1,178)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d390>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d390> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS prefixexp . LexToken(PLUS,'+',1,178)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d390>] and goto state 174
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d250> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 174
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS exp . LexToken(PLUS,'+',1,178)
+   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7ff6b1f3d2d0>,'+',<Symbol @ 0x7ff6b1f3d250>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d390> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp . LexToken(PLUS,'+',1,178)
+   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 408:
+   yacc.py: 409:State  : 106
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS . LexToken(ID,'z',1,180)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS ID . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS names . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d350> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS var . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d350>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d350> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS prefixexp . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d350>] and goto state 174
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 174
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp PLUS exp . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7ff6b1f3d390>,'+',<Symbol @ 0x7ff6b1f3d2d0>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d350> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS exp . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f3d350>] and goto state 127
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2dd40> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 127
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN varlist EQUALS explist . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7ff6b2772998>,'=',<list @ 0x7ff6b1f2dd40>] and goto state 15
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN stat . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7ff6b1f3d2d0>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk . LexToken(return,'return',1,194)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk empty . LexToken(return,'return',1,194)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk . LexToken(return,'return',1,194)
+   yacc.py: 443:Action : Shift and goto state 17
+   yacc.py: 408:
+   yacc.py: 409:State  : 17
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return . LexToken(ID,'x',1,201)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return ID . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['x'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b94bad00> ('x')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return names . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['x'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d350> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return var . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d350>] and goto state 71
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d350> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 71
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return prefixexp . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [retexp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d350>] and goto state 72
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d290> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 72
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return retexp . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [retexplist -> retexp] with [<Symbol @ 0x7ff6b1f3d290>] and goto state 77
+   yacc.py: 503:Result : <list @ 0x7ff6b2772fc8> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 77
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk return retexplist . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [laststat -> return retexplist] with ['return',<list @ 0x7ff6b2772fc8>] and goto state 113
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d290> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 113
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN chunk M_chunk laststat . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk laststat] with [<Symbol @ 0x7ff6b1f27fd0>,<Symbol @ 0x7ff6b1f3d2d0>,<Symbol @ 0x7ff6b1f3d290>] and goto state 131
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d490> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 131
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 sdash . LexToken(end,'end',1,85)
-   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7fddbadf78d0>] and goto state 246
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf7890> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN sdash . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7ff6b1f3d490>] and goto state 237
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 237
+   yacc.py: 428:Defaulted state 237: Reduce using 128
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN block . LexToken(end,'end',1,212)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 239
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 239
+   yacc.py: 428:Defaulted state 239: Reduce using 29
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN block empty . LexToken(end,'end',1,212)
+   yacc.py: 469:Action : Reduce rule [M_func_end -> empty] with [None] and goto state 247
+   yacc.py: 503:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 247
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN block M_func_end . LexToken(end,'end',1,212)
+   yacc.py: 443:Action : Shift and goto state 256
+   yacc.py: 408:
+   yacc.py: 409:State  : 256
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname LPAREN parlist RPAREN block M_func_end end . LexToken(print,'print',1,225)
+   yacc.py: 469:Action : Reduce rule [funcbody -> LPAREN parlist RPAREN block M_func_end end] with ['(',['x', 'y', 'z'],')',<Symbol @ 0x7ff6b1f27fd0>,None,'end'] and goto state 85
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 85
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk function funcname funcbody . LexToken(print,'print',1,225)
+   yacc.py: 469:Action : Reduce rule [stat -> function funcname funcbody] with ['function',<Symbol @ 0x7ff6b1f27c10>,<Symbol @ 0x7ff6b1f27fd0>] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 114
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk stat . LexToken(print,'print',1,225)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b1f27e10>,<Symbol @ 0x7ff6b1f27e50>,<Symbol @ 0x7ff6b1f27fd0>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27c10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk . LexToken(print,'print',1,225)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk empty . LexToken(print,'print',1,225)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27fd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk . LexToken(print,'print',1,225)
+   yacc.py: 443:Action : Shift and goto state 19
+   yacc.py: 408:
+   yacc.py: 409:State  : 19
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print . LexToken(LPAREN,'(',1,231)
+   yacc.py: 443:Action : Shift and goto state 52
+   yacc.py: 408:
+   yacc.py: 409:State  : 52
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN . LexToken(ID,'f',1,232)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN ID . LexToken(LPAREN,'(',1,233)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['f'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b94ba760> ('f')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN names . LexToken(LPAREN,'(',1,233)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['f'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN var . LexToken(LPAREN,'(',1,233)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27f10>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp . LexToken(LPAREN,'(',1,233)
+   yacc.py: 443:Action : Shift and goto state 52
+   yacc.py: 408:
+   yacc.py: 409:State  : 52
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN . LexToken(INTEGER,'2',1,234)
+   yacc.py: 443:Action : Shift and goto state 33
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN INTEGER . LexToken(COMMA,',',1,235)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['2'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 41
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN Number . LexToken(COMMA,',',1,235)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27e10>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp . LexToken(COMMA,',',1,235)
+   yacc.py: 443:Action : Shift and goto state 185
+   yacc.py: 408:
+   yacc.py: 409:State  : 185
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA . LexToken(ID,'z',1,236)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA ID . LexToken(COMMA,',',1,237)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA names . LexToken(COMMA,',',1,237)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA var . LexToken(COMMA,',',1,237)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d2d0>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA prefixexp . LexToken(COMMA,',',1,237)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d2d0>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d0d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp . LexToken(COMMA,',',1,237)
+   yacc.py: 443:Action : Shift and goto state 185
+   yacc.py: 408:
+   yacc.py: 409:State  : 185
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA . LexToken(ID,'z',1,238)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA ID . LexToken(PLUS,'+',1,239)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA names . LexToken(PLUS,'+',1,239)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d510> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA var . LexToken(PLUS,'+',1,239)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f3d510>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d510> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA prefixexp . LexToken(PLUS,'+',1,239)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f3d510>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d2d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp . LexToken(PLUS,'+',1,239)
+   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 408:
+   yacc.py: 409:State  : 106
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp PLUS . LexToken(INTEGER,'2',1,240)
+   yacc.py: 443:Action : Shift and goto state 33
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp PLUS INTEGER . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['2'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d510> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 41
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp PLUS Number . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f3d510>] and goto state 174
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d510> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 174
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp PLUS exp . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7ff6b1f3d2d0>,'+',<Symbol @ 0x7ff6b1f3d510>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d310> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA exp . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f3d310>] and goto state 226
+   yacc.py: 503:Result : <list @ 0x7ff6b2701128> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 226
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA exp COMMA explist . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [explist -> exp COMMA explist] with [<Symbol @ 0x7ff6b1f3d0d0>,',',<list @ 0x7ff6b2701128>] and goto state 226
+   yacc.py: 503:Result : <list @ 0x7ff6b1f2dc20> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 226
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN exp COMMA explist . LexToken(RPAREN,')',1,241)
+   yacc.py: 469:Action : Reduce rule [explist -> exp COMMA explist] with [<Symbol @ 0x7ff6b1f27e10>,',',<list @ 0x7ff6b1f2dc20>] and goto state 119
+   yacc.py: 503:Result : <list @ 0x7ff6b2701128> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 119
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN explist . LexToken(RPAREN,')',1,241)
+   yacc.py: 443:Action : Shift and goto state 184
+   yacc.py: 408:
+   yacc.py: 409:State  : 184
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp LPAREN explist RPAREN . LexToken(RPAREN,')',1,242)
+   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7ff6b2701128>,')'] and goto state 51
+   yacc.py: 503:Result : <list @ 0x7ff6b2701128> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 51
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp args . LexToken(RPAREN,')',1,242)
+   yacc.py: 469:Action : Reduce rule [functioncall -> prefixexp args] with [<Symbol @ 0x7ff6b1f27f10>,<list @ 0x7ff6b2701128>] and goto state 42
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 42
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN functioncall . LexToken(RPAREN,')',1,242)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> functioncall] with [<Symbol @ 0x7ff6b1f27d50>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN prefixexp . LexToken(RPAREN,')',1,242)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27d50>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN exp . LexToken(RPAREN,')',1,242)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f27f10>] and goto state 119
+   yacc.py: 503:Result : <list @ 0x7ff6b276cef0> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 119
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN explist . LexToken(RPAREN,')',1,242)
+   yacc.py: 443:Action : Shift and goto state 184
+   yacc.py: 408:
+   yacc.py: 409:State  : 184
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print LPAREN explist RPAREN . LexToken(break,'break',1,253)
+   yacc.py: 469:Action : Reduce rule [args -> LPAREN explist RPAREN] with ['(',<list @ 0x7ff6b276cef0>,')'] and goto state 80
+   yacc.py: 503:Result : <list @ 0x7ff6b276cef0> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 80
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk print args . LexToken(break,'break',1,253)
+   yacc.py: 469:Action : Reduce rule [functioncall -> print args] with ['print',<list @ 0x7ff6b276cef0>] and goto state 13
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 13
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk functioncall . LexToken(break,'break',1,253)
+   yacc.py: 469:Action : Reduce rule [stat -> functioncall] with [<Symbol @ 0x7ff6b1f27d50>] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 114
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk stat . LexToken(break,'break',1,253)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b1f27c10>,<Symbol @ 0x7ff6b1f27fd0>,<Symbol @ 0x7ff6b1f27d50>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk . LexToken(break,'break',1,253)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk empty . LexToken(break,'break',1,253)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27d50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk . LexToken(break,'break',1,253)
+   yacc.py: 443:Action : Shift and goto state 18
+   yacc.py: 408:
+   yacc.py: 409:State  : 18
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk break . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [laststat -> break] with ['break'] and goto state 113
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 113
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 chunk M_chunk laststat . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk laststat] with [<Symbol @ 0x7ff6b1f27f10>,<Symbol @ 0x7ff6b1f27d50>,<Symbol @ 0x7ff6b1f27e50>] and goto state 131
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 131
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 sdash . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7ff6b1f27e10>] and goto state 242
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 242
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block . LexToken(end,'end',1,265)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 250
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 250
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block empty . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [M_if_block_end -> empty] with [None] and goto state 251
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 251
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end . LexToken(end,'end',1,265)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 258
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 258
+   yacc.py: 428:Defaulted state 258: Reduce using 58
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end empty . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [opt_else -> empty] with [None] and goto state 257
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 257
+   yacc.py: 428:Defaulted state 257: Reduce using 62
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end opt_else . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [ifblock -> opt_else] with [<Symbol @ 0x7ff6b1f27e50>] and goto state 259
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d0d0> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 259
+   yacc.py: 428:Defaulted state 259: Reduce using 128
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end ifblock . LexToken(end,'end',1,265)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 264
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 264
+   yacc.py: 428:Defaulted state 264: Reduce using 56
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end ifblock empty . LexToken(end,'end',1,265)
+   yacc.py: 469:Action : Reduce rule [M_if_tail -> empty] with [None] and goto state 265
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27e50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 265
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail . LexToken(end,'end',1,265)
+   yacc.py: 443:Action : Shift and goto state 271
+   yacc.py: 408:
+   yacc.py: 409:State  : 271
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [stat -> if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end] with ['if',<Symbol @ 0x7ff6b1f27bd0>,<Symbol @ 0x7ff6b1f27610>,'then',<Symbol @ 0x7ff6b1f27a10>,<Symbol @ 0x7ff6b1f27f10>,<Symbol @ 0x7ff6b1f27e10>,<Symbol @ 0x7ff6b1f3d0d0>,<Symbol @ 0x7ff6b1f27e50>,'end'] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f3d290> (<SymbolTable.Symbol object at 0x7ff6b1f3 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 114
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk stat . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b1f27990>,<Symbol @ 0x7ff6b1f27b50>,<Symbol @ 0x7ff6b1f3d290>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27bd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk . LexToken(end,'end',1,272)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk empty . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27990> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 chunk M_chunk . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7ff6b1f27bd0>,<Symbol @ 0x7ff6b1f27990>] and goto state 131
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27bd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 131
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 sdash . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7ff6b1f27bd0>] and goto state 242
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27990> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 242
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block . LexToken(end,'end',1,272)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 250
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 250
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block empty . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [M_if_block_end -> empty] with [None] and goto state 251
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27bd0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 251
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end . LexToken(end,'end',1,272)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 258
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 258
+   yacc.py: 428:Defaulted state 258: Reduce using 58
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end empty . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [opt_else -> empty] with [None] and goto state 257
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 257
+   yacc.py: 428:Defaulted state 257: Reduce using 62
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end opt_else . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [ifblock -> opt_else] with [<Symbol @ 0x7ff6b1f27610>] and goto state 259
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27b50> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 259
+   yacc.py: 428:Defaulted state 259: Reduce using 128
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock . LexToken(end,'end',1,272)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 264
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 264
+   yacc.py: 428:Defaulted state 264: Reduce using 56
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock empty . LexToken(end,'end',1,272)
+   yacc.py: 469:Action : Reduce rule [M_if_tail -> empty] with [None] and goto state 265
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27610> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 265
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail . LexToken(end,'end',1,272)
+   yacc.py: 443:Action : Shift and goto state 271
+   yacc.py: 408:
+   yacc.py: 409:State  : 271
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end . LexToken(ID,'z',1,279)
+   yacc.py: 469:Action : Reduce rule [stat -> if exp M_bool then M_if1 block M_if_block_end ifblock M_if_tail end] with ['if',<Symbol @ 0x7ff6b1f27890>,<Symbol @ 0x7ff6b1f278d0>,'then',<Symbol @ 0x7ff6b1f277d0>,<Symbol @ 0x7ff6b1f27990>,<Symbol @ 0x7ff6b1f27bd0>,<Symbol @ 0x7ff6b1f27b50>,<Symbol @ 0x7ff6b1f27610>,'end'] and goto state 15
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 15
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 stat . LexToken(ID,'z',1,279)
+   yacc.py: 469:Action : Reduce rule [chunk -> stat] with [<Symbol @ 0x7ff6b1f27f10>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27810> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk . LexToken(ID,'z',1,279)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk empty . LexToken(ID,'z',1,279)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27f10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk . LexToken(ID,'z',1,279)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk ID . LexToken(EQUALS,'=',1,281)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk names . LexToken(EQUALS,'=',1,281)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 12
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27a10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 12
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var . LexToken(EQUALS,'=',1,281)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 62
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 62
+   yacc.py: 428:Defaulted state 62: Reduce using 49
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var empty . LexToken(EQUALS,'=',1,281)
+   yacc.py: 469:Action : Reduce rule [comvar -> empty] with [None] and goto state 61
+   yacc.py: 503:Result : <list @ 0x7ff6b27724d0> ([])
+   yacc.py: 408:
+   yacc.py: 409:State  : 61
+   yacc.py: 428:Defaulted state 61: Reduce using 66
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk var comvar . LexToken(EQUALS,'=',1,281)
+   yacc.py: 469:Action : Reduce rule [varlist -> var comvar] with [<Symbol @ 0x7ff6b1f27a10>,[]] and goto state 9
+   yacc.py: 503:Result : <list @ 0x7ff6b2772560> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 9
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist . LexToken(EQUALS,'=',1,281)
+   yacc.py: 443:Action : Shift and goto state 57
+   yacc.py: 408:
+   yacc.py: 409:State  : 57
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS . LexToken(ID,'z',1,283)
+   yacc.py: 443:Action : Shift and goto state 20
+   yacc.py: 408:
+   yacc.py: 409:State  : 20
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS ID . LexToken(PLUS,'+',1,284)
+   yacc.py: 469:Action : Reduce rule [names -> ID] with ['z'] and goto state 5
+   yacc.py: 503:Result : <str @ 0x7ff6b9410cd8> ('z')
+   yacc.py: 408:
+   yacc.py: 409:State  : 5
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS names . LexToken(PLUS,'+',1,284)
+   yacc.py: 469:Action : Reduce rule [var -> names] with ['z'] and goto state 32
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 32
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS var . LexToken(PLUS,'+',1,284)
+   yacc.py: 469:Action : Reduce rule [prefixexp -> var] with [<Symbol @ 0x7ff6b1f27890>] and goto state 31
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 31
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS prefixexp . LexToken(PLUS,'+',1,284)
+   yacc.py: 469:Action : Reduce rule [exp -> prefixexp] with [<Symbol @ 0x7ff6b1f27890>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27b10> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp . LexToken(PLUS,'+',1,284)
+   yacc.py: 443:Action : Shift and goto state 106
+   yacc.py: 408:
+   yacc.py: 409:State  : 106
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS . LexToken(INTEGER,'1',1,285)
+   yacc.py: 443:Action : Shift and goto state 33
+   yacc.py: 408:
+   yacc.py: 409:State  : 33
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS INTEGER . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [Number -> INTEGER] with ['1'] and goto state 41
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 41
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS Number . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [exp -> Number] with [<Symbol @ 0x7ff6b1f27890>] and goto state 174
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 174
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp PLUS exp . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [exp -> exp PLUS exp] with [<Symbol @ 0x7ff6b1f27b10>,'+',<Symbol @ 0x7ff6b1f27890>] and goto state 120
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27990> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 120
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS exp . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [explist -> exp] with [<Symbol @ 0x7ff6b1f27990>] and goto state 127
+   yacc.py: 503:Result : <list @ 0x7ff6b2772098> ([<SymbolTable.Symbol object at 0x7ff6b1f ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 127
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk varlist EQUALS explist . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [stat -> varlist EQUALS explist] with [<list @ 0x7ff6b2772560>,'=',<list @ 0x7ff6b2772098>] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 114
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk stat . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b1f27810>,<Symbol @ 0x7ff6b1f27f10>,<Symbol @ 0x7ff6b1f27890>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f278d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 4
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk . LexToken(end,'end',1,287)
+   yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
+   yacc.py: 408:
+   yacc.py: 409:State  : 47
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk empty . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 46
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 chunk M_chunk . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7ff6b1f278d0>,<Symbol @ 0x7ff6b1f27890>] and goto state 131
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f278d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
+   yacc.py: 408:
+   yacc.py: 409:State  : 131
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 sdash . LexToken(end,'end',1,287)
+   yacc.py: 469:Action : Reduce rule [block -> sdash] with [<Symbol @ 0x7ff6b1f278d0>] and goto state 246
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f27890> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 246
-   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 block . LexToken(end,'end',1,85)
+   yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 block . LexToken(end,'end',1,287)
    yacc.py: 443:Action : Shift and goto state 255
    yacc.py: 408:
    yacc.py: 409:State  : 255
    yacc.py: 433:Stack  : chunk M_chunk while M_while1 exp do M_while2 block end . $end
-   yacc.py: 469:Action : Reduce rule [stat -> while M_while1 exp do M_while2 block end] with ['while',<Symbol @ 0x7fddbb625b10>,<Symbol @ 0x7fddbadf76d0>,'do',<Symbol @ 0x7fddbb64e110>,<Symbol @ 0x7fddbadf7890>,'end'] and goto state 114
-   yacc.py: 503:Result : <Symbol @ 0x7fddbadf78d0> (<SymbolTable.Symbol object at 0x7fddbadf ...)
+   yacc.py: 469:Action : Reduce rule [stat -> while M_while1 exp do M_while2 block end] with ['while',<Symbol @ 0x7ff6b2756b10>,<Symbol @ 0x7ff6b1f276d0>,'do',<Symbol @ 0x7ff6b277c110>,<Symbol @ 0x7ff6b1f27890>,'end'] and goto state 114
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b1f278d0> (<SymbolTable.Symbol object at 0x7ff6b1f2 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 114
    yacc.py: 433:Stack  : chunk M_chunk stat . $end
-   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7fddc2304a50>,<Symbol @ 0x7fddc22ed350>,<Symbol @ 0x7fddbadf78d0>] and goto state 4
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e510> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 469:Action : Reduce rule [chunk -> chunk M_chunk stat] with [<Symbol @ 0x7ff6b9470a50>,<Symbol @ 0x7ff6b9459350>,<Symbol @ 0x7ff6b1f278d0>] and goto state 4
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c510> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 4
    yacc.py: 433:Stack  : chunk . $end
    yacc.py: 472:Action : Reduce rule [empty -> <empty>] with [] and goto state 47
-   yacc.py: 542:Result : <NoneType @ 0x7fddc216bda0> (None)
+   yacc.py: 542:Result : <NoneType @ 0x7ff6b92dbda0> (None)
    yacc.py: 408:
    yacc.py: 409:State  : 47
    yacc.py: 433:Stack  : chunk empty . $end
    yacc.py: 469:Action : Reduce rule [M_chunk -> empty] with [None] and goto state 46
-   yacc.py: 503:Result : <Symbol @ 0x7fddc2304a50> (<SymbolTable.Symbol object at 0x7fddc230 ...)
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b9470a50> (<SymbolTable.Symbol object at 0x7ff6b947 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 46
    yacc.py: 433:Stack  : chunk M_chunk . $end
-   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7fddbb64e510>,<Symbol @ 0x7fddc2304a50>] and goto state 23
-   yacc.py: 503:Result : <Symbol @ 0x7fddbb64e510> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 469:Action : Reduce rule [sdash -> chunk M_chunk] with [<Symbol @ 0x7ff6b277c510>,<Symbol @ 0x7ff6b9470a50>] and goto state 23
+   yacc.py: 503:Result : <Symbol @ 0x7ff6b277c510> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 408:
    yacc.py: 409:State  : 23
    yacc.py: 433:Stack  : sdash . $end
-   yacc.py: 564:Done   : Returning <Symbol @ 0x7fddbb64e510> (<SymbolTable.Symbol object at 0x7fddbb64 ...)
+   yacc.py: 564:Done   : Returning <Symbol @ 0x7ff6b277c510> (<SymbolTable.Symbol object at 0x7ff6b277 ...)
    yacc.py: 565:PLY: PARSE DEBUG END
