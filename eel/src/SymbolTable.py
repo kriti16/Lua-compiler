@@ -78,7 +78,7 @@ class SymbolTable(object):
         try:
             if key.Iden in self.scope[scope].Vars.keys():
                 return True
-            elif self.scope[scope].Type == 'Main' or stubborn:
+            elif self.scope[scope].Type == 'Main' or stubborn :
                 return False
             else:
                 par_scope = self.findParent(scope)

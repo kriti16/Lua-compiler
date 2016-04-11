@@ -75,14 +75,14 @@ class Runner(object):
                 i += 1
                 continue
             if ops.InstrType == 'Return':
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
+                RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                 if check_variable(ops.SymtabEntry1):
-                    print "\tMOVL $"+ops.SymtabEntry1+",%EDX"
+                    print "\tMOVL $"+ops.SymtabEntry1+",%EAX"
                 else:
                     if self.AddrDesc[ops.SymtabEntry1] == None:
-                        print "\tMOVL "+ops.SymtabEntry1+",%EDX"
+                        print "\tMOVL "+ops.SymtabEntry1+",%EAX"
                     else:
-                        print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EDX"
+                        print "\tMOVL %"+self.AddrDesc[ops.SymtabEntry1]+",%EAX"
                 i+=1
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tRET"
@@ -90,9 +90,12 @@ class Runner(object):
             if ops.InstrType == 'FunCall':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
                 print "\tCALL "+ops.SymtabEntry1
-                print "\tMOVL %EDX,"+ops.SymtabEntry2
-                print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP" 
-                i += 1
+                print "\tMOVL %EAX,"+ops.SymtabEntry2
+                try:
+                    print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP"
+                except:
+                    pass
+                    i += 1
                 continue
             if ops.InstrType == 'Func':
                 if self.Sleep == 0:
@@ -291,6 +294,7 @@ class Runner(object):
                 #print tmpVar,Rdash
                 setattr(self.RegDesc,Rdash,tmpVar)
                 #print self.nextUse[i+1],self.nextUse[i],y
+                #print self.nextUse
                 if self.nextUse[i][y]==-1:
                     #print tmpVar,y,getattr(self.RegDesc,Rdash)
                     tmpVar=getattr(self.RegDesc,Rdash)

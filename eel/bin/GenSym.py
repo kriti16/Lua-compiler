@@ -346,6 +346,8 @@ class GenSym(object):
                         #print self.AddrDesc
                         self.deadAlive.insert(0,dict_dead)
                         self.nextUse.insert(0,dict_next)
+                        #print self.nextUse
+                        #print vars(TOC)
                 for keysd in self.nextUse[-1].keys():
                         self.nextUse[-1][keysd]=self.lines-1
                 #print self.nextUse

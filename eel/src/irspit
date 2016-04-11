@@ -279,6 +279,7 @@ class LuaParser(object):
             '''parlist : namelist'''
             reversedList = deepcopy(p[1])
             self.ST.scope[self.ST.CurrFunc].args = len(p[1])
+            #print(self.ST.CurrFunc,len(p[1]))
             reversedList.reverse()
             for arg in reversedList:
                 tempS = Symbol()
@@ -509,7 +510,7 @@ class LuaParser(object):
                 ## HANDLING 2 ARGUEMENTS ##
                 ##############################################
                 if len(p) == 2:    
-                        if self.ST.isPresentIdent(p[1]):
+                        if self.ST.isPresentIdent(p[1]) == True and p[1].Iden != None :
                                 p[1].Locate = self.ST.getIdent(p[1]).Locate
                                 p[1].Type = self.ST.getIdent(p[1]).Type
                                 p[0] = deepcopy(p[1])
@@ -791,6 +792,11 @@ class LuaParser(object):
             self.ST.addVar(tempS)
             self.TAC.inject('call',['CreateDict',tempVar,1])
             p[0].Locate = tempVar
+            
+
+
+
+            
         def p_fieldlist_fieldseplist(p):
             '''fieldlist : field fieldseplist fieldsep
             | field fieldseplist'''
@@ -812,19 +818,15 @@ class LuaParser(object):
             | names EQUALS exp 
             | exp'''
             
-            try:
-                raise Exception
-            except:
-                print("Implementation depends on future action")
                 
         def p_fieldsep_seps(p):
           '''fieldsep : COMMA 
           | SEMI'''
-          
           try:
               raise Exception
           except:
-              print("Implementation depends on future action")
+              pass
+              #print("Implementation depends on future action")
                 
         def p_error(p):
             print("Syntax error with token "+p.value)

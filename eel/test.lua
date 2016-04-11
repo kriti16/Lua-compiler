@@ -1,5 +1,7 @@
 x=1
 y=2
+t ={}
+print(t)
 function f(a,b)
    z = a + b
    return z
