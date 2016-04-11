@@ -90,17 +90,27 @@ class LuaParser(object):
             p[1] = p[1]+[p[1][0]]
             del p[1][0]
             for i in range(0,minarg):
+                dictI = True
+                if p[1][i].Type == 'DictInsert':
+                    dictI = False
                 if not self.ST.isPresentIdent(p[1][i]):
-                        tempVar = self.ST.create_temp()
-                        p[1][i].Type = p[3][minarg-1-i].Type
-                        p[1][i].Locate = tempVar
-                        self.ST.addVar(p[1][i])
+                    tempVar = self.ST.create_temp()
+                    p[1][i].Type = p[3][minarg-1-i].Type
+                    p[1][i].Locate = tempVar
+                    self.ST.addVar(p[1][i])
                 else:
-                        p[1][i].Type = p[3][minarg-1-i].Type
-                        p[1][i].Locate = self.ST.getIdent(p[1][i]).Locate
-                        p[1][i].Type = self.ST.getIdent(p[1][i]).Type
+                    p[1][i].Type = p[3][minarg-1-i].Type
+                    p[1][i].Locate = self.ST.getIdent(p[1][i]).Locate
+                    p[1][i].Type = self.ST.getIdent(p[1][i]).Type
+                        
                 p[0] = Symbol()
-                self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
+                if dictI == False:
+                    self.TAC.inject('param',[p[3][minarg-i-1].Locate])
+                    self.TAC.inject('param',[p[1][i].Value])
+                    self.TAC.inject('param',[p[1][i].Locate])
+                    self.TAC.inject('call',['insertDict',p[1][i].Locate,3])
+                else:
+                    self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
 
         
 
@@ -358,7 +368,7 @@ class LuaParser(object):
                 p[0] = []
             else:
                 p[0] = p[3] + [p[2]]
-
+            
         def p_comid(p):
                 '''comid : COMMA names comid 
                 | empty'''
@@ -455,7 +465,6 @@ class LuaParser(object):
         def p_varlist_var(p):
             '''varlist : var comvar '''
             p[0] = [p[1]] + p[2]
-            
         def p_var_names(p):
             '''var :  names 
             | prefixexp LSQUARE exp RSQUARE 
@@ -463,8 +472,14 @@ class LuaParser(object):
             if len(p) == 2:
                 tempSymbol = Symbol()
                 tempSymbol.Iden = p[1]
+                tempSymbol.Locate = p[1]
                 p[0] = tempSymbol
-            
+            else:
+                tempSymbol = Symbol()
+                p[0] = tempSymbol
+                p[0].Locate = p[1].Locate
+                p[0].Type = 'DictInsert'
+                p[0].Value = p[3].Locate
             
         def p_namelist_names(p):
             'namelist :  names  comid'

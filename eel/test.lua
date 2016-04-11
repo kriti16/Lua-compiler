@@ -1,5 +1,3 @@
-dfd ="sdsds"
-y = 2
-print(dfd)
-sdsd = "asas"
-print(sdsd)
+z = 1
+A = {[1]=2}
+A[3]=3
