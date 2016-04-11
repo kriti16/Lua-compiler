@@ -2,10 +2,10 @@
 
 all: out
 	@./out
-	@rm -rf out out.o out.s
+	#@rm -rf out out.o out.s
 
 out: out.s
-	@g++ -m32 out.s Dict.cpp -o out
+	@g++ -m32 out.s Dict.cpp String.cpp -o out
 
 out.s: copy
 	@./bin/FinalRun.py testF.ir > out.s

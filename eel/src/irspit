@@ -240,10 +240,18 @@ class LuaParser(object):
                 p[0] = Symbol()
                 p[0].Type = 'Error'
             elif p[1] == 'scan':
-                p[0] = Symbol()
-                for arg in p[2]:
-                    self.TAC.inject('scan',[arg.Locate])
-                p[0].Type = 'Error'
+                tempS = Symbol()
+                tempVar = self.ST.create_temp()
+                tempS.Locate = tempVar
+                self.ST.addVar(tempS)
+                self.TAC.inject('call',['InputString',tempVar,1])
+                p[2] = Symbol()
+                p[2].Iden = p[3].Iden
+                p[2].Locate = tempVar
+                p[0]=Symbol()
+                # for arg in p[2]:
+                #     self.TAC.inject('scan',[arg.Locate])
+                # p[0].Type = 'Error'
             elif len(p) == 3:
                 if self.ST.isPresentIdent(p[0]):
                     tempVar = self.ST.getIdent(p[0]).Locate
