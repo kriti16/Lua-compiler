@@ -377,6 +377,7 @@ class LuaParser(object):
                 #except:
                 #        print("ERROR! Boolean Type not found")
                 #        sys.exit(0)
+                #print("HELL",p[5].Quad)
                 self.TAC.backpatch(p[2].PosList, p[5].Quad)
                 self.TAC.backpatch(p[2].NegList, p[7].Quad)
                 p[0] = Symbol()
@@ -392,6 +393,7 @@ class LuaParser(object):
                 '''M_if1 : empty'''
                 p[0] = Symbol()
                 p[0].Quad = self.TAC.get_mile()
+                print(p[0].Quad)
                 
         def p_if_block_end(p):
                 '''M_if_block_end :  empty'''

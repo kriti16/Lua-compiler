@@ -83,9 +83,9 @@ class TACList():
             #    if funcs != self.ST.CurrFunc:
             #        GodMile += len(self.TAC[funcs])
             #        print GodMile,"Godmile"
-            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse'):
+            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse') and  self.TAC[self.ST.CurrFunc][instr].Target == None:
                 self.TAC[self.ST.CurrFunc][instr].Target = GodMile
-                #print GodMile,"IFFF"
+       #         print GodMile,"IFFF"
         
     def print_OpCodes(self):
         for code in self.TAC:

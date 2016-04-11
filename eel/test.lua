@@ -1,13 +1,13 @@
-function f(x,y)
-   d = x+ y
-   print(x)
-   print(y)
-   if x == 10 then
-      return x
-   end
-   d = f(x+1,y+1)
-   print(d)
-   
-   return d
+x=1
+y=2
+function f(a,b)
+   z = a + b
+   return z
 end
-print(f(2,88))
+
+while x < 100 do
+   y = f(x,y)
+   x = x+1
+   print(y)
+end
+print(x)

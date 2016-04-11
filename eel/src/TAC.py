@@ -77,7 +77,7 @@ class TACList():
 
     def backpatch(self, PatchList, GodMile):
         for instr in PatchList:
-            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse'):
+            if instr < self.nextMile and (self.TAC[self.ST.CurrFunc][instr].InstrType =='GoTo' or  self.TAC[self.ST.CurrFunc][instr].InstrType =='IfElse') and  self.TAC[self.ST.CurrFunc][instr].Target == None:
                 self.TAC[self.ST.CurrFunc][instr].Target = GodMile
                 #print GodMile,"IFFF"
         
