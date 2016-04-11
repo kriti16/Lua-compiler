@@ -382,11 +382,8 @@ class Runner(object):
             if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
-                    if z[0] != '"':
-                        print "\tMOVL $"+str(z)+",%ESI"
-                    else:
-                        print "\tMOVL $"+self.StringDesc[z]+",%ESI"
-                    RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
+                    print "\tMOVL $"+str(z)+",%ESI"
+                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
 
             try:
                 if self.AddrDesc[z] == None:

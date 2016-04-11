@@ -1,1 +1,6 @@
-True
+t0 = "sdsds"
+t1 = 2
+print t0
+t2 = "asas"
+print t2
+_empty_ = 0

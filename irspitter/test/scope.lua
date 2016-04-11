@@ -12,7 +12,7 @@ do
    end
 
    do
-      z = 77
+      z = x
    end
    
 end

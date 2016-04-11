@@ -465,6 +465,7 @@ class LuaParser(object):
                 tempSymbol.Iden = p[1]
                 p[0] = tempSymbol
             
+            
         def p_namelist_names(p):
             'namelist :  names  comid'
             p[0] = [p[1]] + p[2]
@@ -479,9 +480,15 @@ class LuaParser(object):
         def p_exp_primi(p):
             '''exp :  nil 
             | Number 
-            | STRING
             '''
             p[0] = p[1]
+
+
+        def p_exp_string(p):
+            '''exp : STRING'''
+            p[0] = Symbol()
+            p[0].Locate = p[1]
+            p[0].Type = 'String'
             
         def p_exp_true(p):
                 '''exp : true'''
@@ -792,32 +799,47 @@ class LuaParser(object):
             self.ST.addVar(tempS)
             self.TAC.inject('call',['CreateDict',tempVar,1])
             p[0].Locate = tempVar
-            
-
-
-
+            if len(p) == 4:
+                for fields in p[2]:
+                    self.TAC.inject('param',[fields[1].Locate])
+                    self.TAC.inject('param',[fields[0].Locate])
+                    self.TAC.inject('param',[p[0].Locate])
+                    self.TAC.inject('call',['insertDict',tempVar,1])
+                    
             
         def p_fieldlist_fieldseplist(p):
             '''fieldlist : field fieldseplist fieldsep
             | field fieldseplist'''
             try:
-                raise Exception
+                p[0] = [p[1]] + p[2]
             except:
-                print("Implementation depends on future action")
+                print("You have some error.\n I dont know what.")
+
+                
         def p_fieldseplist_field(p):
             ''' fieldseplist : fieldseplist fieldsep field 
             | empty'''
-            
-            try:
-                raise Exception
-            except:
-                print("Implementation depends on future action")
+            if len(p) == 2:
+                p[0] = []
+                
+            else:
+                p[0] = p[1] + [p[3]]
+                
                 
         def p_field_exp(p):
             '''field : LSQUARE exp RSQUARE EQUALS exp 
             | names EQUALS exp 
             | exp'''
-            
+            try:
+                if len(p) == 6:
+                    p[0] = (p[2],p[5])
+                elif len(p) == 4:
+                    p[0] = (p[1],p[3])
+                else:
+                    raise Exception
+            except:
+                print("Not Implemented")
+                sys.exit()
                 
         def p_fieldsep_seps(p):
           '''fieldsep : COMMA 

@@ -21,6 +21,7 @@ class Runner(object):
         self.AddrDesc = Gensym.AddrDesc
         self.AddrMem = Gensym.AddrMem
         self.ArrayDesc = Gensym.ArrayDesc
+        self.StringDesc = Gensym.StringDesc
         self.leaders = Gensym.leaders
         self.Sleep = 0
         self.args = 0
@@ -36,11 +37,16 @@ class Runner(object):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
             x86istr=x86istr+key+":\n  .long 0\n"
-        #x86istr=x86istr+".section .bss\n"
-        for key in self.ArrayDesc:
+        for key in self.StringDesc.keys():
+            x86istr=x86istr+'\n'+ self.StringDesc[key]+":\t.ascii\t"+key
+
+            #x86istr=x86istr+".section .bss\n"
+        for key in self.ArrayDesc.keys():
             x86istr = x86istr +".lcomm\t"+key+", "+str(int(self.ArrayDesc[key])*4)
             #x86istr = x86istr+"\t"+key+":\n  .long 0\n"#+":   "+str(int(self.ArrayDesc[key])*4)+"\n"
-        x86istr=x86istr+'\n.section .text\ninptstr:\n  .asciz "%d" \nfmtstr:  .asciz "%d\\n"\n\n .globl main\n\nmain:\n'
+        x86istr=x86istr+'\n.section .text\ninptstr:\n  .asciz "%d" \nfmtstr:  .asciz "%d\\n" \nstrfmt:  .asciz "%s\\n"'
+        #print(self.StringDesc)
+        x86istr += '\n\n .globl main\n\nmain:\n'
         print x86istr
 
     def footer(self):
@@ -77,7 +83,10 @@ class Runner(object):
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                 if check_variable(ops.SymtabEntry1):
-                    print "\tMOVL $"+ops.SymtabEntry1+",%EAX"
+                    if ops.SymtabEntry1[0] != '"':
+                        print "\tMOVL $"+ops.SymtabEntry1+",%EAX"
+                    else:
+                        print "\tMOVL "+self.StringDesc[ops.SymtabEntry1]+",%EAX"
                 else:
                     if self.AddrDesc[ops.SymtabEntry1] == None:
                         print "\tMOVL "+ops.SymtabEntry1+",%EAX"
@@ -92,7 +101,10 @@ class Runner(object):
                 print "\tCALL "+ops.SymtabEntry1
                 print "\tMOVL %EAX,"+ops.SymtabEntry2
                 try:
-                    print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP"
+                    if ops.SymtabEntry1 == 'insertDict':
+                        print "\tADDL $12, %ESP"
+                    else:
+                        print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP"
                 except:
                     pass
                     i += 1
@@ -115,8 +127,11 @@ class Runner(object):
                         raise Exception()      
                     print "\tPUSHL %"+ self.AddrDesc[Entry1] 
                 except:     
-                    if check_variable(Entry1):     
-                        print "\tPUSHL $"+ Entry1
+                    if check_variable(Entry1):
+                        if Entry1[0] != '"':
+                            print "\tPUSHL $"+ Entry1
+                        else:
+                            print "\tPUSHL $"+ self.StringDesc[Entry1]
                     else:
                         print "\tPUSHL "+ str(Entry1)                       
                 i+=1
@@ -133,7 +148,10 @@ class Runner(object):
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry2,self.RegDesc,self.AddrDesc,i)
                     regX = R
                     if check_variable(Entry1):
-                        print "\tMOVL $"+str(Entry1)+",%"+R
+                        if Entry1[0] != '"':
+                            print "\tMOVL $"+str(Entry1)+",%"+R
+                        else:
+                            print "\tMOVL "+self.StringDesc[Entry1]+",%"+R
                     else:
                         print "\tMOVL "+Entry1+",%"+R
                         self.AddrDesc[Entry1]=R                        
@@ -147,7 +165,10 @@ class Runner(object):
                     #print vars(self.RegDesc),self.AddrDesc
                     regY = R
                     if check_variable(Entry2):
-                        print "\tMOVL $"+Entry2 +",%"+R
+                        if Entry1[0] != '"':
+                            print "\tMOVL $"+str(Entry2)+",%"+R
+                        else:
+                            print "\tMOVL "+self.StringDesc[Entry2]+",%"+R
                     else:
                         print "\tMOVL "+Entry2 +",%"+R
                         self.AddrDesc[Entry2]=R                        
@@ -225,22 +246,32 @@ class Runner(object):
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
-                    print "\tPUSHL $" + x
+                    if x[0] != '"':
+                        print "\tPUSHL $" + x
+                    else:
+                        print "\tPUSHL $" + self.StringDesc[x]
                 else:
                     RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                     if self.AddrDesc[x] == None:
-                        print "\tPUSHL " + x
+                        print "\tPUSHL $" + x
                     else:
                         print "\gtPUSHL %" + self.AddrDesc[x]
-                    print "\tPUSHL $fmtstr"
-                print "\tCALL printf"
-                print "\tADDL $8, %ESP" 
-                #print vars(self.RegDesc),self.AddrDesc
+                    if x[0] == '"':
+                        print "\tPUSHL $fmtstr"
+                        print "\tCALL printf"
+                        print "\tADDL $8, %ESP"
+                    else:
+                        print "\tPUSHL $strfmt"
+                        print "\tCALL printf"
+                        print "\tADDL $8, %ESP"
+                        #print vars(self.RegDesc),self.AddrDesc
                 i+= 1
                 continue
+
+            # need to do scan""
             if ops.InstrType=='Scan':
                 x = ops.SymtabEntry2
                 if check_variable(x):
@@ -266,6 +297,8 @@ class Runner(object):
                 self.currArgs += 1
                 i +=1
                 continue
+
+            
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
                 try:
@@ -275,13 +308,15 @@ class Runner(object):
                 #    print vars(self.RegDesc),self.AddrDesc
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
-                        print "\tMOVL $"+str(y)+",%"+R
+                        if y[0] != '"':
+                            print "\tMOVL $"+str(y)+",%"+R
+                        else:
+                            print "\tMOVL "+self.StringDesc[y]+",%"+R
                         i += 1
                         var = getattr(self.RegDesc,R) + [x]
                         setattr(self.RegDesc,R,var)
                         self.AddrDesc[x] = R
                         #print vars(self.RegDesc),self.AddrDesc
-                
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
@@ -330,7 +365,10 @@ class Runner(object):
                 #print "Found " + ydash +" for "+y
             except:
                 if check_variable(y):
-                    print "\tMOVL $"+y+",%"+L
+                    if y[0] != '"':
+                        print "\tMOVL $"+y+",%"+L
+                    else:
+                        print "\tMOVL "+self.StringDesc[y]+",%"+L
                 else:
                     print "\tMOVL "+y+",%"+L
             else:
@@ -344,8 +382,11 @@ class Runner(object):
             if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
-                    print "\tMOVL $"+str(z)+",%ESI"
-                RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
+                    if z[0] != '"':
+                        print "\tMOVL $"+str(z)+",%ESI"
+                    else:
+                        print "\tMOVL $"+self.StringDesc[z]+",%ESI"
+                    RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
 
             try:
                 if self.AddrDesc[z] == None:

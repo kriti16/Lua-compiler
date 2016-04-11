@@ -830,7 +830,8 @@ class LuaParser(object):
         def p_error(p):
             print("Syntax error with token "+p.value)
             print ("\n")
-
+            sys.exit(0)
+            
         def p_names_id(p):
             '''names : ID
             | RESID'''

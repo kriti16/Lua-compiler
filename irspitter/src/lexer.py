@@ -55,7 +55,7 @@ class Lualexer(object):
         t_LT      = r'<' #less than
         t_LE      = r'<=' #less than equal
         t_GT      = r'>' #greater than
-        t_GE      = r'>=' #greter than equal
+        t_GE      = r'=>' #greter than equal
         t_NE      = r'~=' #not equal 
         t_COMMA   = r',' #comma
         t_SEMI    = r';' #semicolon

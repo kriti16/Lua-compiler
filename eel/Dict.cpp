@@ -4,26 +4,26 @@
 
 using namespace std;
 extern "C"
-std::map<int,int> *  CreateDict()
+map<int,int> *  CreateDict()
 {
-  map<int,int> *first = new  map<int,int>;
-  return first;
+  map<int,int> *temp = new  map<int,int>;
+  return temp;
     }
 
 
 extern "C"
-int insert(map<int,int> * first,int a,int b)
+map<int,int> * insertDict(map<int,int> * temp,int a,int b)
 {
-
-  first->insert( pair<int,int>(a,b) );
-  return 1;
+  temp->insert( pair<int,int>(a,b) );
+  cout<< temp->at(a)<<endl;
+  return temp;
     }
 
 
 extern "C"
-int get(std::map<int,int> * first,int a)
+int get(std::map<int,int> * temp,int a)
 {
 
-  int b = first->at(a);
+  int b = temp->at(a);
   return b;
     }

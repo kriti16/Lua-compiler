@@ -1,10 +1,26 @@
-x=1
-if x == 1 then
-   x =x + 1
+y = 2
+function f1()
+   y = 2
+   y = 222
+   do
+      local y = 3333
+      print(y)
+   end
+   print(y)
+   z()
+   function z()
+      y = 3
+      print(y)
+      return 3
+   end
+   y = 322
+   print(y)
+   return y
 end
-if x ==2  then
-   x = x+1
-else
-   x= x + 2
+print(y)
+function g1()
+   y = 2
+   return y
 end
-print(x)
+dd = f1()
+print(dd)

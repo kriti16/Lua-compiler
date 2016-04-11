@@ -1,14 +1,16 @@
-wflg = 0, tflg = 0
+wflg = 0
+tflg = 0
 dflg = 0
-if c == 'w' then
+c = 1
+if c == 1 then
     a = 0
 end
-if c == 'W' then
+if c == 2 then
     wflag = 1
-elseif c == 't' then
-    if c == 'T' then
+elseif c == 3 then
+    if c == 4 then
         tflg = 1
     end
-elseif c == 'd' then
+elseif c == 3 then
     dflg = 1
 end

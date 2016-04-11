@@ -13,6 +13,7 @@ class GenSym(object):
                 self.AddrDesc = {}
                 self.AddrMem = {}
                 self.ArrayDesc ={}
+                self.StringDesc={}
                 self.lines = 0
                 self.leaders = {str(0):1}
         def read(self,fname):
@@ -123,6 +124,9 @@ class GenSym(object):
                         #print vars(TOC)
                         if TOC.InstrType == 'Array':
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
+                                continue
+                        if TOC.InstrType == 'Assign' and TOC.SymtabEntry2[0] == '"':
+                                self.StringDesc[TOC.SymtabEntry2] = TOC.SymtabEntry1
                                 continue
                         if TOC.InstrType == 'GoTo':
                                 #if self.list_of_3op[i-1].InstrType == 'Return':
