@@ -26,6 +26,7 @@ class Runner(object):
         self.Sleep = 0
         self.args = 0
         self.currArgs = 2
+        self.similar = Gensym.similar
         ###########Printers#####################
         #pprint ([x for x in Gensym.deadAlive])
         #print
@@ -71,7 +72,7 @@ class Runner(object):
         #print [vars(x) for x in self.list_op_3ops]
         #print self.leaders
         for ops in self.list_op_3ops:
-            #print i,vars(ops)
+            #print i,vars(ops),self.StringDesc['sdds']
             #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
@@ -84,10 +85,7 @@ class Runner(object):
             if ops.InstrType == 'Return':
                 RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                 if check_variable(ops.SymtabEntry1):
-                    if ops.SymtabEntry1[0] != '"':
                         print "\tMOVL $"+ops.SymtabEntry1+",%EAX"
-                    else:
-                        print "\tMOVL "+self.StringDesc[ops.SymtabEntry1]+",%EAX"
                 else:
                     if self.AddrDesc[ops.SymtabEntry1] == None:
                         print "\tMOVL "+ops.SymtabEntry1+",%EAX"
@@ -104,7 +102,7 @@ class Runner(object):
                 try:
                     if ops.SymtabEntry1 == 'insertDict':
                         print "\tADDL $12, %ESP"
-                    elif ops.SymtabEntry1 == 'PrintString' or ops.SymtabEntry1 == 'createStingP':
+                    elif ops.SymtabEntry1 == 'PrintString' or ops.SymtabEntry1 == 'createStingP' or ops.SymtabEntry1 ==' itoa':
                         print "\tADDL $4, %ESP"
                     elif ops.SymtabEntry1 == 'getDict':
                         print "\tADDL $8, %ESP"
@@ -127,17 +125,18 @@ class Runner(object):
             if ops.InstrType == 'ParamPass':
                 Entry1 = ops.SymtabEntry1
                 # print check_variable(Entry1)
+                if Entry1 in self.similar.keys():
+                    Entry1 = self.similar[Entry1]
                 try:
                     if self.AddrDesc[Entry1]==None:
                         raise Exception()      
                     print "\tPUSHL %"+ self.AddrDesc[Entry1] 
                 except:     
-                    if check_variable(Entry1):
-                        if Entry1[0] != '"':
-                            print "\tPUSHL $"+ Entry1
-                        else:
-                            print "\tPUSHL $"+ self.StringDesc[Entry1]
-                    else:
+                    if check_variable(Entry1) :
+                        print "\tPUSHL $"+ Entry1
+                    elif str(Entry1) in [self.StringDesc[key] for key in self.StringDesc.keys()]:
+                        print "\tPUSHL $"+ Entry1
+                    else:   
                         print "\tPUSHL "+ str(Entry1)                       
                 i+=1
                 continue
@@ -153,10 +152,7 @@ class Runner(object):
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(Entry2,self.RegDesc,self.AddrDesc,i)
                     regX = R
                     if check_variable(Entry1):
-                        if Entry1[0] != '"':
-                            print "\tMOVL $"+str(Entry1)+",%"+R
-                        else:
-                            print "\tMOVL "+self.StringDesc[Entry1]+",%"+R
+                        print "\tMOVL $"+str(Entry1)+",%"+R
                     else:
                         print "\tMOVL "+Entry1+",%"+R
                         self.AddrDesc[Entry1]=R                        
@@ -170,10 +166,7 @@ class Runner(object):
                     #print vars(self.RegDesc),self.AddrDesc
                     regY = R
                     if check_variable(Entry2):
-                        if Entry1[0] != '"':
-                            print "\tMOVL $"+str(Entry2)+",%"+R
-                        else:
-                            print "\tMOVL "+self.StringDesc[Entry2]+",%"+R
+                        print "\tMOVL $"+str(Entry2)+",%"+R
                     else:
                         print "\tMOVL "+Entry2 +",%"+R
                         self.AddrDesc[Entry2]=R                        
@@ -251,10 +244,7 @@ class Runner(object):
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
-                    if x[0] != 't':
                         print "\tPUSHL $" + x
-                    else:
-                        print "\tPUSHL " + self.StringDesc[x]
                 else:
                     RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
@@ -306,6 +296,8 @@ class Runner(object):
             
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
+                if y in self.StringDesc.keys():
+                    continue
                 try:
                     if self.AddrDesc[y]==None:
                         raise Exception()
@@ -313,10 +305,7 @@ class Runner(object):
                 #    print vars(self.RegDesc),self.AddrDesc
                     R,self.RegDesc,self.AddrDesc=RegFind.getRegE(ops.SymtabEntry2,self.RegDesc,self.AddrDesc,i)
                     if check_variable(y):
-                        if y[0] != '"':
-                            print "\tMOVL $"+str(y)+",%"+R
-                        else:
-                            print "\tMOVL "+self.StringDesc[y]+",%"+R
+                        print "\tMOVL $"+str(y)+",%"+R
                         i += 1
                         var = getattr(self.RegDesc,R) + [x]
                         setattr(self.RegDesc,R,var)
@@ -327,7 +316,7 @@ class Runner(object):
                         print "\tMOVL "+y+",%"+R
                         self.AddrDesc[y]=R                        
                         setattr(self.RegDesc,R,[y])
-
+                
                 #print self.AddrDesc[x],self.AddrDesc[y]
                 Rdash=self.AddrDesc[x]=self.AddrDesc[y]
                 tmpVar=getattr(self.RegDesc,Rdash)+[x]
@@ -370,10 +359,7 @@ class Runner(object):
                 #print "Found " + ydash +" for "+y
             except:
                 if check_variable(y):
-                    if y[0] != '"':
-                        print "\tMOVL $"+y+",%"+L
-                    else:
-                        print "\tMOVL "+self.StringDesc[y]+",%"+L
+                    print "\tMOVL $"+y+",%"+L
                 else:
                     print "\tMOVL "+y+",%"+L
             else:
@@ -387,10 +373,7 @@ class Runner(object):
             if ops.Operator=='/' or ops.Operator=='%':
                 if check_variable(z):
                     RegFind.storeMem('ESI',self.RegDesc,self.AddrDesc)
-                    if z[0] != '"':
-                        print "\tMOVL $"+str(z)+",%ESI"
-                    else:
-                        print "\tMOVL $"+self.StringDesc[z]+",%ESI"
+                    print "\tMOVL $"+str(z)+",%ESI"
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)        
 
             try:

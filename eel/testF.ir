@@ -1,43 +1,29 @@
-t0 = 0
-t1 = call CreateDict 1
-t2 = t1
-t3 = "PQRST"
-param "PQRST"
-t4 = call createStringP 1
-t5 = t4
-t6 = call InputString 0
-t7 = t6
-param t5
-t8 = call PrintString 1
-if t0 < 20 goto 13
-goto 21
+t0 = "sdds"
 param t0
-param t0
+t1 = call createStringP 1
+t2 = call CreateDict 1
+param 8
 param t1
-t1 = call insertDict 3
-print t0
-t9 = t0 + 1
-t0 = t9
-goto 11
-t10 = 3
-t11 = t0 - 3
-t0 = t11
-param t0
 param t2
-t12 = call getDict 2
-if t0 > 0 goto 29
-goto 31
-print t12
-goto 33
-t13 = t12 + 1
-print t13
-print t0
-param t7
-t14 = call PrintString 1
-param t7
+t2 = call insertDict 1
+param 5
+t3 = call itoa 1
+param 3
+param t3
+param t2
+t2 = call insertDict 1
+t4 = t2
+t5 = "sdds"
 param t5
-t15 = call MergeString 2
-t16 = t15
-param t16
-t17 = call PrintString 1
+t6 = call createStringP 1
+param t6
+param t4
+y = call getDict 2
+print y
+param 5
+t7 = call itoa 1
+param t7
+param t4
+y = call getDict 2
+print y
 _empty_ = 0

@@ -1,6 +1,8 @@
-#include <stdio.h>
 #include <bits/stdc++.h>
+//#include <stdio.h>
 #include <map>
+//#include <cstdlib>
+//#include <math.h>
 
 using namespace std;
 
@@ -12,31 +14,32 @@ char*  InputString()
   return s;
 }
 extern "C"
-char *createStringP(char * str)
+char *createStringP(char *str)
 {
-  int l,i = 0;
-  for(i=0;i< str[i]!= '\0';++i)
+  int l=0,i = 0;
+for(i=0; (int)str[i]!='\0';++i)
     {
+//cout<<str[i]<<endl;
       l++;
     }
-  char *s = (char*)malloc(l+1);
-  s[0]=str[0];
-  for(i=0;i< str[i]!= '\0';++i)
-    {
-      s[i] = str[i];
-    }
+char *s = (char *)malloc(l);
+//cout<<str<<"Reading"<<l<<endl;
+for(int i =0 ;i<l;i++)
+  {
+s[i] = str[i];
+}
+//cout<<s<<"Before"<<str<<endl;
   return s;
 }
 
 extern "C"
-char* MergeString(char* a, char* b)
+char* MergeString(char* b, char* a)
 {
   int i = strlen(a);
   int j = strlen(b);
-  // cout<<i<<" "<<j<<endl;
   char* s = (char*)malloc(100);
-  memcpy(s,a,i);
-  memcpy(s + i, b, j);
+  memcpy(s,b,j);
+  memcpy(s + j, a, i);
   s[i + j] = '\0';
   return s;
 }
@@ -47,7 +50,25 @@ void PrintString(char *s)
   int i=0;
   printf("%s\n",s);
 }
+extern "C"
 
+const char *itoa(int a)
+{
+/*cout<<a<<"HelloString"<<endl;
+  int l = ceil(log10(a));
+cout<<l<<"leng";
+  char *s = (char*)malloc(l);
+  while(l>0)
+    {
+      s[l] = (char)(a%10);
+      a /= 10;
+      l --;
+    }
+*/
+string sa = to_string(a);
+char const * str = sa.c_str();
+  return str;
+}
 // int main()
 // {
 //    char* a = InputString();

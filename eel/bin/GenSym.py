@@ -16,6 +16,8 @@ class GenSym(object):
                 self.StringDesc={}
                 self.lines = 0
                 self.leaders = {str(0):1}
+                self.similar={
+                }
         def read(self,fname):
                 f = open(fname,'r')
                 data = f.read()
@@ -125,8 +127,13 @@ class GenSym(object):
                         if TOC.InstrType == 'Array':
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
                                 continue
-                        if TOC.InstrType == 'Assign' and TOC.SymtabEntry2[0] == '"':
-                                self.StringDesc[TOC.SymtabEntry2] = TOC.SymtabEntry1
+                        if TOC.InstrType == 'Assign' and TOC.SymtabEntry2[0] == '"' :
+                                
+                                if TOC.SymtabEntry2 in self.StringDesc.keys():
+                                        self.similar[TOC.SymtabEntry1]=self.StringDesc[TOC.SymtabEntry2]
+                                else:
+                                        self.StringDesc[TOC.SymtabEntry2] = TOC.SymtabEntry1
+                                        #print "HELLO", TOC.SymtabEntry2,TOC.SymtabEntry1,vars(self.list_of_3op[i]),i,self.list_of_3op[i].SymtabEntry1, self.StringDesc[TOC.SymtabEntry2]
                                 continue
                         if TOC.InstrType == 'GoTo':
                                 #if self.list_of_3op[i-1].InstrType == 'Return':

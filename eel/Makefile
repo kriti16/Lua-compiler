@@ -5,7 +5,7 @@ all: out
 	#@rm -rf out out.o out.s
 
 out: out.s
-	@g++ -m32 out.s Dict.cpp String.cpp -o out
+	@g++ -m32 -g -std=c++11 -w out.s Dict.cpp String.cpp -o out
 
 out.s: copy
 	@./bin/FinalRun.py testF.ir > out.s

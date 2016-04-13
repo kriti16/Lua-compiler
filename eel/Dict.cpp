@@ -1,27 +1,31 @@
 #include <stdio.h>
-#include <bits/stdc++.h>
 #include <map>
-
+#include <iostream>
+#include <string>
 using namespace std;
 extern "C"
-map<int,int> *  CreateDict()
+map<string,int> *  CreateDict()
 {
-  map<int,int> *temp = new  map<int,int>;
+  map<string,int> *temp = new  map<string,int>;
   return temp;
 }
 
 
 extern "C"
-map<int,int> * insertDict(map<int,int> * temp,int a,int b)
+map<string,int> * insertDict(map<string,int> * temp,char *a,int b)
 {
-  temp->insert( pair<int,int>(a,b) );
+  string R = a;
+  temp->insert( pair<string,int>(R,b) );
+  //cout<<R<<"Hello"<<endl;
   return temp;
 }
 
 
 extern "C"
-int getDict(std::map<int,int> * temp,int a)
+int getDict(std::map<string,int> * temp,char *a)
 {
-  int b = temp->at(a);
+  string R = a;
+  //cout<<R<<"JELO"<<endl;
+  int  b = temp->at(R);
   return b;
 }

@@ -1,21 +1,13 @@
 .section .data
-t6:
-  .long 0
-t7:
-  .long 0
-t4:
-  .long 0
 t5:
   .long 0
 t2:
   .long 0
 t3:
   .long 0
+t0:
+  .long 0
 t1:
-  .long 0
-3:
-  .long 0
-5:
   .long 0
 y:
   .long 0
@@ -24,7 +16,7 @@ y:
 _empty_:
   .long 0
 
-t0:	.ascii	"sdds"
+t4:	.asciz	"sdds"
 .section .text
 inptstr:
   .asciz "%d" 
@@ -37,7 +29,7 @@ main:
 
 LEE1:
 LEE1:
-	PUSHL $t0
+	PUSHL $t4
 	CALL createStringP
 	MOVL %EAX,t1
 	CALL CreateDict
@@ -48,35 +40,14 @@ LEE1:
 	CALL insertDict
 	MOVL %EAX,t2
 	ADDL $12, %ESP
-	PUSHL $5
-	CALL itoa
-	MOVL %EAX,t3
-	PUSHL $3
-	PUSHL t3
-	PUSHL t2
-	CALL insertDict
-	MOVL %EAX,t2
-	ADDL $12, %ESP
 	MOVL t2,%EAX
-	PUSHL $t0
+	PUSHL $t4
 	MOVL %EAX,t2
-	MOVL %EAX,t4
+	MOVL %EAX,t3
 	CALL createStringP
-	MOVL %EAX,t6
-	PUSHL t6
-	PUSHL t4
-	CALL getDict
-	MOVL %EAX,y
-	ADDL $8, %ESP
-	PUSHL y
-	PUSHL $fmtstr
-	CALL printf
-	ADDL $8, %ESP
-	PUSHL $5
-	CALL itoa
-	MOVL %EAX,t7
-	PUSHL t7
-	PUSHL t4
+	MOVL %EAX,t5
+	PUSHL t5
+	PUSHL t3
 	CALL getDict
 	MOVL %EAX,y
 	ADDL $8, %ESP
