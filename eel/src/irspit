@@ -91,6 +91,9 @@ class LuaParser(object):
             del p[1][0]
             for i in range(0,minarg):
                 dictI = True
+                dictR = True
+                if p[3][i].Type == 'DictInsert':
+                    dictR = False
                 if p[1][i].Type == 'DictInsert':
                     dictI = False
                 if not self.ST.isPresentIdent(p[1][i]):
@@ -109,6 +112,10 @@ class LuaParser(object):
                     self.TAC.inject('param',[p[1][i].Value])
                     self.TAC.inject('param',[p[1][i].Locate])
                     self.TAC.inject('call',['insertDict',p[1][i].Locate,3])
+                elif dictR == False:
+                    self.TAC.inject('param',[p[3][minarg-i-1].Value])
+                    self.TAC.inject('param',[p[3][minarg-i-1].Locate])
+                    self.TAC.inject('call',['getDict',p[1][i].Locate,2])
                 else:
                     self.TAC.inject('=',[p[1][i].Locate,p[3][minarg-1-i].Locate])
 
@@ -479,16 +486,19 @@ class LuaParser(object):
             | prefixexp SDOT names '''
             if len(p) == 2:
                 tempSymbol = Symbol()
-                tempSymbol.Iden = p[1]
-                tempSymbol.Locate = p[1]
+                tempSymbol.Iden = deepcopy(p[1])
+                tempSymbol.Locate = deepcopy(p[1])
                 p[0] = tempSymbol
             else:
                 tempSymbol = Symbol()
-                p[0] = tempSymbol
-                p[0].Locate = p[1].Locate
+                if self.ST.isPresentIdent(p[1]) == True and p[1].Iden != None :
+                    tempSymbol.Locate = self.ST.getIdent(p[1]).Locate
+                    p[0] = tempSymbol
+                else:
+                    p[0].Locate = p[1].Locate
                 p[0].Type = 'DictInsert'
                 p[0].Value = p[3].Locate
-            
+                
         def p_namelist_names(p):
             'namelist :  names  comid'
             p[0] = [p[1]] + p[2]

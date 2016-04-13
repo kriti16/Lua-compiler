@@ -25,6 +25,11 @@ char* MergeString(char* a, char* b)
   return s;
 }
 
+char* PrintString(char *s)
+{
+  printf("%s\n",s);
+}
+
 // int main()
 // {
 //    char* a = InputString();

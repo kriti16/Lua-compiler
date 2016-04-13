@@ -76,7 +76,7 @@ class Runner(object):
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
             if str(i) in self.leaders.keys() and ops.InstrType != 'Func' :#and ops.InstrType != 'FunCall':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
-                print "LEE"+str(self.leaders[str(i)])+":"#, i,vars(ops)
+                print "LEE"+str(self.leaders[str(i)])+":"#+str(i)#, i,vars(ops)
             if ops.InstrType == 'Array':
                 i += 1
                 continue
@@ -107,7 +107,7 @@ class Runner(object):
                         print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP"
                 except:
                     pass
-                    i += 1
+                i += 1
                 continue
             if ops.InstrType == 'Func':
                 if self.Sleep == 0:
@@ -246,25 +246,25 @@ class Runner(object):
             if ops.InstrType=='Print':
                 x = ops.SymtabEntry1
                 if check_variable(x):
-                    if x[0] != '"':
+                    if x[0] != 't':
                         print "\tPUSHL $" + x
                     else:
-                        print "\tPUSHL $" + self.StringDesc[x]
+                        print "\tPUSHL " + self.StringDesc[x]
                 else:
                     RegFind.storeMem('EAX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EBX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('ECX',self.RegDesc,self.AddrDesc)
                     RegFind.storeMem('EDX',self.RegDesc,self.AddrDesc)
                     if self.AddrDesc[x] == None:
-                        print "\tPUSHL $" + x
+                        print "\tPUSHL " + x
                     else:
-                        print "\gtPUSHL %" + self.AddrDesc[x]
-                    if x[0] == '"':
+                        print "\tPUSHL %" + self.AddrDesc[x]
+                    if x[0] == 't':
                         print "\tPUSHL $fmtstr"
                         print "\tCALL printf"
                         print "\tADDL $8, %ESP"
                     else:
-                        print "\tPUSHL $strfmt"
+                        print "\tPUSHL $fmtstr"
                         print "\tCALL printf"
                         print "\tADDL $8, %ESP"
                         #print vars(self.RegDesc),self.AddrDesc

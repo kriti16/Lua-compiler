@@ -121,7 +121,7 @@ class GenSym(object):
                 #print self.leaders
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
-                        #print vars(TOC)
+                        #print vars(TOC),i
                         if TOC.InstrType == 'Array':
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
                                 continue
@@ -137,19 +137,20 @@ class GenSym(object):
                                 if TOC.Target not in self.leaders.keys():
                                         self.leaders[TOC.Target]=leader_count
                                         leader_count += 1
-                                #sprint "b",TOC.Target,i+1,self.leaders
+                                #print "b",TOC.Target,i+1,self.leaders
                                 continue
                          
-                        if TOC.InstrType == 'FunCall':
-                                self.leaders[str(i+1)] = leader_count
+                        #if TOC.InstrType == 'FunCall':
+                                #self.leaders[str(i+1)] = leader_count
                                 #print vars(TOC),i+1
-                                leader_count += 1
+                                #leader_count += 1
                                 #print "e",str(i+1),str(leader_count)
                         if TOC.InstrType == 'IfElse':
                                 self.leaders[str(i+1)]=leader_count
                                 leader_count += 1
                                 self.leaders[TOC.Target]=leader_count
                                 leader_count += 1
+                                continue
                                 #print "a",self.leaders
                         if TOC.InstrType == 'Func':
                                 self.leaders[str(i)] = leader_count
