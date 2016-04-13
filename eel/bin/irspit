@@ -520,8 +520,12 @@ class LuaParser(object):
         def p_exp_string(p):
             '''exp : STRING'''
             p[0] = Symbol()
-            p[0].Locate = p[1]
+            tempVar = self.ST.create_temp()
+            self.TAC.inject('=',[tempVar,p[1]])
+            p[0].Locate = self.ST.create_temp()
             p[0].Type = 'String'
+            self.TAC.inject('param',[p[1]])
+            self.TAC.inject('call',['createStringP',p[0].Locate,1])
             
         def p_exp_true(p):
                 '''exp : true'''

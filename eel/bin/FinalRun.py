@@ -36,7 +36,8 @@ class Runner(object):
     def header(self):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
-            x86istr=x86istr+key+":\n  .long 0\n"
+            if key not in [self.StringDesc[keyT] for keyT in self.StringDesc.keys()]:
+                x86istr=x86istr+key+":\n  .long 0\n"
         for key in self.StringDesc.keys():
             x86istr=x86istr+'\n'+ self.StringDesc[key]+":\t.ascii\t"+key
 
@@ -103,6 +104,10 @@ class Runner(object):
                 try:
                     if ops.SymtabEntry1 == 'insertDict':
                         print "\tADDL $12, %ESP"
+                    elif ops.SymtabEntry1 == 'PrintString' or ops.SymtabEntry1 == 'createStingP':
+                        print "\tADDL $4, %ESP"
+                    elif ops.SymtabEntry1 == 'getDict':
+                        print "\tADDL $8, %ESP"
                     else:
                         print "\tADDL $"+str(4*self.ST.scope[ops.SymtabEntry1].args)+", %ESP"
                 except:

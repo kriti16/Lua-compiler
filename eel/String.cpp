@@ -8,7 +8,23 @@ extern "C"
 char*  InputString()
 {
   char* s = (char*)malloc(100);
-  scanf("%s",s);
+  gets(s);//scanf("%s\n",s);
+  return s;
+}
+extern "C"
+char *createStringP(char * str)
+{
+  int l,i = 0;
+  for(i=0;i< str[i]!= '\0';++i)
+    {
+      l++;
+    }
+  char *s = (char*)malloc(l+1);
+  s[0]=str[0];
+  for(i=0;i< str[i]!= '\0';++i)
+    {
+      s[i] = str[i];
+    }
   return s;
 }
 
@@ -25,8 +41,10 @@ char* MergeString(char* a, char* b)
   return s;
 }
 
-char* PrintString(char *s)
+extern "C"
+void PrintString(char *s)
 {
+  int i=0;
   printf("%s\n",s);
 }
 
