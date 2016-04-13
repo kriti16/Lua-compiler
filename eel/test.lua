@@ -1,8 +1,26 @@
-x={["sdds"]=8,[5]=3}
-y = x["sdds"]
+y = 2
+function f1()
+   y = 2
+   y = 222
+   do
+      local y = 3333
+      print(y)
+   end
+   print(y)
+   z()
+   function z()
+      y = 3
+      print(y)
+      return 3
+   end
+   y = 322
+   print(y)
+   return y
+end
 print(y)
-y = x[5]
-print(y)
-z={["sdds"]=2,[5]=3}
-y = z["sdds"]
-print(y)
+function g1()
+   y = 2
+   return y
+end
+dd = f1()
+print(dd)

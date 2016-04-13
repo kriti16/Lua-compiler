@@ -312,7 +312,6 @@ class Runner(object):
                         setattr(self.RegDesc,R,var)
                         self.AddrDesc[x] = R
                         #print vars(self.RegDesc),self.AddrDesc
-                        i+=1
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
@@ -324,10 +323,10 @@ class Runner(object):
                 tmpVar=getattr(self.RegDesc,Rdash)+[x]
                 #print tmpVar,Rdash
                 setattr(self.RegDesc,Rdash,tmpVar)
-                #print self.nextUse[i+1],self.nextUse[i],y
+                #print self.nextUse[i],i,y,vars(ops)
                 #print self.nextUse,i,self.nextUse[i]
                 if self.nextUse[i][y]==-1:
-                    print tmpVar,y,getattr(self.RegDesc,Rdash),"ASASASASS"
+                    #print tmpVar,y,getattr(self.RegDesc,Rdash),"ASASASASS"
                     tmpVar=getattr(self.RegDesc,Rdash)
                     #print "###############################"
                     tmpVar.remove(y)
