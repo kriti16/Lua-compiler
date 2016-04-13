@@ -102,8 +102,16 @@ class LuaParser(object):
                     dictI = False
                 p[0] = Symbol()
                 if dictI == False:
+                    exp=None
+                    if (p[1][i].Type)[0] == 'I':
+                        self.TAC.inject('param',[p[1][i].Value])
+                        exp1 = self.ST.create_temp()
+                        self.TAC.inject('call',['itoa',exp1,1])
+                    else:
+                        exp1 = p[1][i].Value
+                        
                     self.TAC.inject('param',[p[3][minarg-i-1].Locate])
-                    self.TAC.inject('param',[p[1][i].Value])
+                    self.TAC.inject('param',[exp1])
                     self.TAC.inject('param',[p[1][i].Locate])
                     self.TAC.inject('call',['insertDict',p[1][i].Locate,3])
                 elif dictR == False:
@@ -271,7 +279,7 @@ class LuaParser(object):
                 tempVar = self.ST.create_temp()
                 tempS.Locate = tempVar
                 self.ST.addVar(tempS)
-                self.TAC.inject('call',['InputString',tempVar,1])
+                self.TAC.inject('call',['inp',tempVar,1])
                 p[2] = Symbol()
                 p[2].Iden = p[3].Iden
                 p[2].Locate = tempVar

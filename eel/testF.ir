@@ -1,27 +1,15 @@
-t0 = 2
-print t0
-t3 = call g1 0
-t4 = t3
-print t4
-_empty_ = 0
-fun f1
-t0 = 222
-t1 = 3333
-print t1
-print t0
-t2 = call z 0
-t0 = t2
-print t0
-t0 = 322
-print t0
-ret t0
-_empty_ = 0
-fun z
-t0 = 3
-print t0
-ret 6
-_empty_ = 0
-fun g1
-t0 = 333
-ret t0
+t0 = call CreateDict 1
+t1 = t0
+param 2
+t2 = call itoa 1
+param 3
+param t2
+param t1
+t1 = call insertDict 3
+param 2
+t3 = call itoa 1
+param t3
+param t1
+y = call getDict 2
+print y
 _empty_ = 0
