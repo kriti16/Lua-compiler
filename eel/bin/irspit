@@ -279,11 +279,11 @@ class LuaParser(object):
                 tempVar = self.ST.create_temp()
                 tempS.Locate = tempVar
                 self.ST.addVar(tempS)
-                self.TAC.inject('call',['inp',tempVar,1])
-                p[2] = Symbol()
-                p[2].Iden = p[3].Iden
-                p[2].Locate = tempVar
-                p[0]=Symbol()
+                self.TAC.inject('scan',[tempVar])
+                p[2][0].Locate = tempVar
+                p[2][0].Type = 'INTEGER'
+                p[0]=deepcopy(p[2][0])
+                self.ST.addVar(p[2][0])
                 # for arg in p[2]:
                 #     self.TAC.inject('scan',[arg.Locate])
                 # p[0].Type = 'Error'

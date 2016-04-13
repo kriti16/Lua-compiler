@@ -1,12 +1,16 @@
-a = 1
-b = 10
-c = 20
-d = 40
-d1730 = b / a
-d1731 = d1730 + a
-d1732 = d * 2
-eval = d1731 + d1732
-d1733 = c * d
-eval = d1733 + eval
-print eval
-d1734 = 0
+array A[5]
+i = 3
+sum = 0
+i = i - 1
+x = call inp
+A[i] = x
+if i > 0 goto 3
+i = 3
+i = i - 1
+tmp = A[i]
+sum = sum + tmp
+if i > 0 goto 8
+print sum
+fun inp
+scanf x
+ret x

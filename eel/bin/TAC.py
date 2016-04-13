@@ -52,6 +52,9 @@ class TACList():
         if operator == 'Func':
             OpCode.InstrType = 'Func'
             OpCode.SymtabEntry1 = tmp_list[0]
+        if operator == 'scan':
+            OpCode.InstrType = 'Scan'
+            OpCode.SymtabEntry2 = tmp_list[0]
         if operator == 'call':
             OpCode.InstrType = 'FunCall'
             OpCode.SymtabEntry1 = tmp_list[0]
@@ -115,6 +118,8 @@ class TACList():
                     print "if "+str(code.SymtabEntry1)+" "+code.Operator+" "+str(code.SymtabEntry2)+" goto "+str(code.Target+total_count)
                 if code.InstrType == 'Print':
                     print "print "+str(code.SymtabEntry1)
+                if code.InstrType == 'Scan':
+                    print "scanf "+str(code.SymtabEntry2)
                 if code.InstrType == 'Prints':
                     print "prints "+str(code.SymtabEntry1)
                 if code.InstrType == 'Printd':
