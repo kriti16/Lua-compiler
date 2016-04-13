@@ -29,7 +29,7 @@ LEE1:
 	PUSHL $fmtstr
 	CALL printf
 	ADDL $8, %ESP
-	CALL f1
+	CALL g1
 	MOVL %EAX,t3
 	ADDL $0, %ESP
 	MOVL t3,%EAX
@@ -47,12 +47,10 @@ LEE1:
 int $0x80
 
 f1:
-	MOVL $2,%EAX
-	MOVL $222,%EBX
-	MOVL $3333,%ECX
+	MOVL $222,%EAX
+	MOVL $3333,%EBX
 	MOVL %EAX,t0
-	MOVL %EBX,t0
-	MOVL %ECX,t1
+	MOVL %EBX,t1
 	PUSHL t1
 	PUSHL $fmtstr
 	CALL printf
@@ -64,6 +62,13 @@ f1:
 	CALL z
 	MOVL %EAX,t2
 	ADDL $0, %ESP
+	MOVL t2,%EAX
+	MOVL %EAX,t2
+	MOVL %EAX,t0
+	PUSHL t0
+	PUSHL $fmtstr
+	CALL printf
+	ADDL $8, %ESP
 	MOVL $322,%EAX
 	MOVL %EAX,t0
 	PUSHL t0
@@ -81,12 +86,12 @@ z:
 	PUSHL $fmtstr
 	CALL printf
 	ADDL $8, %ESP
-	MOVL $3,%EAX
+	MOVL $6,%EAX
 	RET
 	MOVL $0,%EAX
 	MOVL %EAX,_empty_
 g1:
-	MOVL $2,%EAX
+	MOVL $333,%EAX
 	MOVL %EAX,t0
 	MOVL t0,%EAX
 	RET

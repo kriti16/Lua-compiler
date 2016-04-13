@@ -1,16 +1,17 @@
 t0 = 2
 print t0
-t3 = call f1 0
+t3 = call g1 0
 t4 = t3
 print t4
 _empty_ = 0
 fun f1
-t0 = 2
 t0 = 222
 t1 = 3333
 print t1
 print t0
 t2 = call z 0
+t0 = t2
+print t0
 t0 = 322
 print t0
 ret t0
@@ -18,9 +19,9 @@ _empty_ = 0
 fun z
 t0 = 3
 print t0
-ret 3
+ret 6
 _empty_ = 0
 fun g1
-t0 = 2
+t0 = 333
 ret t0
 _empty_ = 0

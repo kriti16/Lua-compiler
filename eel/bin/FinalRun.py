@@ -40,7 +40,7 @@ class Runner(object):
             if key not in [self.StringDesc[keyT] for keyT in self.StringDesc.keys()]:
                 x86istr=x86istr+key+":\n  .long 0\n"
         for key in self.StringDesc.keys():
-            x86istr=x86istr+'\n'+ self.StringDesc[key]+":\t.ascii\t"+key
+            x86istr=x86istr+'\n'+ self.StringDesc[key]+":\t.asciz\t"+key
 
             #x86istr=x86istr+".section .bss\n"
         for key in self.ArrayDesc.keys():
