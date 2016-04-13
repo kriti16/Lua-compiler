@@ -26,4 +26,26 @@ param t7
 param t4
 y = call getDict 2
 print y
+t8 = "sdds"
+param t8
+t9 = call createStringP 1
+t10 = call CreateDict 1
+param 2
+param t9
+param t10
+t10 = call insertDict 1
+param 5
+t11 = call itoa 1
+param 3
+param t11
+param t10
+t10 = call insertDict 1
+t12 = t10
+t13 = "sdds"
+param t13
+t14 = call createStringP 1
+param t14
+param t12
+y = call getDict 2
+print y
 _empty_ = 0

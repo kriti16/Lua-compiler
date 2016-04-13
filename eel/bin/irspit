@@ -93,13 +93,13 @@ class LuaParser(object):
                 dictI = True
                 dictR = True
                 #print(p[3][i].Type)
-                if (p[3][i].Type)[1:] == 'DictInsert':
+                
+                if p[3][i].Type != None and (p[3][i].Type)[1:] == 'DictInsert':
                     #print("reading")
                     dictR = False
                 if p[1][i].Type != None and (p[1][i].Type)[1:] == 'DictInsert':
                     #print("Insert")
                     dictI = False
-                        
                 p[0] = Symbol()
                 if dictI == False:
                     self.TAC.inject('param',[p[3][minarg-i-1].Locate])

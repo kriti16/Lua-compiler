@@ -72,7 +72,7 @@ class Runner(object):
         #print [vars(x) for x in self.list_op_3ops]
         #print self.leaders
         for ops in self.list_op_3ops:
-            #print i,vars(ops),self.StringDesc['sdds']
+            #print i,vars(ops),self.nextUse[i]
             #print vars(self.RegDesc),self.AddrDesc
             if str(i) in self.leaders.keys() and ops.InstrType != 'IfElse' and ops.InstrType != 'FunCall' and ops.InstrType != 'Return' and ops.InstrType != 'GoTo':
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)
@@ -297,6 +297,7 @@ class Runner(object):
             if ops.InstrType=='Assign':
                 x,y = ops.SymtabEntry1, ops.SymtabEntry2
                 if y in self.StringDesc.keys():
+                    i+=1
                     continue
                 try:
                     if self.AddrDesc[y]==None:
@@ -311,6 +312,7 @@ class Runner(object):
                         setattr(self.RegDesc,R,var)
                         self.AddrDesc[x] = R
                         #print vars(self.RegDesc),self.AddrDesc
+                        i+=1
                         continue
                     else:
                         print "\tMOVL "+y+",%"+R
@@ -323,9 +325,9 @@ class Runner(object):
                 #print tmpVar,Rdash
                 setattr(self.RegDesc,Rdash,tmpVar)
                 #print self.nextUse[i+1],self.nextUse[i],y
-                #print self.nextUse
+                #print self.nextUse,i,self.nextUse[i]
                 if self.nextUse[i][y]==-1:
-                    #print tmpVar,y,getattr(self.RegDesc,Rdash)
+                    print tmpVar,y,getattr(self.RegDesc,Rdash),"ASASASASS"
                     tmpVar=getattr(self.RegDesc,Rdash)
                     #print "###############################"
                     tmpVar.remove(y)

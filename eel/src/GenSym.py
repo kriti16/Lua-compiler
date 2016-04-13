@@ -123,7 +123,6 @@ class GenSym(object):
                 #print self.leaders
                 for i in range(0,self.lines):
                         TOC = self.list_of_3op[i]
-                        #print vars(TOC),i
                         if TOC.InstrType == 'Array':
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
                                 continue
