@@ -22,12 +22,15 @@ for(i=0; (int)str[i]!='\0';++i)
 //cout<<str[i]<<endl;
       l++;
     }
-char *s = (char *)malloc(l);
+char *s = (char *)malloc(l+1);
 //cout<<str<<"Reading"<<l<<endl;
 for(int i =0 ;i<l;i++)
   {
 s[i] = str[i];
 }
+s[l]='\0';
+
+
 //cout<<s<<"Before"<<str<<endl;
   return s;
 }
@@ -47,7 +50,7 @@ char* MergeString(char* b, char* a)
 extern "C"
 void PrintString(char *s)
 {
-  int i=0;
+  // int i=0;
   printf("%s\n",s);
 }
 extern "C"
