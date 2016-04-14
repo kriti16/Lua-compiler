@@ -1,3 +1,13 @@
-scanf t0
-print t0
+t0 = 2
+t1 = 4
+param t0
+t2 = call itoa 1
+param t1
+t3 = call itoa 1
+param t3
+param t2
+t4 = call MergeString 2
+t5 = t4
+param t5
+t6 = call PrintString 1
 _empty_ = 0

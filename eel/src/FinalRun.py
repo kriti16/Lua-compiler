@@ -37,7 +37,7 @@ class Runner(object):
     def header(self):
         x86istr=".section .data\n"
         for key in self.AddrDesc:
-            if key not in [self.StringDesc[keyT] for keyT in self.StringDesc.keys()]:
+            if key != None and key not in [self.StringDesc[keyT] for keyT in self.StringDesc.keys()]:
                 x86istr=x86istr+key+":\n  .long 0\n"
         for key in self.StringDesc.keys():
             x86istr=x86istr+'\n'+ self.StringDesc[key]+":\t.asciz\t"+key
@@ -170,7 +170,7 @@ class Runner(object):
                     else:
                         print "\tMOVL "+Entry2 +",%"+R
                         self.AddrDesc[Entry2]=R                        
-                        setattr(self.RegDesc,R,Entry2g)
+                        setattr(self.RegDesc,R,[Entry2])
                 print "\tCMP %"+regY+",%"+regX
                 #print vars(self.RegDesc),self.AddrDesc
                 self.endBlock(RegFind,self.RegDesc,self.AddrDesc)

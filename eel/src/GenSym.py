@@ -75,9 +75,9 @@ class GenSym(object):
                                 OpCode.SymtabEntry2 = arr_var[1].split(']')[0] #Array Index
                         elif len(tmp_list)==3 and tmp_list[1]=='=':
                                 #print "Twent"
-                                #print tmp_list
                                 OpCode.InstrType = "Assign"
                                 OpCode.SymtabEntry1 = tmp_list[0]
+                                
                                 OpCode.SymtabEntry2 = tmp_list[2]
                         elif tmp_list[3] in ['+','-','*','/','%','>>','<<','&','|','^^']:
                                 #print "Third"
@@ -126,6 +126,7 @@ class GenSym(object):
                         if TOC.InstrType == 'Array':
                                 self.ArrayDesc[TOC.SymtabEntry1] = TOC.SymtabEntry2
                                 continue
+                        #print vars(TOC)
                         if TOC.InstrType == 'Assign' and TOC.SymtabEntry2[0] == '"' :
                                 
                                 if TOC.SymtabEntry2 in self.StringDesc.keys():

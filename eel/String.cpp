@@ -8,7 +8,7 @@ using namespace std;
 
 extern "C"
 char*  InputString()
-{
+{scanf("\n");
   char* s = (char*)malloc(100);
   gets(s);//scanf("%s\n",s);
   return s;
@@ -41,9 +41,19 @@ char* MergeString(char* b, char* a)
   int i = strlen(a);
   int j = strlen(b);
   char* s = (char*)malloc(100);
-  memcpy(s,b,j);
-  memcpy(s + j, a, i);
-  s[i + j] = '\0';
+int ind = 0;
+for(;ind <i;ind++)
+  {
+s[ind] = b[ind];
+}
+
+for(;ind <i+j;ind++)
+  {
+s[ind] = a[ind-i];
+}
+//memcpy(s,b,j);
+//memcpy(s + j, a, i);
+s[i + j] = '\0';
   return s;
 }
 
@@ -51,6 +61,7 @@ extern "C"
 void PrintString(char *s)
 {
   // int i=0;
+
   printf("%s\n",s);
 }
 extern "C"

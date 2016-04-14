@@ -1,7 +1,19 @@
 .section .data
-_empty_:
+t6:
+  .long 0
+t4:
+  .long 0
+t5:
+  .long 0
+t2:
+  .long 0
+t3:
   .long 0
 t0:
+  .long 0
+t1:
+  .long 0
+_empty_:
   .long 0
 
 .section .text
@@ -15,14 +27,27 @@ strfmt:  .asciz "%s\n"
 main:
 
 LEE1:
-	PUSHL $t0
-	PUSHL $inptstr
-	CALL scanf
-	ADDL $8, %ESP
-	PUSHL t0
-	PUSHL $fmtstr
-	CALL printf
-	ADDL $8, %ESP
+	MOVL $2,%EAX
+	MOVL $4,%EBX
+	PUSHL %EAX
+	MOVL %EAX,t0
+	MOVL %EBX,t1
+	CALL itoa
+	MOVL %EAX,t2
+	PUSHL t1
+	CALL itoa
+	MOVL %EAX,t3
+	PUSHL t3
+	PUSHL t2
+	CALL MergeString
+	MOVL %EAX,t4
+	MOVL t4,%EAX
+	PUSHL %EAX
+	MOVL %EAX,t4
+	MOVL %EAX,t5
+	CALL PrintString
+	MOVL %EAX,t6
+	ADDL $4, %ESP
 	MOVL $0,%EAX
 
 	MOVL $1,%EAX

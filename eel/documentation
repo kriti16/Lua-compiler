@@ -1,0 +1,38 @@
+# LUA COMPILER called eel
+    
+    ## Special Feature
+    >hashes
+    >Both string and integer as keys
+    > store both string and int
+    >nested functions
+    >nested loops
+    > local scopes
+    ##All Features
+    ###LOOPS
+    > While loops
+    > repeat until loops
+    ### If else statement
+    > Normal If Else
+    > __Backpatching__ implemented
+    > Break 
+    ### Functions
+    > Nested Functions
+    > Compile-time scoping in Functions
+    > Multiple arguements supported
+    ### Assignments
+    > Multiple value assignment
+    ### I/O
+    > String Input
+    > Integer Input
+    > String Output
+    > Integer Output
+    ### String handling
+    > Take Strings as input and store it
+    > Use this as keys in hashmaps
+    > Can also be values in hashmaps
+    > Concat strings by .. operator
+    ### Dictionary
+    > Keys : String , integer
+    > Values : String, integer, pointers
+    > Creation, Insertion, Retrieval supported
+    

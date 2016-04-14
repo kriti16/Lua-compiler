@@ -120,6 +120,7 @@ class RegisterFinder(object):
         #print regDesc,reg
         varReg = getattr(regDesc,reg)
         for var in varReg:
+            #print var,varReg
             print "\tMOVL %"+reg+","+var
             AddrDesc[var] = None
         setattr(regDesc,reg,[])

@@ -1,0 +1,8 @@
+WARNING: Token 'NEWLINE' defined, but not used
+WARNING: Token 'TDASH' defined, but not used
+WARNING: There are 2 unused tokens
+Generating LALR tables
+WARNING: 1 shift/reduce conflict
+WARNING: 1 reduce/reduce conflict
+WARNING: reduce/reduce conflict in state 13 resolved using rule (stat -> functioncall)
+WARNING: rejected rule (prefixexp -> functioncall) in state 13
